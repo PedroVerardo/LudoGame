@@ -3,26 +3,29 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardArray<T> {
-	private static BoardArray<?> instance;
-	private List<T> board = new ArrayList<T>();
-	private T b;
+public class BoardArray {
+	private static BoardArray instance;
+	private static List<Byte> board;
 	
 	private BoardArray() {
 		
 	}
 	
-	public void getInstance() {
+	public static BoardArray getInstance(int length) {
 		if(instance == null) {
-			instance = new BoardArray<T>();
+			board = new ArrayList<Byte>(length);
+			instance = new BoardArray();
 		}
+		return instance;
+	}
+
+	public static Byte getBoard(int position) {
+		return board.get(position);
+	}
+
+	public static void setBoard(int position, Byte object) {
+		board.set(0, object);
 	}
 	
-	public void createBoard() {
-		for(int i = 0; i < 4; i++) {
-			for(int j = 0; j < 4; j++) {
-				board.add(j, b);
-			}
-		}
-	}
+	
 }

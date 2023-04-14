@@ -1,29 +1,26 @@
 package Model;
 
-import java.io.*;
-
-public class Board<T> {
-	private static Board<? extends Object> instance;
-	private static Object[][] board;
+public class Board {
+	private static Board instance;
+	private static Byte[][] board;
 	
-	@SuppressWarnings("unchecked")
 	private Board(int line, int column){
-		Board.board = (T[][])new Object[line][column];
+		Board.board = new Byte[line][column];
 	}
 	
-	public static Board<?> getInstance(int line, int column) {
+	public static Board getInstance(int line, int column) {
 		if(Board.board == null) {
-			instance = new Board<Object>(line, column);
+			instance = new Board(line, column);
 		}
 		
 		return instance;
 	}
 	
-	public T[][] getBoardPosition(int line, int column) {
-		return (T[][]) board[line][column];
+	public Byte getBoardPosition(int line, int column) {
+		return board[line][column];
 	}
 	
-	public void setBoardPosition(T object, int line, int column) {
+	public void setBoardPosition(Byte object, int line, int column) {
 		board[line - 1][column - 1] = object;
 	}
 }

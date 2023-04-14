@@ -1,7 +1,11 @@
 package Model;
 
+import java.util.Random;
+
 public class Dice {
-	public int getDiceValue() {
-		return (int) (Math.random()%6);
+	static Random gerador = new Random();
+	
+	public static int getDiceValue() {
+		return gerador.nextInt(6);
 	}
 }
