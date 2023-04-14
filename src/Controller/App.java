@@ -7,8 +7,8 @@ import View.BoardV;
 
 public class App {
 	public static void main(String args[]) {
-		Board<Pawn_class> board = Board.getInstance(8, 8);
-		board.setBoardPosition(new Pawn_class(Color.black), 1, 2);
+		//Board<Pawn_class> board = (Board<Pawn_class>) Board.getInstance(8, 8);
+		//board.setBoardPosition(new Pawn_class(Color.black), 1, 2);
 		Byte j = 5;
 		System.out.println(j.byteValue());
 		//BoardV.showTable();
