@@ -20,19 +20,21 @@ public class BoardArray implements IBoardRules{
 	}
 	
 	@Override
-	public boolean makeContact(int position1 , int position2) {
+	public void makeContact(int position1 , int position2) {
 		
-		if ((board[position1]& 0xf0) == (board[position2]& 0xf0)) {
+		if (isEqual(position1, position2)) {
 
-			board[position2]++;
-			return true;
+			board[position2]++; 
 		}
-		return false;
+		return;
 	}
 
 	@Override
 	public boolean isEqual(int position1 , int position2) {
-		
+		if ((board[position1]& 0xf0) == (board[position2]& 0xf0)) {
+
+			return true;
+		}
 		return false;
 	}	
 }
