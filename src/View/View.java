@@ -10,7 +10,7 @@ public class View {
 	
 	private Scanner scan;
 	private int column, line;
-	private char[][] board = new char[33][36];
+	private char[][] board = new char[33][34];
 	public static final String ANSI_YELLOW = "\u001B[33m";
 	public static final String ANSI_BLUE = "\u001B[34m";
 	public static final String ANSI_RED = "\u001B[31m";
@@ -48,7 +48,7 @@ public class View {
 	
 	public void printBoard() {
 		for (int i = 0; i < 33; i++){
-			for(int j = 0; j < 35; j++) {
+			for(int j = 0; j < 34; j++) {
 				if(DecideColor.isRed(i,j)) {
 					System.out.print(ANSI_RED + board[i][j] + ANSI_RESET);
 				}

@@ -22,15 +22,18 @@ public class BoardArray implements IBoardRules{
 	@Override
 	public void makeContact(int position1 , int position2) {
 		
-		if (isEqual(position1, position2)) {
-
+		if (sameType(position1, position2)) {
+			board[position1] = 0;
 			board[position2]++; 
 		}
-		return;
+		else {
+			board[position2] = board[position1];
+			board[position1] = 0;
+		}
 	}
 
 	@Override
-	public boolean isEqual(int position1 , int position2) {
+	public boolean sameType(int position1 , int position2) {
 		if ((board[position1]& 0xf0) == (board[position2]& 0xf0)) {
 
 			return true;

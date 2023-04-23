@@ -8,4 +8,6 @@ public class Dice {
 	public static int getDiceValue() {
 		return gerador.nextInt(6);
 	}
+	
+	
 }
