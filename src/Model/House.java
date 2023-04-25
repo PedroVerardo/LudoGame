@@ -1,5 +1,24 @@
 package Model;
 
+import java.util.LinkedList;
+
 public class House {
+	private LinkedList<Pawn> pawnsInHouse = new LinkedList<Pawn>();
+	private boolean isSafe = false;
 	
+	public void addPawn(Pawn pawn) {
+		pawnsInHouse.add(pawn);
+	}
+	
+	public void removePawn(Pawn pawn) {
+		pawnsInHouse.remove(pawn);
+	}
+
+	public boolean isSafe() {
+		return isSafe;
+	}
+
+	public void setSafe() {
+		this.isSafe = true;
+	}
 }
