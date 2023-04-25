@@ -15,16 +15,17 @@ public class BoardArray implements IBoardRules{
 		return instance;
 	}
 
-	public void setBoard(int index, byte b) {
+	public void setBoard(int index, Byte b) {
 		board[index] = b;
 	}
+	
 	
 	@Override
 	public void makeContact(int position1 , int position2) {
 		
 		if (sameType(position1, position2)) {
-			board[position1] = 0;
-			board[position2]++; 
+			//board[position1] = 0;
+			//board[position2]++; 
 		}
 		else {
 			board[position2] = board[position1];
