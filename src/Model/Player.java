@@ -49,7 +49,7 @@ public class Player {
 	 *
 	 *@param pawnposition The position of a pawn if it's in board
 	 */
-	public void addPawnInBoard(Integer pawnposition) {
+	public void addPawnInBoardPosition(Integer pawnposition) {
 		this.pawnsBoardposition.add(pawnposition);
 	}
 	

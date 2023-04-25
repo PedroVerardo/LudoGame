@@ -4,7 +4,13 @@ import java.util.LinkedList;
 
 public class House {
 	private LinkedList<Pawn> pawnsInHouse = new LinkedList<Pawn>();
-	private boolean isSafe = false;
+	private boolean isSafe;
+	private boolean finalHouse;
+	
+	public House(boolean isSafe, boolean finalHouse){
+		this.isSafe = isSafe;
+		this.finalHouse = finalHouse;
+	}
 	
 	public void addPawn(Pawn pawn) {
 		pawnsInHouse.add(pawn);
@@ -17,8 +23,10 @@ public class House {
 	public boolean isSafe() {
 		return isSafe;
 	}
+	
+	
 
-	public void setSafe() {
-		this.isSafe = true;
+	public boolean isFinalHouse() {
+		return finalHouse;
 	}
 }

@@ -1,44 +1,38 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class BoardArray implements IBoardRules{
-	private static BoardArray instance;
-	private static byte[] board;
+	 private ArrayList<House> board;
+	 private int lenght;
 	
-	private BoardArray(int length) {
-		board = new byte[length];
+	BoardArray(int lenght) {
+		this.lenght = lenght;
+		board = new ArrayList<House>(lenght);
 	}
 	
-	public static BoardArray getInstance(int length) {
-		if(instance == null) {
-			instance = new BoardArray(length);
+	public void setBoard() {
+		int i = 0;
+		while(i < 52) {
+			if(i == 2 || i == 15 || i == 28 || i == 41){
+				board.add(new House(true, false));
+			}
+			else {
+				board.add(new House(false, false));
+			}
+			i++;
 		}
-		return instance;
 	}
-
-	public void setBoard(int index, Byte b) {
-		board[index] = b;
-	}
-	
-	
+	 
 	@Override
-	public void makeContact(int position1 , int position2) {
+	public void possibleMove(int position1, int position2) {
+		// TODO Auto-generated method stub
 		
-		if (sameType(position1, position2)) {
-			//board[position1] = 0;
-			//board[position2]++; 
-		}
-		else {
-			board[position2] = board[position1];
-			board[position1] = 0;
-		}
 	}
 
 	@Override
-	public boolean sameType(int position1 , int position2) {
-		if ((board[position1]& 0xf0) == (board[position2]& 0xf0)) {
-
-			return true;
-		}
+	public boolean sameType(int position1, int position2) {
+		
 		return false;
 	}	
 }

@@ -23,6 +23,10 @@ public class Pawn {
 		pawn += diceRoll;
 	}
 	
+	public static boolean equals(Pawn one, Pawn two) {
+		return (one.getColor() == two.getColor());
+	}
+	
 	public boolean haveFinished()
 	{
 		return (this.getDistGoal() >= 52) ? true : false;
