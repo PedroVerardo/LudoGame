@@ -8,7 +8,7 @@ public class Pawn {
 		return pawn & 0x0f00;
 	}
 	
-	public int getDistGoal()
+	public int getTotalMoves()
 	{
 		return pawn & 0x0ff;
 	}
@@ -18,7 +18,7 @@ public class Pawn {
 		pawn &= 0xf00;
 	}
 	
-	public void madeMove(int diceRoll)
+	public void addMove(int diceRoll)
 	{
 		pawn += diceRoll;
 	}
@@ -27,8 +27,17 @@ public class Pawn {
 		return (one.getColor() == two.getColor());
 	}
 	
+	public boolean isSameType(Pawn p)
+	{
+		
+		if (this.getColor() == p.getColor())
+			return true;
+		
+		return false;
+	}
+	
 	public boolean haveFinished()
 	{
-		return (this.getDistGoal() >= 52) ? true : false;
+		return (this.getTotalMoves() >= 52) ? true : false;
 	}
 }

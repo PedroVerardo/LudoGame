@@ -23,10 +23,14 @@ public class House {
 	public boolean isSafe() {
 		return isSafe;
 	}
-	
-	
 
 	public boolean isFinalHouse() {
 		return finalHouse;
 	}
+	
+	public LinkedList<Pawn> getPawnsInHouse()
+	{
+		return pawnsInHouse;
+	}
+
 }
