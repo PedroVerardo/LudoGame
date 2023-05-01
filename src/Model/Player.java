@@ -13,13 +13,13 @@ class Player {
 	private int startHouse;
 	private List<Pawn> pawnsBoardposition = new ArrayList<Pawn>(4);
 	
-	Player(int startHouse){
+	Player(int startHouse, PlayerColor pC){
 		this.startHouse = startHouse;
 		
-		//Pawn p = new Pawn()
+		Pawn p = new Pawn(pC);
 		
 		for(int i = 0; i < 4; i++) {
-			pawnsBoardposition.add(null);
+			pawnsBoardposition.add(p);
 		}
 		
 	}
