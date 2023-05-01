@@ -34,6 +34,6 @@ public class Pawn {
 	
 	public boolean haveFinished()
 	{
-		return (this.getTotalMoves() >= 52) ? true : false;
+		return this.getTotalMoves() == 57 ? true : false;
 	}
 }

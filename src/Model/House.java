@@ -49,7 +49,7 @@ class House {
 		return barrierUp;
 	}
 
-	void setBarrierUp(boolean state) {
+	void setBarrierState(boolean state) {
 		this.barrierUp = state;
 	}
 

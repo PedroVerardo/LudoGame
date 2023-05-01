@@ -3,21 +3,26 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 class BoardArray {
-	 private ArrayList<House> board;
-	 private int length;
+	private ArrayList<House> board;
+	private int length;
 	
+	 
 	BoardArray(int length) {
 		this.length = length;
 		board = new ArrayList<House>(length);
 	}
 	
+	
 	boolean isInitialHousePositions(int position) {
 		return position == 2 || position == 15 || position == 28 || position == 41;
 	}
 	
+	
 	boolean isSafeHousePosition(int position) {
 		return position == 10 || position == 23 || position == 36 || position == 49;
 	}
+	
+	
 	boolean isFinalHouse(int position) {
 		return position == 0 || position == 13 || position == 26 || position == 39;
 	}
@@ -49,15 +54,20 @@ class BoardArray {
 		}
 	}
 	
+	
 	House getHousePosition(int pos) {
 		return board.get(pos);
 	}
+	
 	
 	boolean haveBarrier(House h) {
 		return h.isBarrierUp();
 	}
 	
-	boolean comparePawns(Pawn p1, LinkedList<Pawn> p2) {
+	
+	boolean comparePawns(Pawn p1, House h2) {
+		LinkedList<Pawn> p2 = h2.getPawnsInHouse();
+		
 		for(int i = 0; i < p2.size(); i++) {
 			if(!p1.equals(p2.get(i))) {
 				return false;
@@ -65,7 +75,6 @@ class BoardArray {
 		}
 		return true;
 	}
-	
 	
 	
 	boolean possibleMove(Pawn p, int position1, int position2) {
@@ -87,12 +96,12 @@ class BoardArray {
 		}
 		
 		//is safe and don't have same color pawn
-		else if(h2.isSafe() && listH2.size() < 2 &&  !comparePawns(p ,listH2)){
+		else if(h2.isSafe() && listH2.size() < 2 &&  !comparePawns(p ,h2)){
 			return true;
 		}
 		
 		//is initial house and don't have pawns of same color
-		else if(h2.isInitialHouse() && !comparePawns(p, listH2)){
+		else if(h2.isInitialHouse() && !comparePawns(p, h2)){
 			return true;
 		}
 		
@@ -105,30 +114,46 @@ class BoardArray {
 		
 	}
 	
+	
+	/**
+	 * The function check's if 
+	 * */
 	boolean possibleEat(Pawn p, int position1, int position2) {
 		House h2 = board.get(position2);
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
-		if(listH2.size() < 2 && !h2.isSafe() && !h2.isInitialHouse()) {
+		if(listH2.size() == 1 && !h2.isSafe() && !h2.isInitialHouse()) {
 			return true;
 		}
+		
 		return false;
 	}
 	
-	//only move the pawn, don't increment the pawn distance and
-	//don't remove a possible pawn in the position 2
+	
+	/**only move the pawn, don't increment the pawn distance and
+	 * don't remove a possible pawn in the position 2
+	 **/
 	void moveTo(Pawn p, int position1, int position2) {
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
+		
+		if(h1.isBarrierUp()) {
+			h1.setBarrierState(false);
+		}
 		
 		h1.removePawn(p);
 		
 		h2.addPawn(p);
 	}
 	
+	
 	void eatPawn(Pawn p, int position1, int position2) {
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
+		
+		if(h1.isBarrierUp()) {
+			h1.setBarrierState(false);
+		}
 		
 		h1.removePawn(p);
 		h2.removePawn();
@@ -136,15 +161,25 @@ class BoardArray {
 		h2.addPawn(p);
 	}
 	
+	
 	void makeMove(Pawn p, int position1, int position2) {
+		House h2 = board.get(position2);
+		
 		if(possibleMove(p, position1, position2) && possibleEat(p, position1, position2)) {
 			
 			eatPawn(p, position1, position2);
+		}
+		
+		else if(possibleMove(p, position1, position2) && comparePawns(p ,h2)) {
+			
+			moveTo(p, position1, position2);
+			h2.setBarrierState(true);
 		}
 		
 		else if(possibleMove(p, position1, position2)) {
 			
 			moveTo(p, position1, position2);
 		}
+		
 	}
 }
