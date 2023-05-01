@@ -3,6 +3,10 @@ package Model;
 public class Pawn {
 	private short pawn;
 	
+	Pawn(PlayerColor pC){
+		pawn = pC.getValue();
+	}
+	
 	public int getColor()
 	{
 		return pawn & 0x0f00;
@@ -23,18 +27,10 @@ public class Pawn {
 		pawn += diceRoll;
 	}
 	
-	public static boolean equals(Pawn one, Pawn two) {
-		return (one.getColor() == two.getColor());
+	public  boolean equals(Pawn two) {
+		return (this.getColor() == two.getColor());
 	}
 	
-	public boolean isSameType(Pawn p)
-	{
-		
-		if (this.getColor() == p.getColor())
-			return true;
-		
-		return false;
-	}
 	
 	public boolean haveFinished()
 	{

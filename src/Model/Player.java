@@ -7,31 +7,42 @@ import java.util.List;
  * The class Player is relative for how color the player represet's 
  * in the ludo game, that class are used in the Round class too
  * */
-public class Player {
+class Player {
 	private int pawnsInBase = 4;
 	private int pawnsFinished = 0;
 	private int startHouse;
-	private List<Integer> pawnsBoardposition = new ArrayList<Integer>(4);
+	private List<Pawn> pawnsBoardposition = new ArrayList<Pawn>(4);
+	
+	Player(int startHouse){
+		this.startHouse = startHouse;
+		
+		//Pawn p = new Pawn()
+		
+		for(int i = 0; i < 4; i++) {
+			pawnsBoardposition.add(null);
+		}
+		
+	}
 	
 	/**
 	 * Function to see how many pawns in base that player have
 	 * @return pawnsInBase The number of pawn in base
 	 * */
-	public int getHowManyPawnsInBase() {
+	int getHowManyPawnsInBase() {
 		return pawnsInBase;
 	}
 	
 	/**
 	 * Function to add a pawn in the base
 	 * */
-	public void incPawnsInBase() {
+	void incPawnsInBase() {
 		this.pawnsInBase++;
 	}
 	
 	/**
 	 * Function to decrement one pawn of the base 
 	 * */
-	public void decPawnsInBase() {
+	void decPawnsInBase() {
 		this.pawnsInBase--;
 	}
 	
@@ -39,28 +50,8 @@ public class Player {
 	 * Function to see all pawns position of the player object
 	 * @return pawnsBoardposition a list with all pawns position
 	 * */
-	public List<Integer> getAllPawnsBoardposition() {
+	List<Pawn> getAllPawnsBoardposition() {
 		return pawnsBoardposition;
-	}
-	
-	/**
-	 *Function to remove a @pawn of the base and
-	 *put in the starter house stored on the variable startHouse
-	 *
-	 *@param pawnposition The position of a pawn if it's in board
-	 */
-	public void addPawnInBoardPosition(Integer pawnposition) {
-		this.pawnsBoardposition.add(pawnposition);
-	}
-	
-	/**
-	 *Function to change the position of a specific pawn
-	 *
-	 *@param index The position in the array to change
-	 *@param pawnsBoardposition The new position of the pawn
-	 **/
-	public void changePawnPosition(int index ,Integer pawnsBoardposition) {
-		this.pawnsBoardposition.add(index, pawnsBoardposition);
 	}
 	
 	/**
@@ -69,7 +60,7 @@ public class Player {
 	 * @return true if player win the game.
 	 * @return false if player not win the game.
 	 * */
-	public boolean isWinner() {
+	boolean isWinner() {
 		if(pawnsFinished == 4) {return true;}
 		
 		else {return false;}
