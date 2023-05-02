@@ -13,15 +13,19 @@ class Player {
 	private int startHouse;
 	private List<Pawn> pawnsBoardposition = new ArrayList<Pawn>(4);
 	
-	Player(int startHouse, PlayerColor pC){
+	Player(int startHouse, Pawn p1, Pawn p2, Pawn p3, Pawn p4){
 		this.startHouse = startHouse;
 		
-		Pawn p = new Pawn(pC);
+			pawnsBoardposition.add(p1);
+			pawnsBoardposition.add(p2);
+			pawnsBoardposition.add(p3);
+			pawnsBoardposition.add(p4);
 		
-		for(int i = 0; i < 4; i++) {
-			pawnsBoardposition.add(p);
-		}
-		
+	}
+	
+	
+	void incPawnsFinished() {
+		this.pawnsFinished++;
 	}
 	
 	/**
@@ -32,12 +36,14 @@ class Player {
 		return pawnsInBase;
 	}
 	
+	
 	/**
 	 * Function to add a pawn in the base
 	 * */
 	void incPawnsInBase() {
 		this.pawnsInBase++;
 	}
+	
 	
 	/**
 	 * Function to decrement one pawn of the base 
@@ -46,12 +52,27 @@ class Player {
 		this.pawnsInBase--;
 	}
 	
+	
+	Integer getPawnPosition(Pawn p) {
+		int soma = startHouse + p.getTotalMoves();
+		if( soma > 51) {
+			return soma - 51;
+		}
+		return soma;
+	}
+	
+	
 	/**
 	 * Function to see all pawns position of the player object
 	 * @return pawnsBoardposition a list with all pawns position
 	 * */
-	List<Pawn> getAllPawnsBoardposition() {
-		return pawnsBoardposition;
+	List<Integer> getAllPawnsBoardposition() {
+		ArrayList<Integer> positions = new ArrayList<Integer>();
+		
+		for(Pawn p : pawnsBoardposition) {
+			positions.add(getPawnPosition(p));
+		}
+		return positions;
 	}
 	
 	/**
@@ -61,8 +82,6 @@ class Player {
 	 * @return false if player not win the game.
 	 * */
 	boolean isWinner() {
-		if(pawnsFinished == 4) {return true;}
-		
-		else {return false;}
+		return pawnsFinished == 4;
 	}
 }

@@ -1,39 +1,54 @@
 package Model;
 
-public class Pawn {
+class Pawn {
 	private short pawn;
+	private Player player;
 	
-	Pawn(PlayerColor pC){
+	Pawn(PlayerColor pC, Player p){
+		this.player = p;
 		pawn = pC.getValue();
 	}
 	
-	public int getColor()
-	{
+	int getColor() {
 		return pawn & 0x0f00;
 	}
+
 	
-	public int getTotalMoves()
-	{
-		return pawn & 0x0ff;
+	public Player getPlayer() {
+		return player;
 	}
 	
-	public void setPawnToBase()
-	{
-		pawn &= 0xf00;
+	
+	int getTotalMoves() {
+		return pawn & 0x00ff;
 	}
 	
-	public void addMove(int diceRoll)
-	{
+	
+	void setPawnToBase() {
+		pawn &= 0x0f00;
+	}
+	
+	
+	void addMove(int diceRoll) {
 		pawn += diceRoll;
 	}
 	
-	public  boolean equals(Pawn two) {
+	
+	boolean equals(Pawn two) {
 		return (this.getColor() == two.getColor());
 	}
 	
+	void setFinalLine() {
+		pawn |= 0x8000;
+	}
 	
-	public boolean haveFinished()
-	{
+	boolean isInFinalLine() {
+		return (pawn >> 12) == 8;
+	}
+	
+	boolean haveFinished() {
 		return this.getTotalMoves() == 57 ? true : false;
 	}
+
+	
 }

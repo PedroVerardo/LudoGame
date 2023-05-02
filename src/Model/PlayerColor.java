@@ -2,7 +2,7 @@ package Model;
 /**
  * The value of each type represents a increment on the second byte of the number
  * */
-public enum PlayerColor {
+enum PlayerColor {
 	VERMELHO(256), VERDE(512), AZUL(768), AMARELO(1024);
 
 	private short color;
@@ -11,7 +11,7 @@ public enum PlayerColor {
         this.color = (short) value;
     }
 
-    public short getValue() {
+    short getValue() {
        return color;
     }
 }

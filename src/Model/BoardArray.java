@@ -2,6 +2,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+
+//board array de 78
 class BoardArray {
 	private ArrayList<House> board;
 	private int length;
@@ -13,17 +15,17 @@ class BoardArray {
 	}
 	
 	
-	boolean isInitialHousePositions(int position) {
+	private boolean isInitialHousePositions(int position) {
 		return position == 2 || position == 15 || position == 28 || position == 41;
 	}
 	
 	
-	boolean isSafeHousePosition(int position) {
+	private boolean isSafeHousePosition(int position) {
 		return position == 10 || position == 23 || position == 36 || position == 49;
 	}
 	
 	
-	boolean isFinalHouse(int position) {
+	private boolean isFinalHouse(int position) {
 		return position == 0 || position == 13 || position == 26 || position == 39;
 	}
 	
@@ -34,7 +36,7 @@ class BoardArray {
 	 * */
 	void setBoard() {
 		int i = 0;
-		while(i < 52) {
+		while(i < length) {
 			if(isInitialHousePositions(i)){
 				board.add(new House(false, false, true));
 			}
@@ -50,6 +52,7 @@ class BoardArray {
 			else {
 				board.add(new House(false, false, false));
 			}
+			
 			i++;
 		}
 	}
@@ -77,41 +80,59 @@ class BoardArray {
 	}
 	
 	
-	boolean possibleMove(Pawn p, int position1, int position2) {
+	boolean possibleMove(Pawn p, int position1, int diceRoll) {
 		
-		int distMove = position2 - position1;
+		int position2 = diceRoll + position1;
+		if(position2 > 51) {
+			position2 -= 51;
+		}
+		
 		
 		House h2 = board.get(position2);
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
-		
-		for(int i = 1; i < distMove; i++) {
-			if(haveBarrier(board.get(position1 + i))) {
+		if(p.isInFinalLine()) {
+			if(p.getTotalMoves() + diceRoll <= 57 && h2.getPawnsInHouse() == null) {
+				return true;
+			}
+			
+			else {
 				return false;
 			}
 		}
 		
-		//don't have pawns
-		if(listH2.isEmpty()) {
-			return true;
+		else {
+			for(int i = 1; i < diceRoll; i++) {
+				if(p.getTotalMoves() + i == 52) {
+					return true;
+				}
+				
+				else if(haveBarrier(board.get(position1 + i))) {
+					return false;
+				}
+			}
+			
+			//don't have pawns
+			if(listH2.isEmpty()) {
+				return true;
+			}
+			
+			//is safe and don't have same color pawn
+			else if(h2.isSafe() && listH2.size() < 2 &&  !comparePawns(p ,h2)){
+				return true;
+			}
+			
+			//is initial house and don't have pawns of same color
+			else if(h2.isInitialHouse() && !comparePawns(p, h2)){
+				return true;
+			}
+			
+			//only have one pawn
+			else if(listH2.size() < 2) {
+				return true;
+			}
+			
+			return false;
 		}
-		
-		//is safe and don't have same color pawn
-		else if(h2.isSafe() && listH2.size() < 2 &&  !comparePawns(p ,h2)){
-			return true;
-		}
-		
-		//is initial house and don't have pawns of same color
-		else if(h2.isInitialHouse() && !comparePawns(p, h2)){
-			return true;
-		}
-		
-		//only have one pawn
-		else if(listH2.size() < 2) {
-			return true;
-		}
-		
-		return false;
-		
 	}
 	
 	
@@ -138,7 +159,7 @@ class BoardArray {
 		House h2 = board.get(position2);
 		
 		if(h1.isBarrierUp()) {
-			h1.setBarrierState(false);
+			h1.setBarrierDown();
 		}
 		
 		h1.removePawn(p);
@@ -152,7 +173,7 @@ class BoardArray {
 		House h2 = board.get(position2);
 		
 		if(h1.isBarrierUp()) {
-			h1.setBarrierState(false);
+			h1.setBarrierDown();
 		}
 		
 		h1.removePawn(p);
@@ -162,24 +183,33 @@ class BoardArray {
 	}
 	
 	
-	void makeMove(Pawn p, int position1, int position2) {
+	void makeMove(Pawn p, int position1, int diceRoll) {
+		int position2 = position1 + diceRoll;
 		House h2 = board.get(position2);
+		
+		if(possibleMove(p, position1, position2) && p.getTotalMoves() + diceRoll >= 52) {
+			position2 = 51 + 6*(p.getColor() - 0x0100) + (p.getTotalMoves() - 51);
+			moveTo(p, position1, position2);
+			if(p.haveFinished()) {
+				Player player = p.getPlayer();
+				player.incPawnsFinished();
+			}
+		}
 		
 		if(possibleMove(p, position1, position2) && possibleEat(p, position1, position2)) {
 			
 			eatPawn(p, position1, position2);
 		}
 		
-		else if(possibleMove(p, position1, position2) && comparePawns(p ,h2)) {
+		else if(possibleMove(p, position1, position2) && comparePawns(p ,h2) && !h2.isSafe()) {
 			
 			moveTo(p, position1, position2);
-			h2.setBarrierState(true);
+			h2.setBarrierUp();
 		}
 		
 		else if(possibleMove(p, position1, position2)) {
 			
 			moveTo(p, position1, position2);
 		}
-		
 	}
 }
