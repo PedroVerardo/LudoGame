@@ -23,6 +23,9 @@ class Player {
 		
 	}
 	
+	int getStartHouse() {
+		return startHouse;
+	}
 	
 	void incPawnsFinished() {
 		this.pawnsFinished++;

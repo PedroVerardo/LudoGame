@@ -8,16 +8,23 @@ public class SingletonBoard {
 	private ArrayList<House> board;
 	private int length;
 	
-	
+	private static SingletonBoard boardInstance;
 	 
-	SingletonBoard(int length) {
+	private SingletonBoard(int length) {
 		this.length = length;
 		board = new ArrayList<House>(length);
 	}
 	
 	
+	public SingletonBoard getInstance(int lenght) {
+		if(boardInstance == null) {
+			boardInstance = new SingletonBoard(lenght);
+		}
+		return boardInstance;
+	}
+	
 	/**
-	 * 
+	 * Static definitions in the game
 	 * */
 	private boolean isInitialHousePositions(int position) {
 		return position == 2 || position == 15 || position == 28 || position == 41;
@@ -79,16 +86,23 @@ public class SingletonBoard {
 	 * 
 	 * @param Object House 
 	 * 
-	 * @return 
+	 * @return Boolean that represent the barrier in the house
 	 * */
 	boolean haveBarrier(House house) {
 		return house.isBarrierUp();
 	}
 	
-	
+	/**
+	 * Function to check if the pawn in the selected house is the same or not.
+	 * 
+	 * @param p1 The pawn you want to move
+	 * @param h2 The House you want to check
+	 * 
+	 * @return boolean representing if is equal or not
+	 * */
 	boolean comparePawns(Pawn p1, House h2) {
 		LinkedList<Pawn> p2 = h2.getPawnsInHouse();
-		
+		Thread t1;
 		for(int i = 0; i < p2.size(); i++) {
 			if(!p1.equals(p2.get(i))) {
 				return false;
@@ -98,18 +112,22 @@ public class SingletonBoard {
 	}
 	
 	
-	boolean possibleMove(Pawn p, int position1, int diceRoll) {
+	boolean possibleMove(Pawn pawn, Player player, int position1, int diceRoll) {
 		
 		int position2 = diceRoll + position1;
+		
 		if(position2 > 51) {
 			position2 -= 51;
 		}
 		
 		
 		House h2 = board.get(position2);
+		House inicial = board.get(player.getPawnPosition(pawn));
+		
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
-		if(p.isInFinalLine()) {
-			if(p.getTotalMoves() + diceRoll <= 57 && h2.getPawnsInHouse() == null) {
+		
+		if(pawn.isInFinalLine()) {
+			if(pawn.getTotalMoves() + diceRoll <= 57 && h2.getPawnsInHouse() == null) {
 				return true;
 			}
 			
@@ -120,7 +138,7 @@ public class SingletonBoard {
 		
 		else {
 			for(int i = 1; i < diceRoll; i++) {
-				if(p.getTotalMoves() + i == 52) {
+				if(pawn.getTotalMoves() + i == 52) {
 					return true;
 				}
 				
@@ -129,18 +147,22 @@ public class SingletonBoard {
 				}
 			}
 			
+			if(pawn.inbase && diceRoll == 5 && !comparePawns(pawn ,inicial)) {
+				return true;
+			}
+			
 			//don't have pawns
 			if(listH2.isEmpty()) {
 				return true;
 			}
 			
 			//is safe and don't have same color pawn
-			else if(h2.isSafe() && listH2.size() < 2 &&  !comparePawns(p ,h2)){
+			else if(h2.isSafe() && listH2.size() < 2 &&  !comparePawns(pawn ,h2)){
 				return true;
 			}
 			
 			//is initial house and don't have pawns of same color
-			else if(h2.isInitialHouse() && !comparePawns(p, h2)){
+			else if(h2.isInitialHouse() && !comparePawns(pawn, h2)){
 				return true;
 			}
 			
@@ -206,32 +228,37 @@ public class SingletonBoard {
 		h2.addPawn(p);
 	}
 	
+	void exitBase(Pawn pawn, Player player) {
+		House h1 = board.get(player.getStartHouse());
+		pawn.removeFromBase();
+		h1.addPawn(pawn);
+	}
 	
-	void makeMove(Pawn p, int position1, int diceRoll) {
+	
+	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
 		int position2 = position1 + diceRoll;
 		House h2 = board.get(position2);
 		
-		if(possibleMove(p, position1, position2) && p.getTotalMoves() + diceRoll >= 52) {
+		if(possibleMove(p, null, position1, position2) && p.getTotalMoves() + diceRoll >= 52) {
 			position2 = 51 + 6*(p.getColor() - 0x0100) + (p.getTotalMoves() - 51);
 			moveTo(p, position1, position2);
 			if(p.haveFinished()) {
-				Player player = p.getPlayer();
 				player.incPawnsFinished();
 			}
 		}
 		
-		if(possibleMove(p, position1, position2) && possibleEat(p, position1, position2)) {
+		if(possibleMove(p, player, position1, position2) && possibleEat(p, position1, position2)) {
 			
 			eatPawn(p, position1, position2);
 		}
 		
-		else if(possibleMove(p, position1, position2) && comparePawns(p ,h2) && !h2.isSafe()) {
+		else if(possibleMove(p, player, position1, position2) && comparePawns(p ,h2) && !h2.isSafe()) {
 			
 			moveTo(p, position1, position2);
 			h2.setBarrierUp();
 		}
 		
-		else if(possibleMove(p, position1, position2)) {
+		else if(possibleMove(p, player, position1, position2)) {
 			
 			moveTo(p, position1, position2);
 		}

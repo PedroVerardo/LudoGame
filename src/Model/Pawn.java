@@ -13,6 +13,7 @@ package Model;
  * */
 class Pawn {
 	private short pawn;
+	boolean inbase = true;
 	
 	Pawn(PlayerColor pC){
 		pawn = pC.getValue();
@@ -28,11 +29,14 @@ class Pawn {
 	}
 	
 	
+	void removeFromBase() {
+		inbase = false;
+	}
+	
+	
 	/**
 	 * Function to used to get how many steps need to complete the
 	 * turn in the board
-	 * 
-	 * @see
 	 * 
 	 * @return A short representing the 
 	 * */
