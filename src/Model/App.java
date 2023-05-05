@@ -3,7 +3,7 @@ package Model;
 
 public class App {
 	public static void main(String[] args) {
-		BoardArray board = new BoardArray(52);
+		SingletonBoard board = new SingletonBoard(52);
 		
 		board.setBoard();
 		

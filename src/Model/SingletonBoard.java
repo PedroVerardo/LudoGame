@@ -3,18 +3,22 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 
-//board array de 78
-class BoardArray {
+
+public class SingletonBoard {
 	private ArrayList<House> board;
 	private int length;
 	
+	
 	 
-	BoardArray(int length) {
+	SingletonBoard(int length) {
 		this.length = length;
 		board = new ArrayList<House>(length);
 	}
 	
 	
+	/**
+	 * 
+	 * */
 	private boolean isInitialHousePositions(int position) {
 		return position == 2 || position == 15 || position == 28 || position == 41;
 	}
@@ -58,13 +62,27 @@ class BoardArray {
 	}
 	
 	
+	/**
+	 * Function to get the house object of a specific position.
+	 * 
+	 * @param pos position in the ArrayList.
+	 * 
+	 * @return A House object 
+	 * */
 	House getHousePosition(int pos) {
 		return board.get(pos);
 	}
 	
 	
-	boolean haveBarrier(House h) {
-		return h.isBarrierUp();
+	/**
+	 * Function to check if in this house have a barrier(two pawns of same type)
+	 * 
+	 * @param Object House 
+	 * 
+	 * @return 
+	 * */
+	boolean haveBarrier(House house) {
+		return house.isBarrierUp();
 	}
 	
 	
@@ -137,7 +155,8 @@ class BoardArray {
 	
 	
 	/**
-	 * The function check's if 
+	 * The function check's if is possible to eat a pawn in the position 
+	 * the player can move.
 	 * */
 	boolean possibleEat(Pawn p, int position1, int position2) {
 		House h2 = board.get(position2);
@@ -151,8 +170,13 @@ class BoardArray {
 	}
 	
 	
-	/**only move the pawn, don't increment the pawn distance and
+	/**
+	 * Function to see all possible moves.
+	 *  
+	 * only move the pawn, don't increment the pawn distance and
 	 * don't remove a possible pawn in the position 2
+	 * 
+	 * 
 	 **/
 	void moveTo(Pawn p, int position1, int position2) {
 		House h1 = board.get(position1);
@@ -213,3 +237,4 @@ class BoardArray {
 		}
 	}
 }
+
