@@ -169,10 +169,9 @@ public class SingletonBoard {
 	 * the player can move.
 	 * 
 	 * @param p The Pawn object that be added in in the house
-	 * @param position1 The position initial in the pawn
 	 * @param position2 The position the pawn move
 	 * */
-	boolean possibleEat(Pawn p, int position1, int position2) {
+	boolean possibleEat(Pawn p, int position2) {
 		House h2 = board.get(position2);
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
@@ -248,7 +247,7 @@ public class SingletonBoard {
 			}
 		}
 		
-		if(possibleMove(p, player, position1, position2) && possibleEat(p, position1, position2)) {
+		if(possibleMove(p, player, position1, position2) && possibleEat(p, position2)) {
 			eatPawn(p, position1, position2);
 		}
 		
