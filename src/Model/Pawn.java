@@ -6,9 +6,9 @@ package Model;
  * make bit operations to get some rules previous decided.
  * 
  * Pawn ->  0000 0000 0000 0000
- *                 |   |_____|
- *                 |       |
- *              (color)(distance)
+ *            |    |   |_____|
+ *            |    |       |
+ *       (finish)(color)(distance)
  * </pre> 
  * */
 class Pawn {
@@ -24,52 +24,64 @@ class Pawn {
 	 * 
 	 * @return A short with only the first 4 bits after the first byte
 	 * */
-	int getColor() {
-		return pawn & 0x0f00;
-	}
+	int getColor() {return pawn & 0x0f00;}
 	
 	
-	void removeFromBase() {
-		inbase = false;
-	}
+	/**
+	 * Function to remove pawn in the base.
+	 * */
+	void removeFromBase() {inbase = false;}
 	
 	
 	/**
 	 * Function to used to get how many steps need to complete the
-	 * turn in the board
+	 * turn in the board.
 	 * 
-	 * @return A short representing the 
+	 * @return A short representing the total of moves that pawn did.
 	 * */
-	int getTotalMoves() {
-		return pawn & 0x00ff;
-	}
+	int getTotalMoves() {return pawn & 0x00ff;}
 	
 	
-	void setPawnToBase() {
-		pawn &= 0x0f00;
-	}
+	/**
+	 * Function to return the pawn to the base.
+	 * */
+	void setPawnToBase() {pawn &= 0x0f00;}
 	
 	
-	void addMove(int diceRoll) {
-		pawn += diceRoll;
-	}
+	/**
+	 * Function to add the dice roll to the pawn selected.
+	 * 
+	 * @param diceRoll the value of the dice in determinate round.
+	 * */
+	void addMove(int diceRoll) {pawn += diceRoll;}
 	
 	
-	boolean equals(Pawn two) {
-		return (this.getColor() == two.getColor());
-	}
+	/**
+	 * Function overwrite the method equals used to compare pawns.
+	 * 
+	 * @param two the other pawn you want to make the comparison.
+	 * */
+	boolean equals(Pawn two) {return (this.getColor() == two.getColor());}
 	
-	void setFinalLine() {
-		pawn |= 0x8000;
-	}
 	
-	boolean isInFinalLine() {
-		return (pawn >> 12) == 8;
-	}
+	/**
+	 * Function to put the pawn in the final line.
+	 * */
+	void setFinalLine() {pawn |= 0x8000;}
 	
-	boolean haveFinished() {
-		return this.getTotalMoves() == 57 ? true : false;
-	}
+	
+	/**
+	 * Function to see if the pawn is in final line.
+	 * */
+	boolean isInFinalLine() {return (pawn >> 12) == 8;}
+	
+	
+	/**
+	 * Function to see if the pawn complete the final line.
+	 * 
+	 * @return The boolean that represent the pawn finalize the path.
+	 * */
+	boolean haveFinished() {return this.getTotalMoves() == 57 ? true : false;}
 
 	
 }

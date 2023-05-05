@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Random;
 
-class Dice {
+public class Dice {
 	static Random gerador = new Random();
 	
 	public static int getDiceValue() {

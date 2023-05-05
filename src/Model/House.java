@@ -18,52 +18,77 @@ class House {
 	}
 	
 	
-	void addPawn(Pawn pawn) {
-		pawnsInHouse.add(pawn);
-	}
-	
-	boolean removePawn(Pawn pawn) {
-		return pawnsInHouse.remove(pawn);
-	}
+	/**
+	 * Function to add a pawn inside the house.
+	 * */
+	void addPawn(Pawn pawn) {pawnsInHouse.add(pawn);}
 	
 	
-	void removePawn() {
-		pawnsInHouse.remove();
-	}
-	
-
-	boolean isSafe() {
-		return Safe;
-	}
-
-	
-	boolean isFinalHouse() {
-		return finalHouse;
-	}
+	/**
+	 * Function to remove a pawn in the specific house.
+	 * 
+	 * @return A boolean that represent if the remove method remove something or not.
+	 * */
+	boolean removePawn(Pawn pawn) {return pawnsInHouse.remove(pawn);}
 	
 	
-	LinkedList<Pawn> getPawnsInHouse() {
-		return pawnsInHouse;
-	}
-
+	/**
+	 * Function to overload the removePawm method.
+	 * 
+	 * The difference between this functions is this one remove the first one.
+	 * */
+	void removePawn() {pawnsInHouse.remove();}
 	
-	boolean isInitialHouse() {
-		return initialHouse;
-	}
+	
+	/**
+	 * Function to return the boolean if the house is safe or not.
+	 * 
+	 * @return boolean if is safe or not.
+	 * */
+	boolean isSafe() {return Safe;}
 
 	
-	boolean isBarrierUp() {
-		return barrierUp;
-	}
+	/**
+	 * Function to return the boolean if the house is final or not.
+	 * 
+	 * @return boolean if is final or not.
+	 * */
+	boolean isFinalHouse() {return finalHouse;}
+	
+	
+	/**
+	 * Function to return the list of the pawns in the house.
+	 * 
+	 * @return A LinkedList of pawns.
+	 * */
+	LinkedList<Pawn> getPawnsInHouse() {return pawnsInHouse;}
 
 	
-	void setBarrierUp() {
-		this.barrierUp = true;
-	}
+	/**
+	 * Function to return the boolean if the house is initial or not.
+	 * 
+	 * @return boolean if is initial or not.
+	 * */
+	boolean isInitialHouse() {return initialHouse;}
+
+	
+	/**
+	 * Function to return the boolean if the house has barrier or not.
+	 * 
+	 * @return boolean if has barrier or not.
+	 * */
+	boolean isBarrierUp() {return barrierUp;}
+
+	
+	/**
+	 * Function to set the boolean barrier to true.
+	 * */
+	void setBarrierUp() {this.barrierUp = true;}
 	
 	
-	void setBarrierDown() {
-		this.barrierUp = false;
-	}
+	/**
+	 * Function to set the boolean barrier to false.
+	 * */
+	void setBarrierDown() {this.barrierUp = false;}
 
 }

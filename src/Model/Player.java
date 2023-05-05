@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * The class Player is relative for how color the player represet's 
- * in the ludo game, that class are used in the Round class too
+ * in the Ludo game, that class are used in the Round class too
  * */
 class Player {
 	private int pawnsInBase = 4;
@@ -20,24 +20,28 @@ class Player {
 			pawnsBoardposition.add(p2);
 			pawnsBoardposition.add(p3);
 			pawnsBoardposition.add(p4);
-		
 	}
 	
-	int getStartHouse() {
-		return startHouse;
-	}
 	
-	void incPawnsFinished() {
-		this.pawnsFinished++;
-	}
+	/**
+	 * Function to return the start house of the pawn.
+	 * */
+	int getStartHouse() {return startHouse;}
+	
+	
+	/**
+	 * Function to increment the quantities of pawns finished.
+	 * 
+	 * This gone be useful in the round to see if player win the game.
+	 * */
+	void incPawnsFinished() {this.pawnsFinished++;}
+	
 	
 	/**
 	 * Function to see how many pawns in base that player have
 	 * @return pawnsInBase The number of pawn in base
 	 * */
-	int getHowManyPawnsInBase() {
-		return pawnsInBase;
-	}
+	int getHowManyPawnsInBase() {return pawnsInBase;}
 	
 	
 	/**
@@ -51,16 +55,23 @@ class Player {
 	/**
 	 * Function to decrement one pawn of the base 
 	 * */
-	void decPawnsInBase() {
-		this.pawnsInBase--;
-	}
+	void decPawnsInBase() {this.pawnsInBase--;}
 	
 	
+	/**
+	 * Function to see if the pawn is in final line.
+	 * 
+	 * @param p the pawn you want to know the position
+	 * 
+	 * @return A integer that represent the position in the board.
+	 * */
 	Integer getPawnPosition(Pawn p) {
 		int soma = startHouse + p.getTotalMoves();
+		
 		if( soma > 51) {
 			return soma - 51;
 		}
+		
 		return soma;
 	}
 	
@@ -75,6 +86,7 @@ class Player {
 		for(Pawn p : pawnsBoardposition) {
 			positions.add(getPawnPosition(p));
 		}
+		
 		return positions;
 	}
 	
@@ -84,7 +96,5 @@ class Player {
 	 * @return true if player win the game.
 	 * @return false if player not win the game.
 	 * */
-	boolean isWinner() {
-		return pawnsFinished == 4;
-	}
+	boolean isWinner() {return pawnsFinished == 4;}
 }
