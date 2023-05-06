@@ -1,11 +1,10 @@
 package Model;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 class Round {
-	Queue<Player> queue = new PriorityQueue<Player>();
-	Player currentPlayer;
+	Queue<Player> queue = new LinkedList<Player>();
 	
 	
 	/**
@@ -26,7 +25,7 @@ class Round {
 	 * @return A Player object that represent the actual player, who going to play this turn in the game.
 	 * */
 	Player getNextPlayer() {
-		currentPlayer = queue.remove();
+		Player currentPlayer = queue.remove();
 		queue.add(currentPlayer);
 		
 		return currentPlayer;
