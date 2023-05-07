@@ -16,7 +16,7 @@ public class SingletonBoard {
 	}
 	
 	
-	public SingletonBoard getInstance(int lenght) {
+	public static SingletonBoard getInstance(int lenght) {
 		if(boardInstance == null) {
 			boardInstance = new SingletonBoard(lenght);
 		}
@@ -26,17 +26,17 @@ public class SingletonBoard {
 	/**
 	 * Static definitions in the game
 	 * */
-	private boolean isInitialHousePositions(int position) {
+	boolean isInitialHousePositions(int position) {
 		return position == 2 || position == 15 || position == 28 || position == 41;
 	}
 	
 	
-	private boolean isSafeHousePosition(int position) {
+	boolean isSafeHousePosition(int position) {
 		return position == 10 || position == 23 || position == 36 || position == 49;
 	}
 	
 	
-	private boolean isFinalHouse(int position) {
+	boolean isFinalHouse(int position) {
 		return position == 0 || position == 13 || position == 26 || position == 39;
 	}
 	

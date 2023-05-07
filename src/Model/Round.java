@@ -1,10 +1,10 @@
 package Model;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 class Round {
-	Queue<Player> queue = new PriorityQueue<Player>();
+	Queue<Player> queue = new LinkedList<Player>();
 	Player currentPlayer;
 	
 	
