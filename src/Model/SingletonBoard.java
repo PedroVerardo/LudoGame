@@ -26,13 +26,13 @@ public class SingletonBoard {
 	/**
 	 * Static definitions in the game
 	 * */
-	boolean isInitialHousePositions(int position) {
+	public boolean isInitialHousePositions(int position) {
 		return position == 2 || position == 15 || position == 28 || position == 41;
 	}
 	
 	
-	boolean isSafeHousePosition(int position) {
-		return position == 10 || position == 23 || position == 36 || position == 49;
+	public boolean isSafeHousePosition(int position) {
+		return position == 11 || position == 24 || position == 37 || position == 50;
 	}
 	
 	
@@ -76,7 +76,7 @@ public class SingletonBoard {
 	 * 
 	 * @return A House object 
 	 * */
-	House getHousePosition(int pos) {return board.get(pos);}
+	public House getHousePosition(int pos) {return board.get(pos);}
 	
 	
 	/**
