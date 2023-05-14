@@ -7,7 +7,7 @@ import java.util.List;
  * The class Player is relative for how color the player represet's 
  * in the Ludo game, that class are used in the Round class too
  * */
-class Player {
+public class Player {
 	private int pawnsInBase = 4;
 	private int pawnsFinished = 0;
 	private int startHouse;
@@ -26,7 +26,7 @@ class Player {
 	/**
 	 * Function to return the start house of the pawn.
 	 * */
-	int getStartHouse() {return startHouse;}
+	public int getStartHouse() {return startHouse;}
 	
 	
 	/**
@@ -41,7 +41,7 @@ class Player {
 	 * Function to see how many pawns in base that player have
 	 * @return pawnsInBase The number of pawn in base
 	 * */
-	int getHowManyPawnsInBase() {return pawnsInBase;}
+	public int getHowManyPawnsInBase() {return pawnsInBase;}
 	
 	
 	/**
@@ -80,7 +80,7 @@ class Player {
 	 * Function to see all pawns position of the player object
 	 * @return pawnsBoardposition a list with all pawns position
 	 * */
-	List<Integer> getAllPawnsBoardposition() {
+	public List<Integer> getAllPawnsBoardposition() {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		
 		for(Pawn p : pawnsBoardposition) {

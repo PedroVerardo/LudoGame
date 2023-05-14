@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.List;
 import java.awt.event.*;
 import Model.*;
 
@@ -12,20 +13,24 @@ public class PNLudo extends JPanel implements MouseListener {
 	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
 	int iClick,jClick;
 	ViewHouse tab[]=new ViewHouse[52];
+	ViewHouse start[][] = new ViewHouse[4][4];
 	ViewHouse finalLines[][] =new ViewHouse[4][5];
 	ViewHouse finalTrinagle[] = new ViewHouse[4];
-	Rectangle2D.Double finalHouses[][] = new Rectangle2D.Double[4][5];
 	Rectangle2D.Double houses[] = new Rectangle2D.Double[52];
 	Rectangle2D.Double base[] = new Rectangle2D.Double[4];
+	Rectangle2D.Double finalHouses[][] = new Rectangle2D.Double[4][5];
 	Shape finalHouse[] = new Shape[4];
 	Ellipse2D.Double baseHouses[][] = new Ellipse2D.Double[4][4];
+	Ellipse2D.Double pawns[][] = new Ellipse2D.Double[4][4];
 	SingletonBoard board;
+	Player players[];
+	List<Integer> pawnsPosition;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
+	Integer bases[] = {2,15,28,41};
 	
-	public PNLudo(SingletonBoard c) {
+	
+	private void createHouse(){
 		double x=xIni,y=yIni,xFinal,yFinal;
-		board = c;
-
 		tab[0] = new ViewHouse(x,y);
 		xFinal = x;
 		yFinal = y;
@@ -105,58 +110,51 @@ public class PNLudo extends JPanel implements MouseListener {
 			y=y-40;
 			tab[i+46] = new ViewHouse(x,y);
 		}
-	
-		addMouseListener(this);
 		
+		start[0][0] = new ViewHouse(401.00,41.00);
+		start[0][1] = new ViewHouse(401.00,161.00);
+		start[0][2] = new ViewHouse(521.00,161.00);
+		start[0][3] = new ViewHouse(521.00,41.00);
+		
+		start[1][0] = new ViewHouse(401.00,401.00);
+		start[1][1] = new ViewHouse(401.00,521.00);
+		start[1][2] = new ViewHouse(521.00,521.00);
+		start[1][3] = new ViewHouse(521.00,401.00);
+		
+		start[2][0] = new ViewHouse(41.00,401.00);
+		start[2][1] = new ViewHouse(41.00,521.00);
+		start[2][2] = new ViewHouse(161.00,521.00);
+		start[2][3] = new ViewHouse(161.00,401.00);
+		
+		start[3][0] = new ViewHouse(41.00,41.00);
+		start[3][1] = new ViewHouse(41.00,161.00);
+		start[3][2] = new ViewHouse(161.00,161.00);
+		start[3][3] = new ViewHouse(161.00,41.00);
+	}
+	
+	private void setUpHouses() {
 		for(int i = 0; i<52;i++)
 			houses[i] = new Rectangle2D.Double(tab[i].x+6,tab[i].y+6,40.00,40.00);
 		for(int i = 0; i<4;i++) {
 			for(int j = 0; j < 5; j++)
 				finalHouses[i][j] = new Rectangle2D.Double(finalLines[i][j].x+6,finalLines[i][j].y+6,40.00,40.00);
 		}
+		
+		
 		base[0] = new Rectangle2D.Double(6.00,6.00,239.00,239.00);
 		base[1] = new Rectangle2D.Double(366.00,6.00,239.00,239.00);
 		base[2] = new Rectangle2D.Double(366.00,367.00,239.00,239.00);
 		base[3] = new Rectangle2D.Double(6.00,367.00,239.00,239.00);
 		
-		baseHouses[0][0] = new Ellipse2D.Double(41.00,41.00,50,50);
-		baseHouses[0][1] = new Ellipse2D.Double(41.00,161.00,50,50);
-		baseHouses[0][2] = new Ellipse2D.Double(161.00,161.00,50,50);
-		baseHouses[0][3] = new Ellipse2D.Double(161.00,41.00,50,50);
-		
-		baseHouses[1][0] = new Ellipse2D.Double(401.00,41.00,50,50);
-		baseHouses[1][1] = new Ellipse2D.Double(401.00,161.00,50,50);
-		baseHouses[1][2] = new Ellipse2D.Double(521.00,161.00,50,50);
-		baseHouses[1][3] = new Ellipse2D.Double(521.00,41.00,50,50);
-		
-		baseHouses[2][0] = new Ellipse2D.Double(41.00,401.00,50,50);
-		baseHouses[2][1] = new Ellipse2D.Double(41.00,521.00,50,50);
-		baseHouses[2][2] = new Ellipse2D.Double(161.00,521.00,50,50);
-		baseHouses[2][3] = new Ellipse2D.Double(161.00,401.00,50,50);
-		
-		baseHouses[3][0] = new Ellipse2D.Double(401.00,401.00,50,50);
-		baseHouses[3][1] = new Ellipse2D.Double(401.00,521.00,50,50);
-		baseHouses[3][2] = new Ellipse2D.Double(521.00,521.00,50,50);
-		baseHouses[3][3] = new Ellipse2D.Double(521.00,401.00,50,50);
-		
-//		JButton pb=new JButton("Teste");
-//		pb.setBounds(0,0,90,25);
-//		add(pb);
-//		setLayout(null);
-//		setBounds(0,0,410,450);
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				baseHouses[i][j] = new Ellipse2D.Double(start[i][j].x,start[i][j].y,50,50);
+			}
+		}
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d=(Graphics2D) g;
+	private void drawBoard(Graphics2D g2d) {
 		int colorCount = 0;
-		//for(int i = 0; i<4;i++) 
-		
-		g2d.setStroke(new BasicStroke((float) espLinha,
-                BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_MITER,
-                10.0f));
-		
 		g2d.setPaint(Color.black);
 		for(int i = 0; i<52;i++) {
 			if(board.isSafeHousePosition(i))
@@ -195,14 +193,64 @@ public class PNLudo extends JPanel implements MouseListener {
 		g2d.draw(base[1]);
 		g2d.draw(base[2]);
 		g2d.draw(base[3]);
+	}
+	
+	private void drawCurrentState(Graphics2D g2d) {
 		for(int i = 0; i < 4; i ++) {
+			pawnsPosition = players[i].getAllPawnsBoardposition();
 			for(int j =0; j < 4; j++) {
 				g2d.setPaint(Color.white);
 				g2d.fill(baseHouses[i][j]);
 				g2d.setPaint(Color.black);
 				g2d.draw(baseHouses[i][j]);
+				if(board.isInitialHousePositions(pawnsPosition.get(j))) {
+					pawns[i][j] = new Ellipse2D.Double(start[i][j].x+10,start[i][j].y+10,30,30);
+					g2d.draw(pawns[i][j]);
+					g2d.setPaint(colors[i]);
+					g2d.fill(pawns[i][j]);
+					g2d.setPaint(Color.black);
+				} else {
+					pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+10,tab[pawnsPosition.get(j)].y+10,30,30);
+					g2d.draw(pawns[i][j]);
+					g2d.setPaint(colors[i]);
+					g2d.fill(pawns[i][j]);
+					g2d.setPaint(Color.black);
+				}
+				
 			}
 		}
+	}
+	
+	public PNLudo(SingletonBoard c, Player[] p) {
+		double x=xIni,y=yIni,xFinal,yFinal;
+		board = c;
+		players = p;
+		
+		createHouse();
+		
+		addMouseListener(this);
+		
+		setUpHouses();
+		
+//		JButton pb=new JButton("Teste");
+//		pb.setBounds(0,0,90,25);
+//		add(pb);
+//		setLayout(null);
+//		setBounds(0,0,410,450);
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d=(Graphics2D) g;
+		//for(int i = 0; i<4;i++) 
+		
+		g2d.setStroke(new BasicStroke((float) espLinha,
+                BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_MITER,
+                10.0f));
+		
+		drawBoard(g2d);
+		drawCurrentState(g2d);
 	}
 	
 
