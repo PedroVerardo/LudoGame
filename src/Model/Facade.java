@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +41,16 @@ public class Facade {
 		if (facadeInstance == null){facadeInstance = new Facade();}
 		
 		return facadeInstance;
+	}
+	
+	public List<Player> getAllPlayers(){
+		List<Player> plist = new ArrayList<Player>(4);
+		plist.add(pl4);
+		plist.add(pl2);
+		plist.add(pl3);
+		plist.add(pl1);
+		
+		return plist;
 	}
 	
 	//Player of the round
