@@ -12,16 +12,15 @@ import Model.*;
 public class PNLudo extends JPanel implements MouseListener {
 	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
 	int iClick,jClick;
-	ViewHouse tab[]=new ViewHouse[52];
+	ViewHouse tab[]=new ViewHouse[72];
 	ViewHouse start[][] = new ViewHouse[4][4];
-	ViewHouse finalLines[][] =new ViewHouse[4][5];
 	ViewHouse finalTrinagle[] = new ViewHouse[4];
-	Rectangle2D.Double houses[] = new Rectangle2D.Double[52];
+	Rectangle2D.Double houses[] = new Rectangle2D.Double[72];
 	Rectangle2D.Double base[] = new Rectangle2D.Double[4];
-	Rectangle2D.Double finalHouses[][] = new Rectangle2D.Double[4][5];
 	Shape finalHouse[] = new Shape[4];
 	Ellipse2D.Double baseHouses[][] = new Ellipse2D.Double[4][4];
 	Ellipse2D.Double pawns[][] = new Ellipse2D.Double[4][4];
+	Ellipse2D.Double pawnst[][] = new Ellipse2D.Double[4][4];
 	SingletonBoard board;
 	Player players[];
 	List<Integer> pawnsPosition;
@@ -34,10 +33,10 @@ public class PNLudo extends JPanel implements MouseListener {
 		tab[0] = new ViewHouse(x,y);
 		xFinal = x;
 		yFinal = y;
-		for(int i = 0; i < 6; i++) {
+		for(int i = 52; i < 58; i++) {
 			yFinal=yFinal+40;
-			if( i < 5 )
-				finalLines[0][i] = new ViewHouse(xFinal,yFinal);
+			if( i < 57 )
+				tab[i] = new ViewHouse(xFinal,yFinal);
 			else
 				finalTrinagle[0] = new ViewHouse(xFinal,yFinal);
 		}
@@ -54,10 +53,10 @@ public class PNLudo extends JPanel implements MouseListener {
 		tab[13] = new ViewHouse(x,y);
 		xFinal = x;
 		yFinal = y;
-		for(int i = 0; i < 6; i++) {
+		for(int i = 57; i < 63; i++) {
 			xFinal=xFinal-40;
-			if( i < 5 )
-				finalLines[1][i] = new ViewHouse(xFinal,yFinal);
+			if( i < 62 )
+				tab[i] = new ViewHouse(xFinal,yFinal);
 			else
 				finalTrinagle[1] = new ViewHouse(xFinal,yFinal);
 		}
@@ -74,10 +73,10 @@ public class PNLudo extends JPanel implements MouseListener {
 		tab[26] = new ViewHouse(x,y);
 		xFinal = x;
 		yFinal = y;
-		for(int i = 0; i < 6; i++) {
+		for(int i = 62; i < 68; i++) {
 			yFinal=yFinal-40;
-			if( i < 5 )
-				finalLines[2][i] = new ViewHouse(xFinal,yFinal);
+			if( i < 67 )
+				tab[i] = new ViewHouse(xFinal,yFinal);
 			else
 				finalTrinagle[2] = new ViewHouse(xFinal,yFinal);
 		}
@@ -94,10 +93,10 @@ public class PNLudo extends JPanel implements MouseListener {
 		tab[39] = new ViewHouse(x,y);
 		xFinal = x;
 		yFinal = y;
-		for(int i = 0; i < 6; i++) {
+		for(int i = 67; i < 73; i++) {
 			xFinal=xFinal+40;
-			if( i < 5 )
-				finalLines[3][i] = new ViewHouse(xFinal,yFinal);
+			if( i < 72 )
+				tab[i] = new ViewHouse(xFinal,yFinal);
 			else
 				finalTrinagle[3] = new ViewHouse(xFinal,yFinal);
 		}
@@ -133,12 +132,8 @@ public class PNLudo extends JPanel implements MouseListener {
 	}
 	
 	private void setUpHouses() {
-		for(int i = 0; i<52;i++)
+		for(int i = 0; i<72;i++)
 			houses[i] = new Rectangle2D.Double(tab[i].x+6,tab[i].y+6,40.00,40.00);
-		for(int i = 0; i<4;i++) {
-			for(int j = 0; j < 5; j++)
-				finalHouses[i][j] = new Rectangle2D.Double(finalLines[i][j].x+6,finalLines[i][j].y+6,40.00,40.00);
-		}
 		
 		
 		base[0] = new Rectangle2D.Double(6.00,6.00,239.00,239.00);
@@ -161,19 +156,20 @@ public class PNLudo extends JPanel implements MouseListener {
 				g2d.fill(houses[i]);
 			if(board.isInitialHousePositions(i)) {
 				g2d.setPaint(colors[colorCount]);
-				for(int j = 0; j < 5; j++) {
-					g2d.fill(finalHouses[colorCount][j]);
-					//g2d.fill(finalHouse[colorCount]);
-					g2d.setPaint(Color.black);
-					g2d.draw(finalHouses[colorCount][j]);
-					//g2d.draw(finalHouse[colorCount]);
-					g2d.setPaint(colors[colorCount]);
-				}
 				g2d.fill(houses[i]);
 				g2d.setPaint(Color.black);
 				colorCount++;
 			}
 			g2d.draw(houses[i]);	
+		}
+		colorCount = 0;
+		for(int i = 52; i<72;i++) {
+			g2d.setPaint(colors[colorCount]);
+			g2d.fill(houses[i]);
+			g2d.setPaint(Color.black);
+			g2d.draw(houses[i]);
+			if(i == 56 || i == 61 || i == 66)
+				colorCount++;
 		}
 		finalHouse[0] = Triangle.drawTriangleGreen(g2d, finalTrinagle[0].x+6.00, finalTrinagle[0].y+6.00);
 		finalHouse[1] = Triangle.drawTriangleYellow(g2d, finalTrinagle[1].x+6.00, finalTrinagle[1].y+6.00);
@@ -196,6 +192,9 @@ public class PNLudo extends JPanel implements MouseListener {
 	}
 	
 	private void drawCurrentState(Graphics2D g2d) {
+		int[] p = new int[72];
+		for(int i = 0; i<72;i++)
+			p[i] = 0;
 		for(int i = 0; i < 4; i ++) {
 			pawnsPosition = players[i].getAllPawnsBoardposition();
 			for(int j =0; j < 4; j++) {
@@ -203,14 +202,19 @@ public class PNLudo extends JPanel implements MouseListener {
 				g2d.fill(baseHouses[i][j]);
 				g2d.setPaint(Color.black);
 				g2d.draw(baseHouses[i][j]);
-				if(board.isInitialHousePositions(pawnsPosition.get(j))) {
+				if(pawnsPosition.get(j) == bases[i]) {
 					pawns[i][j] = new Ellipse2D.Double(start[i][j].x+10,start[i][j].y+10,30,30);
 					g2d.draw(pawns[i][j]);
 					g2d.setPaint(colors[i]);
 					g2d.fill(pawns[i][j]);
 					g2d.setPaint(Color.black);
 				} else {
-					pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+10,tab[pawnsPosition.get(j)].y+10,30,30);
+					if(p[pawnsPosition.get(j)] == 0) {
+						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+10,tab[pawnsPosition.get(j)].y+10,30,30);
+						p[pawnsPosition.get(j)]++;
+					} else {
+						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+15,tab[pawnsPosition.get(j)].y+15,20,20);
+					}
 					g2d.draw(pawns[i][j]);
 					g2d.setPaint(colors[i]);
 					g2d.fill(pawns[i][j]);
@@ -222,7 +226,6 @@ public class PNLudo extends JPanel implements MouseListener {
 	}
 	
 	public PNLudo(SingletonBoard c, Player[] p) {
-		double x=xIni,y=yIni,xFinal,yFinal;
 		board = c;
 		players = p;
 		

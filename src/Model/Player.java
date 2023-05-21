@@ -69,7 +69,7 @@ public class Player {
 		int soma = startHouse + p.getTotalMoves();
 		
 		if( soma > 51) {
-			return soma - 51;
+			return soma - 52;
 		}
 		
 		return soma;
