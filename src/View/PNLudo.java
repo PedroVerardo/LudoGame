@@ -137,8 +137,8 @@ public class PNLudo extends JPanel implements MouseListener {
 		
 		
 		base[0] = new Rectangle2D.Double(6.00,6.00,239.00,239.00);
-		base[1] = new Rectangle2D.Double(366.00,6.00,239.00,239.00);
-		base[2] = new Rectangle2D.Double(366.00,367.00,239.00,239.00);
+		base[1] = new Rectangle2D.Double(367.00,6.00,239.00,239.00);
+		base[2] = new Rectangle2D.Double(367.00,367.00,239.00,239.00);
 		base[3] = new Rectangle2D.Double(6.00,367.00,239.00,239.00);
 		
 		for(int i = 0; i < 4; i++) {
@@ -258,7 +258,71 @@ public class PNLudo extends JPanel implements MouseListener {
 	
 
 	public void mousePressed(MouseEvent e) {
-
+		int x=e.getX()/40,y=e.getY()/40;
+		int pos = -5;
+		if (x == 6) {
+			if(y >= 0 && y < 6)
+				pos = 51 - y;
+			if (y >= 6 && y<=8)
+				pos = 72;
+			if(y > 8 && y <= 14)
+				pos = 32 - (y- 9); 
+		}
+		if (x == 7) {
+			if(y == 0)
+				pos = 0;
+			if(y > 0 && y < 6)
+				pos = y + 51;
+			if (y >= 6 && y<=8)
+				pos = 72;
+			if(y > 8 && y < 14)
+				pos = 66 - (y- 9); 
+			if(y==14)
+				pos = 26;
+		}
+		if (x == 8) {
+			if(y >= 0 && y < 6)
+				pos = y + 1;
+			if (y >= 6 && y<=8)
+				pos = 72;
+			if(y > 8 && y <= 14)
+				pos = 20 + (y- 9); 
+		}
+		if (x > 8 && x < 15) {
+			if(y >= 0 && y < 6) {
+				pos = -1;
+			}	
+			if (y == 6)
+				pos = x - 2; 
+			if (y == 7) {
+				if (x < 14)
+					pos = 61 - (x - 9);
+				else
+					pos = 13;
+			}
+			if (y == 8)
+				pos = 19 - (x - 9);
+			if (y > 8) {
+				pos = -2;
+			}
+		}	
+		if (x >= 0 && x < 6) {
+			if(y >= 0 && y < 6)
+				pos = -4;
+			if (y == 6)
+				pos = 40 + x; 
+			if (y == 7) {
+				if (x > 0)
+					pos = 66 + x;
+				else
+					pos = 39;
+			}
+			if (y == 8)
+				pos = 38 - x;
+			if (y > 8) 
+				pos = -3;
+		}
+		System.out.println("x =" + x + " y =" + y + " Position =" + pos);	
 	}
 	
 	public void mouseEntered(MouseEvent e) {}
