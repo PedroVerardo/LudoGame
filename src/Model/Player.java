@@ -7,27 +7,36 @@ import java.util.List;
  * The class Player is relative for how color the player represet's 
  * in the Ludo game, that class are used in the Round class too
  * */
-public class Player {
+class Player {
 	private int pawnsInBase = 4;
 	private int pawnsFinished = 0;
 	private int startHouse;
+	private PlayerColor color;
 	private List<Pawn> pawnsBoardposition = new ArrayList<Pawn>(4);
 	
-	Player(int startHouse, Pawn p1, Pawn p2, Pawn p3, Pawn p4){
+	Player(int startHouse, Pawn p1, Pawn p2, Pawn p3, Pawn p4, PlayerColor color){
 		this.startHouse = startHouse;
 		
-			pawnsBoardposition.add(p1);
-			pawnsBoardposition.add(p2);
-			pawnsBoardposition.add(p3);
-			pawnsBoardposition.add(p4);
+		this.color = color;
+		
+		pawnsBoardposition.add(p1);
+		pawnsBoardposition.add(p2);
+		pawnsBoardposition.add(p3);
+		pawnsBoardposition.add(p4);
 	}
 	
 	
 	/**
 	 * Function to return the start house of the pawn.
 	 * */
-	public int getStartHouse() {return startHouse;}
+	int getStartHouse() {return startHouse;}
 	
+	/**
+	 * Function to understand who is playing
+	 * 
+	 * @return The enum PlayerColor
+	 */
+	PlayerColor getPlayerColor() {return color;}
 	
 	/**
 	 * Function to increment the quantities of pawns finished.
@@ -41,7 +50,7 @@ public class Player {
 	 * Function to see how many pawns in base that player have
 	 * @return pawnsInBase The number of pawn in base
 	 * */
-	public int getHowManyPawnsInBase() {return pawnsInBase;}
+	int getHowManyPawnsInBase() {return pawnsInBase;}
 	
 	
 	/**
@@ -80,7 +89,7 @@ public class Player {
 	 * Function to see all pawns position of the player object
 	 * @return pawnsBoardposition a list with all pawns position
 	 * */
-	public List<Integer> getAllPawnsBoardposition() {
+	List<Integer> getAllPawnsBoardposition() {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		
 		for(Pawn p : pawnsBoardposition) {
@@ -88,6 +97,20 @@ public class Player {
 		}
 		
 		return positions;
+	}
+	
+	List<Pawn> getPawns(){
+		return pawnsBoardposition;
+	}
+	
+	List<Integer> getPawnsMoveTypes(SingletonBoard board, int diceRoll){
+		ArrayList<Integer> moveTypes = new ArrayList<Integer>();
+		
+		for(Pawn p : pawnsBoardposition) {
+			moveTypes.add(board.possibleMove(p, this, p.getPawnPositionInBoard(this), diceRoll));
+		}
+		
+		return moveTypes;
 	}
 	
 	/**

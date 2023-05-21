@@ -6,12 +6,11 @@ import java.util.Queue;
 class Round {
 	Queue<Player> queue = new LinkedList<Player>();
 	Player currentPlayer;
-	
-	
+
 	/**
 	 * Function to initialize the order of the players.
 	 * */
-	void inicialQueue(Player p1, Player p2, Player p3, Player p4) {
+	Round(Player p1, Player p2, Player p3, Player p4) {
 		queue.add(p1);
 		queue.add(p2);
 		queue.add(p3);

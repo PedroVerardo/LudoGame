@@ -2,10 +2,10 @@ package Model;
 
 import java.util.Random;
 
-public class Dice {
-	static Random gerador = new Random();
+class Dice {
+	private static Random gerador = new Random();
 	
-	public static int getDiceValue() {
+	static int getDiceValue() {
 		return gerador.nextInt(6);
 	}	
 }

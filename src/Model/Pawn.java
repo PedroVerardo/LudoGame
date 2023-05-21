@@ -41,6 +41,19 @@ class Pawn {
 	 * */
 	int getTotalMoves() {return pawn & 0x00ff;}
 	
+	/**
+	 * Function to know the position of the pawn in the board
+	 * 
+	 * @param p The player, who control this pawn
+	 * @return The player start house + the total of pawn moves % 52(total houses)
+	 */
+	int getPawnPositionInBoard(Player p) {
+		if(this.isInFinalLine()) {
+			
+		}
+		return (p.getStartHouse() + this.getTotalMoves())%52;
+	}
+	
 	
 	/**
 	 * Function to return the pawn to the base.
@@ -81,7 +94,7 @@ class Pawn {
 	 * 
 	 * @return The boolean that represent the pawn finalize the path.
 	 * */
-	boolean haveFinished() {return this.getTotalMoves() == 57 ? true : false;}
+	boolean haveFinished() {return this.getTotalMoves() == 58 ? true : false;}
 
 	
 }
