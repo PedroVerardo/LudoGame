@@ -6,6 +6,6 @@ class Dice {
 	private static Random gerador = new Random();
 	
 	static int getDiceValue() {
-		return gerador.nextInt(6);
+		return gerador.nextInt(7);
 	}	
 }

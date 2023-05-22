@@ -11,7 +11,7 @@ package Model;
  *       (finish)(color)(distance)
  * </pre> 
  * */
-class Pawn {
+public class Pawn {
 	private short pawn;
 	boolean inbase = true;
 	

@@ -10,7 +10,8 @@ public class FRLudo extends JFrame {
 	final int LARG_DEFAULT=810;
 	final int ALT_DEFAULT=850;
 	
-	public FRLudo(SingletonBoard c, Player[] p) {
+	public FRLudo(Facade facade) {
+		facade.setBoard();
 		Toolkit tk=Toolkit.getDefaultToolkit();
 		Dimension screenSize=tk.getScreenSize();
 		int sl=screenSize.width;
@@ -27,7 +28,8 @@ public class FRLudo extends JFrame {
 	        constraints1.weightx = 0.85; // Painel1 ocupa 2/3 da largura
 	        constraints1.weighty = 1;
 	        constraints1.fill = GridBagConstraints.BOTH;
-	        getContentPane().add(new PNLudo(c,p), constraints1);
+	        JPanel pnLudo = new PNLudo(facade);
+	        getContentPane().add(pnLudo, constraints1);
 
 	        GridBagConstraints constraints2 = new GridBagConstraints();
 	        constraints2.gridx = 1;
@@ -35,7 +37,7 @@ public class FRLudo extends JFrame {
 	        constraints2.weightx = 0.25; // Painel2 ocupa 1/3 da largura
 	        constraints2.weighty = 1;
 	        constraints2.fill = GridBagConstraints.BOTH;
-	        getContentPane().add(new Menu(), constraints2);
+	        getContentPane().add(new Menu(pnLudo,facade), constraints2);
 		setTitle("Ludo Game");
 //		setLayout(null);
 	}

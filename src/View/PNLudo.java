@@ -12,6 +12,7 @@ import Model.*;
 public class PNLudo extends JPanel implements MouseListener {
 	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
 	int iClick,jClick;
+	Facade facade;
 	ViewHouse tab[]=new ViewHouse[72];
 	ViewHouse start[][] = new ViewHouse[4][4];
 	ViewHouse finalTrinagle[] = new ViewHouse[4];
@@ -21,8 +22,6 @@ public class PNLudo extends JPanel implements MouseListener {
 	Ellipse2D.Double baseHouses[][] = new Ellipse2D.Double[4][4];
 	Ellipse2D.Double pawns[][] = new Ellipse2D.Double[4][4];
 	Ellipse2D.Double pawnst[][] = new Ellipse2D.Double[4][4];
-	SingletonBoard board;
-	Player players[];
 	List<Integer> pawnsPosition;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 	Integer bases[] = {2,15,28,41};
@@ -152,9 +151,9 @@ public class PNLudo extends JPanel implements MouseListener {
 		int colorCount = 0;
 		g2d.setPaint(Color.black);
 		for(int i = 0; i<52;i++) {
-			if(board.isSafeHousePosition(i))
+			if(i == 11 || i == 24 || i == 37 || i == 50)
 				g2d.fill(houses[i]);
-			if(board.isInitialHousePositions(i)) {
+			if(i == 2 || i == 15 || i == 28 || i == 41) {
 				g2d.setPaint(colors[colorCount]);
 				g2d.fill(houses[i]);
 				g2d.setPaint(Color.black);
@@ -196,7 +195,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		for(int i = 0; i<72;i++)
 			p[i] = 0;
 		for(int i = 0; i < 4; i ++) {
-			pawnsPosition = players[i].getAllPawnsBoardposition();
+			pawnsPosition = facade.getPawnsPositionOfPlayer(facade.getAllPlayers().get(i));
 			for(int j =0; j < 4; j++) {
 				g2d.setPaint(Color.white);
 				g2d.fill(baseHouses[i][j]);
@@ -225,10 +224,8 @@ public class PNLudo extends JPanel implements MouseListener {
 		}
 	}
 	
-	public PNLudo(SingletonBoard c, Player[] p) {
-		board = c;
-		players = p;
-		
+	public PNLudo(Facade f) {
+		facade = f;
 		createHouse();
 		
 		addMouseListener(this);

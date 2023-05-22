@@ -32,7 +32,7 @@ public class Facade {
 	
 	private SingletonBoard game = SingletonBoard.getInstance(76);
 	private Round round = new Round(pl1, pl2, pl3, pl4);
-	
+
 	/**
 	 * Singleton construction
 	 * @return The instance of the facade class
@@ -42,13 +42,15 @@ public class Facade {
 		
 		return facadeInstance;
 	}
-	
+	public void setBoard() {
+		game.setBoard();
+	}
 	public List<Player> getAllPlayers(){
 		List<Player> plist = new ArrayList<Player>(4);
-		plist.add(pl4);
+		plist.add(pl1);
 		plist.add(pl2);
 		plist.add(pl3);
-		plist.add(pl1);
+		plist.add(pl4);
 		
 		return plist;
 	}

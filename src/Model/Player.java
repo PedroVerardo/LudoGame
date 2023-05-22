@@ -7,7 +7,7 @@ import java.util.List;
  * The class Player is relative for how color the player represet's 
  * in the Ludo game, that class are used in the Round class too
  * */
-class Player {
+public class Player {
 	private int pawnsInBase = 4;
 	private int pawnsFinished = 0;
 	private int startHouse;
