@@ -319,7 +319,7 @@ public class PNLudo extends JPanel implements MouseListener {
 			if (y > 8) 
 				pos = -3;
 		}
-		System.out.println("x =" + x + " y =" + y + " Position =" + pos);	
+		System.out.println("x = " + x + " y = " + y + " Position = " + pos);	
 	}
 	
 	public void mouseEntered(MouseEvent e) {}

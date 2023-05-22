@@ -244,10 +244,10 @@ class SingletonBoard {
 	
 	
 	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
-		int position2 = position1 + diceRoll;
-		House h2 = board.get(position2);
+		//int position2 = position1 + diceRoll;
+		//House h2 = board.get(position2);
 		
-		int moveType = possibleMove(p, player, position1, diceRoll);
+		//int moveType = possibleMove(p, player, position1, diceRoll);
 		p.addMove(diceRoll);
 		//casa final
 //		if(moveType == 2) {

@@ -59,7 +59,7 @@ public class Facade {
 	public Player getPlayerOfRound() {return round.getNextPlayer();}
 	
 	//diceValue
-	public int GetDiceRoll(){return Dice.getDiceValue();}
+	public int GetDiceRoll(){return Dice.getDiceValue()+1;}
 	
 	//House
 	public House getHouseByPosition(int pos){return game.getHousePosition(pos);}

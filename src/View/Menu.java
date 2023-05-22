@@ -72,6 +72,7 @@ public class Menu extends JPanel {
 	        public void actionPerformed(ActionEvent e) {
 	            int a = facade.GetDiceRoll();
 	            String image = "src/Images/Dado" + a + ".png";
+	            System.out.println(a);	
 	            ImageIcon imageIcon = new ImageIcon(image);
 	            imageLabel.setIcon(imageIcon);
 	            imageLabel.setBounds(35, 390, imageIcon.getIconWidth(), imageIcon.getIconHeight());
