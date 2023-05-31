@@ -32,6 +32,8 @@ public class Facade {
 	
 	private SingletonBoard game = SingletonBoard.getInstance(76);
 	private Round round = new Round(pl1, pl2, pl3, pl4);
+	
+	Player acctualPlayer;
 
 	/**
 	 * Singleton construction
@@ -42,9 +44,11 @@ public class Facade {
 		
 		return facadeInstance;
 	}
+	
 	public void setBoard() {
 		game.setBoard();
 	}
+	
 	public List<Player> getAllPlayers(){
 		List<Player> plist = new ArrayList<Player>(4);
 		plist.add(pl1);
@@ -56,41 +60,42 @@ public class Facade {
 	}
 	
 	//Player of the round
-	public Player getPlayerOfRound() {return round.getNextPlayer();}
+	public void getPlayerOfRound() {acctualPlayer = round.getNextPlayer();}
 	
 	//diceValue
 	public int GetDiceRoll(){return Dice.getDiceValue()+1;}
 	
-	//House
-	public House getHouseByPosition(int pos){return game.getHousePosition(pos);}
-	
 	//Pawns in the House
-	public LinkedList<Pawn> getPawnsInHouse(House h){return h.getPawnsInHouse();}
-	
-	//Pawns of one Player
-	public List<Pawn> getPawnsOfPlayer(Player p) {return p.getPawns();}
+	public int getPawnsInHouse(int pos){return game.getHousePosition(pos).getPawnsInHouse().size();}
 	
 	//Pawns positions of one player
-	public List<Integer> getPawnsPositionOfPlayer(Player p){return p.getAllPawnsBoardposition();}
+	public List<Integer> getPawnsPositionOfPlayer(){return acctualPlayer.getAllPawnsBoardposition();}
 	
 	//Pawns moveTypes of one Player
-	public List<Integer> getPawnsMoveTypesOfPlayer(Player p, int diceRoll){return p.getPawnsMoveTypes(game, diceRoll);}
+	public List<Integer> getPawnsMoveTypesOfPlayer(int diceRoll){return acctualPlayer.getPawnsMoveTypes(game, diceRoll);}
 	
 	//If this house is safe
-	public boolean isSafeHouse(House h) {return h.isSafe();}
+	public boolean isSafeHouse(int pos) {return game.getHousePosition(pos).isSafe();}
 	
 	//If this house is final
-	public boolean isFinalHouse(House h) {return h.isFinalHouse();}
+	public boolean isFinalHouse(int pos) {return game.getHousePosition(pos).isFinalHouse();}
 	
 	//If is this house is Initial
-	public boolean isInitialHouse(House h) {return h.isInitialHouse();}
+	public boolean isInitialHouse(int pos) {return game.getHousePosition(pos).isInitialHouse();}
 	
 	//Pawn color
-	public int pawnColor(Pawn p) {return p.getColor();}
+	public int pawnColor(int local) {
+		List<Pawn> lis = acctualPlayer.getPawns();
+		
+		return lis.get(local).getColor();
+	}
 	
 	//move in the game
-	public void makeMove(Pawn p, Player pl, int pos1, int diceRoll){
-		game.makeMove(p, pl, pos1, diceRoll);
+	public void makeMove(int local,int pos1, int diceRoll){
+		List<Pawn> lis = acctualPlayer.getPawns();
+		Pawn p = lis.get(local);
+		
+		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
 	}
 	
 }

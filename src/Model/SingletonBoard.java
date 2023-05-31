@@ -244,42 +244,52 @@ class SingletonBoard {
 	
 	
 	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
-		//int position2 = position1 + diceRoll;
-		//House h2 = board.get(position2);
+		int position2 = position1 + diceRoll;
+		House h2 = board.get(position2);
 		
-		//int moveType = possibleMove(p, player, position1, diceRoll);
-		p.addMove(diceRoll);
+		int moveType = possibleMove(p, player, position1, diceRoll);
+		
 		//casa final
-//		if(moveType == 2) {
-//			position2 = 51 + 6*(p.getColor() - 0x0100) + (p.getTotalMoves() - 52);
-//			
-//			moveTo(p, position1, position2);
-//			if(p.haveFinished()) {
-//				player.incPawnsFinished();
-//			}
-//		}
-//		
-//		//move para casa inicial
-//		else if(moveType == 3) {
-//			moveTo(p, position1, player.getStartHouse());
-//		}
-//		
-//		//come peao
-//		else if(moveType == 4) {
-//			eatPawn(p, position1, position2);
-//		}
-//		
-//		//barreira
-//		else if(moveType == 5) {
-//			moveTo(p, position1, position2);
-//			
-//			h2.setBarrierUp();
-//		}
-//		
-//		//apenas move
-//		else if(moveType == 1) {
-//			moveTo(p, position1, position2);
-//		}
+		if(moveType == 2) {
+			position2 = 51 + 6*(p.getColor() - 0x0100) + (p.getTotalMoves() - 52);
+			
+			moveTo(p, position1, position2);
+			p.addMove(diceRoll);
+			if(p.haveFinished()) {
+				player.incPawnsFinished();
+			}
+		}
+		
+		//move para casa inicial
+		else if(moveType == 3) {
+			p.addMove(diceRoll);
+			moveTo(p, position1, player.getStartHouse());
+		}
+		
+		//come peao
+		else if(moveType == 4) {
+			p.addMove(diceRoll);
+			eatPawn(p, position1, position2);
+		}
+		
+		//barreira
+		else if(moveType == 5) {
+			p.addMove(diceRoll);
+			moveTo(p, position1, position2);
+			
+			h2.setBarrierUp();
+		}
+		
+		//apenas move
+		else if(moveType == 1) {
+			p.addMove(diceRoll);
+			moveTo(p, position1, position2);
+		}
+		
+		//nao pode mover nao faz nada
+		else if(moveType == 0) {
+			return;
+		}
 	}
 }
 

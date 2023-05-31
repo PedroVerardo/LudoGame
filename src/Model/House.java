@@ -3,7 +3,7 @@ package Model;
 import java.util.LinkedList;
 
 
-public class House {
+class House {
 	private LinkedList<Pawn> pawnsInHouse = new LinkedList<Pawn>();
 	private boolean initialHouse;
 	private boolean barrierUp;
