@@ -256,7 +256,7 @@ class SingletonBoard {
 		
 		//casa final
 		if(moveType == 2) {
-			position2 = 51 + 6*(p.getColor() - 0x0100) + (p.getTotalMoves() - 52);
+			position2 = 51 + 6*((p.getColor() - 0x0100) >> 8) + (p.getTotalMoves() - 52);
 			
 			moveTo(p, position1, position2);
 			p.addMove(diceRoll);
