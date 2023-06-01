@@ -200,7 +200,7 @@ class SingletonBoard {
 	void moveTo(Pawn p, int position1, int diceRoll) {
 		int position2 = position1 + diceRoll;
 		if(position2 > 51)
-			position2 = position2 - 52;
+			position2 = position2 - 51;
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
 		
@@ -223,6 +223,8 @@ class SingletonBoard {
 	 * */
 	void eatPawn(Pawn p, int position1, int diceRoll) {
 		int position2 = position1 + diceRoll;
+		if(position2 > 51)
+			position2 = position2 - 51;
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
 		
@@ -245,6 +247,9 @@ class SingletonBoard {
 	
 	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
 		int position2 = position1 + diceRoll;
+		if(position2 > 51)
+			position2 = position2 - 51;
+		
 		House h2 = board.get(position2);
 		
 		int moveType = possibleMove(p, player, position1, diceRoll);
