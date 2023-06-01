@@ -34,7 +34,7 @@ public class Facade {
 	private SingletonBoard game = SingletonBoard.getInstance(76);
 	private Round round = new Round(pl1, pl2, pl3, pl4);
 	
-	private Player acctualPlayer;
+	private Player acctualPlayer = round.getNextPlayer();
 
 	/**
 	 * Singleton construction

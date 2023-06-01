@@ -130,7 +130,7 @@ class SingletonBoard {
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
 		if(pawn.isInFinalLine()) {
-			if(pawn.getTotalMoves() + diceRoll <= 57 &&
+			if(pawn.getTotalMoves() + diceRoll >= 51 &&
 					h2.getPawnsInHouse() == null) {return 1;}
 			
 			else {return 0;}
