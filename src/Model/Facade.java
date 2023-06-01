@@ -64,7 +64,7 @@ public class Facade {
 		List<Integer> l1 = pl4.getAllPawnsBoardposition();
 		List<Integer> l2 = pl2.getAllPawnsBoardposition();
 		List<Integer> l3 = pl3.getAllPawnsBoardposition();
-		List<Integer> l4 = pl4.getAllPawnsBoardposition();
+		List<Integer> l4 = pl1.getAllPawnsBoardposition();
 		
 		ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
 		result.add(l1);
