@@ -198,6 +198,7 @@ class SingletonBoard {
 	 * @param position2 The position the pawn move
 	 **/
 	void moveTo(Pawn p, int position1, int diceRoll) {
+		System.out.println(position1 + ", " + diceRoll);	
 		int position2 = position1 + diceRoll;
 		if(position2 > 51)
 			position2 = position2 - 52;
@@ -251,7 +252,7 @@ class SingletonBoard {
 		
 		//casa final
 		if(moveType == 2) {
-			position2 = 51 + 6*(p.getColor() - 0x0100) + (p.getTotalMoves() - 52);
+			position2 = 51 + 6*((p.getColor() - 0x0100)>>8) + (p.getTotalMoves() - 52);
 			
 			moveTo(p, position1, position2);
 			p.addMove(diceRoll);

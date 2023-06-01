@@ -22,22 +22,24 @@ public class FRLudo extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 getContentPane().setLayout(new GridBagLayout());
 
-	        GridBagConstraints constraints1 = new GridBagConstraints();
-	        constraints1.gridx = 0;
-	        constraints1.gridy = 0;
-	        constraints1.weightx = 0.85; // Painel1 ocupa 2/3 da largura
-	        constraints1.weighty = 1;
-	        constraints1.fill = GridBagConstraints.BOTH;
-	        JPanel pnLudo = new PNLudo(facade);
-	        getContentPane().add(pnLudo, constraints1);
-
 	        GridBagConstraints constraints2 = new GridBagConstraints();
 	        constraints2.gridx = 1;
 	        constraints2.gridy = 0;
 	        constraints2.weightx = 0.25; // Painel2 ocupa 1/3 da largura
 	        constraints2.weighty = 1;
 	        constraints2.fill = GridBagConstraints.BOTH;
-	        getContentPane().add(new Menu(pnLudo,facade), constraints2);
+	        Menu menu = new Menu(facade);
+	        getContentPane().add(menu, constraints2);
+	        
+	        GridBagConstraints constraints1 = new GridBagConstraints();
+	        constraints1.gridx = 0;
+	        constraints1.gridy = 0;
+	        constraints1.weightx = 0.85; // Painel1 ocupa 2/3 da largura
+	        constraints1.weighty = 1;
+	        constraints1.fill = GridBagConstraints.BOTH;
+	        PNLudo pnLudo = new PNLudo(menu, facade);
+	        getContentPane().add(pnLudo, constraints1);
+
 		setTitle("Ludo Game");
 //		setLayout(null);
 	}

@@ -10,9 +10,11 @@ import Model.*;
 
  
 public class PNLudo extends JPanel implements MouseListener {
+	int pos;
 	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
 	int iClick,jClick;
 	Facade facade;
+	Menu menu;
 	ViewHouse tab[]=new ViewHouse[72];
 	ViewHouse start[][] = new ViewHouse[4][4];
 	ViewHouse finalTrinagle[] = new ViewHouse[4];
@@ -26,6 +28,9 @@ public class PNLudo extends JPanel implements MouseListener {
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 	Integer bases[] = {2,15,28,41};
 	
+	public int getPositonClicked() {
+		return pos;
+	}		
 	
 	private void createHouse(){
 		double x=xIni,y=yIni,xFinal,yFinal;
@@ -195,7 +200,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		for(int i = 0; i<72;i++)
 			p[i] = 0;
 		for(int i = 0; i < 4; i ++) {
-			pawnsPosition = facade.getPawnsPositionOfPlayer(facade.getAllPlayers().get(i));
+			pawnsPosition = facade.getAllPawnsPositions().get(i);
 			for(int j =0; j < 4; j++) {
 				g2d.setPaint(Color.white);
 				g2d.fill(baseHouses[i][j]);
@@ -224,8 +229,9 @@ public class PNLudo extends JPanel implements MouseListener {
 		}
 	}
 	
-	public PNLudo(Facade f) {
+	public PNLudo(Menu m, Facade f) {
 		facade = f;
+		menu = m;
 		createHouse();
 		
 		addMouseListener(this);
@@ -256,7 +262,7 @@ public class PNLudo extends JPanel implements MouseListener {
 
 	public void mousePressed(MouseEvent e) {
 		int x=e.getX()/40,y=e.getY()/40;
-		int pos = -5;
+		pos = -5;
 		if (x == 6) {
 			if(y >= 0 && y < 6)
 				pos = 51 - y;
@@ -319,7 +325,30 @@ public class PNLudo extends JPanel implements MouseListener {
 			if (y > 8) 
 				pos = -3;
 		}
-		System.out.println("x = " + x + " y = " + y + " Position = " + pos);	
+		Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
+		int colorCount = 0;
+		int diceroll = menu.getDiceroll();
+		List<Integer> b;
+		List<Integer> pp;
+		facade.getPlayerOfRound();
+        b = facade.getPawnsMoveTypesOfPlayer(diceroll);
+        pp = facade.getPawnsPositionOfPlayer();
+        //System.out.println(b);
+        //System.out.println(pos);
+        for(int i = 0; i < b.size(); i++) {
+        	if(b.get(i)!=0) {
+        		facade.makeMove(i, pos,diceroll);
+        		break;
+        	}
+        }
+        if(colorCount < 3)
+        	colorCount++;
+        else
+        	colorCount = 0;	
+        menu.nextRound();
+		//System.out.println("x = " + x + " y = " + y + " Position = " + pos);	
+		repaint();
+		menu.repaint();
 	}
 	
 	public void mouseEntered(MouseEvent e) {}

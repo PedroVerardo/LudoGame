@@ -19,18 +19,28 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Model.Facade;
-import Model.Pawn;
-import Model.Player;
+//import Model.Pawn;
+//import Model.Player;
 
 public class Menu extends JPanel {
+	private int diceroll;
 	private Ellipse2D playing;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 	int colorCount = 0;
 	List<Integer> b;
 	List<Integer> pp;
-	List<Pawn> p;
-	Player r;
-	public Menu(JPanel pnLudo,Facade facade) {
+	//List<Pawn> p;
+	//Player r;
+	int getDiceroll() {
+		return diceroll;
+	}
+	void nextRound() {
+        if(colorCount < 3)
+        	colorCount++;
+        else
+        	colorCount = 0;	
+	}
+	public Menu(Facade facade) {
 	    setBackground(Color.LIGHT_GRAY);
 	    setLayout(null);
 
@@ -70,29 +80,11 @@ public class Menu extends JPanel {
 	    rollDiceButton.setBounds(10, 340, 150, 40);
 	    rollDiceButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            int a = facade.GetDiceRoll();
-	            String image = "src/Images/Dado" + a + ".png";
-	            System.out.println(a);	
+	            diceroll = facade.GetDiceRoll();
+	            String image = "src/Images/Dado" + diceroll + ".png";	
 	            ImageIcon imageIcon = new ImageIcon(image);
 	            imageLabel.setIcon(imageIcon);
 	            imageLabel.setBounds(35, 390, imageIcon.getIconWidth(), imageIcon.getIconHeight());
-	            r = facade.getPlayerOfRound();
-	            b = facade.getPawnsMoveTypesOfPlayer(r,a);
-	            p = facade.getPawnsOfPlayer(r);
-	            pp = facade.getPawnsPositionOfPlayer(r);
-	            for(int i = 0; i < b.size(); i++) {
-	            	if(b.get(i)!=0) {
-	            		facade.makeMove(p.get(i),r ,pp.get(i), a);
-	            		break;
-	            	}
-	            }
-	            if(colorCount < 3)
-	            	colorCount++;
-	            else
-	            	colorCount = 0;	
-	            
-	            repaint();
-	            pnLudo.repaint();
 	        }
 	    });
 	    
