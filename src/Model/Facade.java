@@ -32,9 +32,15 @@ public class Facade {
 	
 	
 	private SingletonBoard game = SingletonBoard.getInstance(76);
-	private Round round = new Round(pl1, pl2, pl3, pl4);
+	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
-	private Player acctualPlayer = round.getNextPlayer();
+	private Player acctualPlayer;
+	
+	public void printBoard() {
+		for(int i = 0; i < 76;i++) {
+			System.out.println("casa "+ i + "com" + game.getHousePosition(i).getPawnsInHouse());
+		}
+	}
 
 	/**
 	 * Singleton construction
@@ -107,13 +113,14 @@ public class Facade {
 	}
 	
 	
-	
 	//move in the game
 	public void makeMove(int local,int pos1, int diceRoll){
 		List<Pawn> lis = acctualPlayer.getPawns();
 		Pawn p = lis.get(local);
+		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
+		printBoard();
 	}
 	
 	

@@ -100,11 +100,11 @@ class SingletonBoard {
 		LinkedList<Pawn> p2 = h2.getPawnsInHouse();
 		Thread t1;
 		for(int i = 0; i < p2.size(); i++) {
-			if(!p1.equals(p2.get(i))) {
-				return false;
+			if(p1.equals(p2.get(i))) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -125,7 +125,7 @@ class SingletonBoard {
 		
 		
 		House h2 = board.get(position2);
-		House inicial = board.get(player.getPawnPosition(pawn));
+		House inicial = board.get(player.getStartHouse());
 		
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
@@ -142,12 +142,12 @@ class SingletonBoard {
 				
 				else if(haveBarrier(board.get(position1 + i))) {return 0;}
 			}
+			if(pawn.inbase && diceRoll != 5) {return 0;}
 			
-			if(pawn.inbase && diceRoll == 5 && 
-					!comparePawns(pawn ,inicial)) {return 3;}
+			else if(pawn.inbase && diceRoll == 5) {return 3;}
 			
 			//don't have pawns
-			else if(listH2.isEmpty()) {return 1;}
+			else if(listH2.isEmpty() && !pawn.inbase) {return 1;}
 			
 			//is safe and don't have same color pawn
 			else if(h2.isSafe() && listH2.size() < 2 &&
@@ -161,7 +161,7 @@ class SingletonBoard {
 			else if(listH2.size() < 2 && !comparePawns(pawn, h2)) {return 4;}
 			
 			//barrier up
-			else if(listH2.size() < 2 && comparePawns(pawn, h2)) {return 5;}
+			else if(listH2.size() == 1 && comparePawns(pawn, h2)) {return 5;}
 			
 			return 0;
 		}
@@ -197,10 +197,7 @@ class SingletonBoard {
 	 * @param position1 The position initial in the pawn
 	 * @param position2 The position the pawn move
 	 **/
-	void moveTo(Pawn p, int position1, int diceRoll) {
-		int position2 = position1 + diceRoll;
-		if(position2 > 51)
-			position2 = position2 - 51;
+	void moveTo(Pawn p, int position1, int position2) {	
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
 		
@@ -213,6 +210,12 @@ class SingletonBoard {
 		h2.addPawn(p);
 	}
 	
+	void putPawn(Pawn p, Player pl) {
+		House h2 = board.get((pl.getStartHouse()));
+		
+		h2.addPawn(p);
+	}
+	
 	/**
 	 * Function to remove a pawn of a specific location and add in the other
 	 * position.
@@ -221,10 +224,7 @@ class SingletonBoard {
 	 * @param position1 The position initial in the pawn
 	 * @param position2 The position the pawn move
 	 * */
-	void eatPawn(Pawn p, int position1, int diceRoll) {
-		int position2 = position1 + diceRoll;
-		if(position2 > 51)
-			position2 = position2 - 51;
+	void eatPawn(Pawn p, int position1, int position2) {
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
 		
@@ -246,13 +246,16 @@ class SingletonBoard {
 	
 	
 	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
+		
 		int position2 = position1 + diceRoll;
-		if(position2 > 51)
+		if(position2 > 51 && !p.isInFinalLine())
 			position2 = position2 - 51;
 		
 		House h2 = board.get(position2);
 		
 		int moveType = possibleMove(p, player, position1, diceRoll);
+		
+		System.out.println("esta "+ position1 + " rodou " + diceRoll + "move type: " + moveType);
 		
 		//casa final
 		if(moveType == 2) {
@@ -267,19 +270,23 @@ class SingletonBoard {
 		
 		//move para casa inicial
 		else if(moveType == 3) {
-			p.addMove(diceRoll);
-			moveTo(p, position1, player.getStartHouse());
+			p.removeFromBase();
+			exitBase(p, player);
 		}
 		
 		//come peao
 		else if(moveType == 4) {
 			p.addMove(diceRoll);
-			eatPawn(p, position1, position2);
+			Pawn p2 = h2.getPawnsInHouse().pop();
+			p2.putInBase();
+			p2.pawnResetDist();
+			moveTo(p, position1, position2);
 		}
 		
 		//barreira
 		else if(moveType == 5) {
 			p.addMove(diceRoll);
+			
 			moveTo(p, position1, position2);
 			
 			h2.setBarrierUp();

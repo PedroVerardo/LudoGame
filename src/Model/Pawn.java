@@ -32,7 +32,7 @@ class Pawn {
 	 * */
 	void removeFromBase() {inbase = false;}
 	
-	
+	void putInBase() {inbase = true;}
 	/**
 	 * Function to used to get how many steps need to complete the
 	 * turn in the board.
@@ -54,6 +54,9 @@ class Pawn {
 		return (p.getStartHouse() + this.getTotalMoves())%52;
 	}
 	
+	void pawnResetDist() {
+		this.pawn &= 0xff00;
+	}
 	
 	/**
 	 * Function to return the pawn to the base.
@@ -94,7 +97,7 @@ class Pawn {
 	 * 
 	 * @return The boolean that represent the pawn finalize the path.
 	 * */
-	boolean haveFinished() {return this.getTotalMoves() == 58 ? true : false;}
+	boolean haveFinished() {return this.getTotalMoves() == 56 ? true : false;}
 
 	
 }
