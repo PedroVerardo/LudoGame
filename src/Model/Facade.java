@@ -25,10 +25,10 @@ public class Facade {
 	private Pawn p15 = new Pawn(PlayerColor.VERDE);
 	private Pawn p16 = new Pawn(PlayerColor.VERDE);
 	
-	private Player pl4 = new Player(41, p13, p14, p15, p16, PlayerColor.VERDE);
+	private Player pl4 = new Player(2, p13, p14, p15, p16, PlayerColor.VERDE);
 	private Player pl2 = new Player(15, p5, p6, p7, p8, PlayerColor.AMARELO);
 	private Player pl3 = new Player(28, p9, p10, p11, p12, PlayerColor.AZUL);
-	private Player pl1 = new Player(2, p1, p2, p3, p4, PlayerColor.VERMELHO);
+	private Player pl1 = new Player(41, p1, p2, p3, p4, PlayerColor.VERMELHO);
 	
 	
 	private SingletonBoard game = SingletonBoard.getInstance(76);
