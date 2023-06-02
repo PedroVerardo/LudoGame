@@ -84,7 +84,6 @@ class Player {
 		return soma;
 	}
 	
-	
 	/**
 	 * Function to see all pawns position of the player object
 	 * @return pawnsBoardposition a list with all pawns position
@@ -97,6 +96,16 @@ class Player {
 		}
 		
 		return positions;
+	}
+	
+	List<Boolean> getIfPawnsInBase(){
+		ArrayList<Boolean> inBase = new ArrayList<Boolean>();
+		
+		for(Pawn p : pawnsBoardposition) {
+			inBase.add(p.inBase());
+		}
+		
+		return inBase;
 	}
 	
 	List<Pawn> getPawns(){

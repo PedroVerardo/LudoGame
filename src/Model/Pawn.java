@@ -32,6 +32,8 @@ class Pawn {
 	 * */
 	void removeFromBase() {inbase = false;}
 	
+	boolean inBase() { return inbase;}
+	
 	void putInBase() {inbase = true;}
 	/**
 	 * Function to used to get how many steps need to complete the
