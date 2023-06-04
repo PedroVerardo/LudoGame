@@ -1,13 +1,17 @@
 package Model;
 import java.util.ArrayList;
+
 import java.util.LinkedList;
+import java.util.List;
+
+import Controller.IObservableBoard;
+import Controller.IObserver;
 
 
-
-class SingletonBoard {
+class SingletonBoard implements IObservableBoard{
 	private ArrayList<House> board;
 	private int length;
-	
+	private List<IObserver> subscribers = new ArrayList<IObserver>();
 	private static SingletonBoard boardInstance;
 	 
 	private SingletonBoard(int length) {
@@ -302,6 +306,24 @@ class SingletonBoard {
 		else if(moveType == 0) {
 			return;
 		}
+		
+		notifyBoard();
+	}
+
+
+	@Override
+	public void add(IObserver observer) {
+		subscribers.add(observer);
+		
+	}
+
+
+	@Override
+	public void notifyBoard() {
+		for(IObserver ob : subscribers) {
+			ob.updateBoard();
+		}
+		
 	}
 }
 

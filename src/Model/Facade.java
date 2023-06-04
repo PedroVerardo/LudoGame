@@ -81,6 +81,22 @@ public class Facade {
 		return result;
 	}
 	
+	public ArrayList<List<Boolean>> getAllPawnsInBase(){
+		List<Boolean> l1 = pl4.getIfPawnsInBase();
+		List<Boolean> l2 = pl2.getIfPawnsInBase();
+		List<Boolean> l3 = pl3.getIfPawnsInBase();
+		List<Boolean> l4 = pl1.getIfPawnsInBase();
+		
+		ArrayList<List<Boolean>> result = new ArrayList<List<Boolean>>();
+		
+		result.add(l1);
+		result.add(l2);
+		result.add(l3);
+		result.add(l4);
+		
+		return result;
+	}
+	
 	//Player of the round
 	public void getPlayerOfRound() {acctualPlayer = round.getNextPlayer();}
 	

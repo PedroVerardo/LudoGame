@@ -12,20 +12,24 @@ class Save {
 		return writeNewFile;
 	}
 	
-	void writeIntegerList(ArrayList<List<Integer>> listAll) {
-		
+	void writeIntegerList(ArrayList<List<Integer>> listAll, FileWriter file) throws IOException {
+		for(List<Integer> playerPawns : listAll) {
+			for(Integer pos : playerPawns) {
+				file.write(pos);
+			}
+		}
 	}
 	
 	
-	void writePawnsState(String name, Facade f) {
+	void writePawnsState(String name, Facade f, ArrayList<List<Integer>> listAll) {
 		try {
 			FileWriter newF = createF(name);
+			writeIntegerList(listAll, newF);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		ArrayList<List<Integer>> listAll = new ArrayList<List<Integer>>();
 	}
 }
