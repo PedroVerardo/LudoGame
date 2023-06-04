@@ -102,7 +102,10 @@ class SingletonBoard implements IObservableBoard{
 	 * */
 	boolean comparePawns(Pawn p1, House h2) {
 		LinkedList<Pawn> p2 = h2.getPawnsInHouse();
+		System.out.println("oi");
 		Thread t1;
+		
+		if(p2.isEmpty()) {return false;}
 		for(int i = 0; i < p2.size(); i++) {
 			if(p1.equals(p2.get(i))) {
 				return true;
@@ -110,6 +113,7 @@ class SingletonBoard implements IObservableBoard{
 		}
 		return false;
 	}
+	
 	
 	/**
 	 * 1 -> apenas move
@@ -129,7 +133,7 @@ class SingletonBoard implements IObservableBoard{
 		
 		
 		House h2 = board.get(position2);
-		House inicial = board.get(player.getStartHouse());
+		House initial = board.get(player.getStartHouse());
 		
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
@@ -150,7 +154,9 @@ class SingletonBoard implements IObservableBoard{
 			}
 			if(pawn.inbase && diceRoll != 5) {return 0;}
 			
-			else if(pawn.inbase && diceRoll == 5) {return 3;}
+			else if(pawn.inbase && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
+			
+			else if(pawn.inbase && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
 			
 			//don't have pawns
 			else if(listH2.isEmpty() && !pawn.inbase) {return 1;}
@@ -254,8 +260,9 @@ class SingletonBoard implements IObservableBoard{
 	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
 		
 		int position2 = position1 + diceRoll;
-		if(position2 > 51 && !p.isInFinalLine())
-			position2 = position2 - 51;
+		if(position2 > 51 && !p.isInFinalLine()) {position2 = position2 - 51;}
+		
+		
 		
 		House h2 = board.get(position2);
 		
@@ -267,7 +274,7 @@ class SingletonBoard implements IObservableBoard{
 		//casa final
 		if(moveType == 2) {
 			position2 = 51 + 6*((p.getColor() - 0x0100) >> 8) + (p.getTotalMoves() - 52);
-			
+			p.addMove(position2 - p.getPawnPositionInBoard(player));
 			moveTo(p, position1, position2);
 			p.addMove(diceRoll);
 			if(p.haveFinished()) {
