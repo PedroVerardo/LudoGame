@@ -165,9 +165,9 @@ class SingletonBoard implements IObservableBoard{
 			else if(h2.isSafe() && listH2.size() < 2 &&
 					!comparePawns(pawn ,h2)){return 1;}
 			
-			//is initial house and don't have pawns of same color
-			else if(h2.isInitialHouse() && 
-					!comparePawns(pawn, h2)){return 1;}
+			else if(h2.isSafe() && comparePawns(pawn ,h2)){return 0;}
+			
+			else if(h2.isSafe() && listH2.size() == 2){return 0;}
 			
 			//eat one pawn
 			else if(listH2.size() < 2 && !comparePawns(pawn, h2)) {return 4;}
