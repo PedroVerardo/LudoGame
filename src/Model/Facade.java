@@ -134,6 +134,7 @@ public class Facade {
 		List<Pawn> lis = acctualPlayer.getPawns();
 		Pawn p = lis.get(local);
 		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
+		System.out.println(p.getPawnPositionInBoard(acctualPlayer));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
 		printBoard();

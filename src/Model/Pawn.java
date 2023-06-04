@@ -51,9 +51,14 @@ class Pawn {
 	 */
 	int getPawnPositionInBoard(Player p) {
 		if(this.isInFinalLine()) {
-			
+			return 51 + 6*((this.getColor() - 0x0100) >> 8) + (this.getTotalMoves() - 52);
 		}
-		return (p.getStartHouse() + this.getTotalMoves())%52;
+		
+		int totalDist = (p.getStartHouse() + this.getTotalMoves());
+		
+		if(totalDist > 51) {return totalDist - 51;}
+		
+		else {return totalDist;}
 	}
 	
 	void pawnResetDist() {

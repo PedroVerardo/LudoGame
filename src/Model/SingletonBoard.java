@@ -133,6 +133,8 @@ class SingletonBoard implements IObservableBoard{
 		
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
+		if(pawn.haveFinished()) {return 0;}
+		
 		if(pawn.isInFinalLine()) {
 			if(pawn.getTotalMoves() + diceRoll >= 51 &&
 					h2.getPawnsInHouse() == null) {return 1;}
@@ -260,6 +262,7 @@ class SingletonBoard implements IObservableBoard{
 		int moveType = possibleMove(p, player, position1, diceRoll);
 		
 		System.out.println("esta "+ position1 + " rodou " + diceRoll + "move type: " + moveType);
+		System.out.println("Pawns pos: "+ p.getTotalMoves());
 		
 		//casa final
 		if(moveType == 2) {
