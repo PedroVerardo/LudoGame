@@ -56,9 +56,7 @@ class Player {
 	/**
 	 * Function to add a pawn in the base
 	 * */
-	void incPawnsInBase() {
-		this.pawnsInBase++;
-	}
+	void incPawnsInBase() {this.pawnsInBase++;}
 	
 	
 	/**

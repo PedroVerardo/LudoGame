@@ -14,6 +14,7 @@ package Model;
 class Pawn {
 	private short pawn;
 	boolean inbase = true;
+	boolean finished = false;
 	
 	Pawn(PlayerColor pC){
 		pawn = pC.getValue();
@@ -51,7 +52,7 @@ class Pawn {
 	 */
 	int getPawnPositionInBoard(Player p) {
 		if(this.isInFinalLine()) {
-			return 51 + 6*((this.getColor() - 0x0100) >> 8) + (this.getTotalMoves() - 52);
+			return this.getTotalMoves();
 		}
 		
 		int totalDist = (p.getStartHouse() + this.getTotalMoves());
@@ -96,7 +97,7 @@ class Pawn {
 	/**
 	 * Function to see if the pawn is in final line.
 	 * */
-	boolean isInFinalLine() {return (pawn >> 12) == 8;}
+	boolean isInFinalLine() {return (pawn & 0x8000) != 0;}
 	
 	
 	/**
@@ -104,7 +105,9 @@ class Pawn {
 	 * 
 	 * @return The boolean that represent the pawn finalize the path.
 	 * */
-	boolean haveFinished() {return this.getTotalMoves() == 56 ? true : false;}
+	boolean haveFinished() {return finished;}
+	
+	void finishedThePath() {finished = true;}
 
 	
 }

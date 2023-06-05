@@ -102,7 +102,6 @@ class SingletonBoard implements IObservableBoard{
 	 * */
 	boolean comparePawns(Pawn p1, House h2) {
 		LinkedList<Pawn> p2 = h2.getPawnsInHouse();
-		System.out.println("oi");
 		Thread t1;
 		
 		if(p2.isEmpty()) {return false;}
@@ -134,14 +133,19 @@ class SingletonBoard implements IObservableBoard{
 		
 		House h2 = board.get(position2);
 		House initial = board.get(player.getStartHouse());
+		int totalMove = pawn.getTotalMoves() + diceRoll;
+		int finalPos = (52 + 6*((pawn.getColor() - 0x0100) >> 8) +5);
 		
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
 		if(pawn.haveFinished()) {return 0;}
 		
+		if(totalMove == 57 || totalMove == 63 || totalMove == 69 || totalMove == 75 ) {
+			return 6;
+		}
+		
 		if(pawn.isInFinalLine()) {
-			if(pawn.getTotalMoves() + diceRoll >= 51 &&
-					h2.getPawnsInHouse() == null) {return 1;}
+			if(totalMove < finalPos ) {return 1;}
 			
 			else {return 0;}
 		}
@@ -273,10 +277,15 @@ class SingletonBoard implements IObservableBoard{
 		
 		//casa final
 		if(moveType == 2) {
-			position2 = 51 + 6*((p.getColor() - 0x0100) >> 8) + (p.getTotalMoves() - 52);
-			p.addMove(position2 - p.getPawnPositionInBoard(player));
+			
+			position2 = 52 + 6*((p.getColor() - 0x0100) >> 8)  + 
+					p.getPawnPositionInBoard(player) + diceRoll - 
+					player.getStartHouse();
+			p.setFinalLine();
+			System.out.println("position2 "+ p.getPawnPositionInBoard(player));
+			p.addMove(position2 - 50);
+			System.out.println("position2 "+  (52 + 6*((p.getColor() - 0x0100) >> 8) +5));
 			moveTo(p, position1, position2);
-			p.addMove(diceRoll);
 			if(p.haveFinished()) {
 				player.incPawnsFinished();
 			}
@@ -309,7 +318,18 @@ class SingletonBoard implements IObservableBoard{
 		//apenas move
 		else if(moveType == 1) {
 			p.addMove(diceRoll);
+			moveTo(p, position1, position2);	
+		}
+		
+		else if(moveType == 6) {
+			p.addMove(diceRoll);
 			moveTo(p, position1, position2);
+			p.finishedThePath();
+			player.incPawnsFinished();
+			//é para colocar um retorno apropiado aq sembolizando o player que ganhou
+			if(player.isWinner()) { 
+				return;
+			}
 		}
 		
 		//nao pode mover nao faz nada

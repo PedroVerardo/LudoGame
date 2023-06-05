@@ -34,6 +34,7 @@ public class Facade {
 	private SingletonBoard game = SingletonBoard.getInstance(76);
 	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
+	
 	private Player acctualPlayer;
 	
 	public void printBoard() {
@@ -134,7 +135,6 @@ public class Facade {
 		List<Pawn> lis = acctualPlayer.getPawns();
 		Pawn p = lis.get(local);
 		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
-		System.out.println(p.getPawnPositionInBoard(acctualPlayer));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
 		printBoard();
