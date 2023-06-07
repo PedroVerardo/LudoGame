@@ -101,13 +101,13 @@ public class Controller {
 	int sidePortions(int x, int y) {
 		if (y < 6)
 		{
-			if (x < 6) {return -4;} // red base
-			return -1; // green base
+			if (x < 6) {return 41;} // red base
+			return 2; // green base
 		}
 		
 		if (y > 8) {
-			if (x < 6) {return -3;} // blue
-			return -2; // yellow base
+			if (x < 6) {return 28;} // blue
+			return 15; // yellow base
 		}
 		
 		// first line from top to bottom 
