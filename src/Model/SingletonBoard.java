@@ -102,7 +102,6 @@ class SingletonBoard implements IObservableBoard{
 	 * */
 	boolean comparePawns(Pawn p1, House h2) {
 		LinkedList<Pawn> p2 = h2.getPawnsInHouse();
-		Thread t1;
 		
 		if(p2.isEmpty()) {return false;}
 		for(int i = 0; i < p2.size(); i++) {
@@ -127,7 +126,7 @@ class SingletonBoard implements IObservableBoard{
 		int position2 = diceRoll + position1;
 		
 		if(position2 > 51) {
-			position2 -= 51;
+			position2 -= 52;
 		}
 		
 		
@@ -156,14 +155,14 @@ class SingletonBoard implements IObservableBoard{
 				
 				else if(haveBarrier(board.get(position1 + i))) {return 0;}
 			}
-			if(pawn.inbase && diceRoll != 5) {return 0;}
+			if(pawn.inBase() && diceRoll != 5) {return 0;}
 			
-			else if(pawn.inbase && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
+			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
 			
-			else if(pawn.inbase && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
+			else if(pawn.inBase() && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
 			
 			//don't have pawns
-			else if(listH2.isEmpty() && !pawn.inbase) {return 1;}
+			else if(listH2.isEmpty() && !pawn.inBase()) {return 1;}
 			
 			//is safe and don't have same color pawn
 			else if(h2.isSafe() && listH2.size() < 2 &&
@@ -174,7 +173,7 @@ class SingletonBoard implements IObservableBoard{
 			else if(h2.isSafe() && listH2.size() == 2){return 0;}
 			
 			//eat one pawn
-			else if(listH2.size() < 2 && !comparePawns(pawn, h2)) {return 4;}
+			else if(listH2.size() == 1 && !comparePawns(pawn, h2)) {return 4;}
 			
 			//barrier up
 			else if(listH2.size() == 1 && comparePawns(pawn, h2)) {return 5;}
@@ -244,6 +243,7 @@ class SingletonBoard implements IObservableBoard{
 		House h1 = board.get(position1);
 		House h2 = board.get(position2);
 		
+		
 		if(h1.isBarrierUp()) {
 			h1.setBarrierDown();
 		}
@@ -264,7 +264,7 @@ class SingletonBoard implements IObservableBoard{
 	void makeMove(Pawn p, Player player, int position1, int diceRoll) {
 		
 		int position2 = position1 + diceRoll;
-		if(position2 > 51 && !p.isInFinalLine()) {position2 = position2 - 51;}
+		if(position2 > 51 && !p.isInFinalLine()) {position2 = position2 - 52;}
 		
 		
 		
@@ -274,6 +274,7 @@ class SingletonBoard implements IObservableBoard{
 		
 		System.out.println("esta "+ position1 + " rodou " + diceRoll + "move type: " + moveType);
 		System.out.println("Pawns pos: "+ p.getTotalMoves());
+		System.out.println(p.getColor());
 		
 		//casa final
 		if(moveType == 2) {

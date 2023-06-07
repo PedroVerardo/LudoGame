@@ -1,35 +1,21 @@
 package Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+
+import Controller.IObserver;
 
 public class Facade {
 	
-	private static Facade facadeInstance;
+	private static Facade facadeInstance;	
 	
-	private Pawn p1 = new Pawn(PlayerColor.VERMELHO);
-	private Pawn p2 = new Pawn(PlayerColor.VERMELHO);
-	private Pawn p3 = new Pawn(PlayerColor.VERMELHO);
-	private Pawn p4 = new Pawn(PlayerColor.VERMELHO);
-	private Pawn p5 = new Pawn(PlayerColor.AMARELO);
-	private Pawn p6 = new Pawn(PlayerColor.AMARELO);
-	private Pawn p7 = new Pawn(PlayerColor.AMARELO);
-	private Pawn p8 = new Pawn(PlayerColor.AMARELO);
-	private Pawn p9 = new Pawn(PlayerColor.AZUL);
-	private Pawn p10 = new Pawn(PlayerColor.AZUL);
-	private Pawn p11 = new Pawn(PlayerColor.AZUL);
-	private Pawn p12 = new Pawn(PlayerColor.AZUL);
-	private Pawn p13 = new Pawn(PlayerColor.VERDE);
-	private Pawn p14 = new Pawn(PlayerColor.VERDE);
-	private Pawn p15 = new Pawn(PlayerColor.VERDE);
-	private Pawn p16 = new Pawn(PlayerColor.VERDE);
+	List<Player> listp = Instance.getPlayerInstance();
 	
-	private Player pl4 = new Player(2, p13, p14, p15, p16, PlayerColor.VERDE);
-	private Player pl2 = new Player(15, p5, p6, p7, p8, PlayerColor.AMARELO);
-	private Player pl3 = new Player(28, p9, p10, p11, p12, PlayerColor.AZUL);
-	private Player pl1 = new Player(41, p1, p2, p3, p4, PlayerColor.VERMELHO);
-	
+	private Player pl4 = listp.get(3);
+	private Player pl2 = listp.get(1);
+	private Player pl3 = listp.get(2);
+	private Player pl1 = listp.get(0);
 	
 	private SingletonBoard game = SingletonBoard.getInstance(76);
 	private Round round = new Round(pl4, pl2, pl3, pl1);
@@ -55,6 +41,10 @@ public class Facade {
 	
 	public void setBoard() {
 		game.setBoard();
+	}
+	
+	public void subscribeInBoard(IObserver ob) {
+		game.add(ob);
 	}
 	
 	public List<Player> getAllPlayers(){
@@ -129,6 +119,10 @@ public class Facade {
 		return lis.get(local).getColor();
 	}
 	
+	public void saveGame() {
+		
+	}
+	
 	
 	//move in the game
 	public void makeMove(int local,int pos1, int diceRoll){
@@ -139,8 +133,6 @@ public class Facade {
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
 		printBoard();
 	}
-	
-	
 	
 }
 

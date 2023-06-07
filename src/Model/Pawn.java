@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 
 /**
  * <pre>In this class we implement the pawn in a short and the methods in this class
@@ -8,16 +9,16 @@ package Model;
  * Pawn ->  0000 0000 0000 0000
  *            |    |   |_____|
  *            |    |       |
- *       (finish)(color)(distance)
+ *       (finalL)(color)(distance)
  * </pre> 
  * */
-class Pawn {
+class Pawn implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private short pawn;
-	boolean inbase = true;
-	boolean finished = false;
 	
 	Pawn(PlayerColor pC){
 		pawn = pC.getValue();
+		pawn |= 0x4000;
 	}
 	
 	/**
@@ -31,11 +32,12 @@ class Pawn {
 	/**
 	 * Function to remove pawn in the base.
 	 * */
-	void removeFromBase() {inbase = false;}
+	void removeFromBase() {pawn &= 0xbfff;}
 	
-	boolean inBase() { return inbase;}
+	boolean inBase() { return (pawn & 0x4000) != 0;}
 	
-	void putInBase() {inbase = true;}
+	void putInBase() {pawn |= 0x4000;}
+	
 	/**
 	 * Function to used to get how many steps need to complete the
 	 * turn in the board.
@@ -57,7 +59,7 @@ class Pawn {
 		
 		int totalDist = (p.getStartHouse() + this.getTotalMoves());
 		
-		if(totalDist > 51) {return totalDist - 51;}
+		if(totalDist > 51) {return totalDist - 52;}
 		
 		else {return totalDist;}
 	}
@@ -69,7 +71,6 @@ class Pawn {
 	/**
 	 * Function to return the pawn to the base.
 	 * */
-	void setPawnToBase() {pawn &= 0x0f00;}
 	
 	
 	/**
@@ -93,6 +94,8 @@ class Pawn {
 	 * */
 	void setFinalLine() {pawn |= 0x8000;}
 	
+	void resetFinalLine() { pawn &= 0x7fff;}
+	
 	
 	/**
 	 * Function to see if the pawn is in final line.
@@ -105,9 +108,19 @@ class Pawn {
 	 * 
 	 * @return The boolean that represent the pawn finalize the path.
 	 * */
-	boolean haveFinished() {return finished;}
+	boolean haveFinished() {return (pawn & 0x2000) != 0;}
 	
-	void finishedThePath() {finished = true;}
+	void finishedThePath() {pawn |= 0x2000;}
+	
+	void resetFinished() { pawn &= 0xcfff;}
+	
+	void setPawn(short pawn) {this.pawn = pawn;}
+	
+	short getPawn() {return pawn;}
 
+	public String toString() {
+		return "Base: " + this.inBase() + " FinalLine: " + this.isInFinalLine() 
+		+ " Finished: " + this.haveFinished() + " total Moves: " + this.getTotalMoves();
+	}
 	
 }

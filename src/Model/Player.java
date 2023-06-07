@@ -45,6 +45,10 @@ class Player {
 	 * */
 	void incPawnsFinished() {this.pawnsFinished++;}
 	
+	int getNumberOfFinished() {return pawnsFinished;}
+	
+	void setPawnsFinishedZero() {pawnsFinished = 0;}
+	
 	
 	/**
 	 * Function to see how many pawns in base that player have
