@@ -269,6 +269,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 		int colorCount = 0;
 		int diceroll = menu.getDiceroll();
+		int chosenPawnMoveType = 0;
 		List<Integer> b;
 		List<Integer> pp;
 		facade.getPlayerOfRound();
@@ -278,11 +279,18 @@ public class PNLudo extends JPanel implements MouseListener {
         
         for (int i = 0; i < b.size(); i++) {
         	if (b.get(i) != 0) {
+        		chosenPawnMoveType = b.get(i);
         		facade.makeMove(i, pos, diceroll);
         		break;
         	}
         }
         
+        int repeatPlayer = c.makeAnotherMove(diceroll, chosenPawnMoveType);
+        if (repeatPlayer == 1)	{
+        	
+        	// repete jogada
+        	
+        }
         
         if(colorCount < 3)
         	colorCount++;

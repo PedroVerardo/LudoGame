@@ -30,19 +30,12 @@ public class Controller {
 		return -5;
 	}
 	
-	/**
-	 * Function that verifies possibles moves for all player pawns and makes a move based on player selection
-	 * returns to view which pawns can be moved based on their positions
-	 **/
-	public int makeAnotherMove(int roll, int click) {
-        List<Integer> moveTypesOfPlayer = facade.getPawnsMoveTypesOfPlayer(roll);
+	/*
+	 * Function that verifies if another move is possible
+	 * */
+	public int makeAnotherMove(int roll, int type) {
         
-        if (roll == 6) {return 1;}
-        
-        for (int i = 0; i < moveTypesOfPlayer.size(); i++) {
-     
-        	if (moveTypesOfPlayer.get(i) == 4) {return 1;}
-        } 
+        if (roll == 6 || type == 4) { return 1; }
         
         return 0;
 	}
