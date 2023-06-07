@@ -6,16 +6,12 @@ import Model.*;
 import View.*;
 
 public class Controller {
-	
-	private int tokenRepeat;
 
 	Facade facade = Facade.getFacadeInstance();
 	
 	public Controller() {}
 	
 	public void inicializeGame() { facade.setBoard(); }
-	
-	public int getDiceRoll() { return facade.GetDiceRoll(); }
 	
 	/**
 	 * Receives two coordinates of a mouse click and returns the position that corresponds to them
@@ -38,35 +34,17 @@ public class Controller {
 	 * Function that verifies possibles moves for all player pawns and makes a move based on player selection
 	 * returns to view which pawns can be moved based on their positions
 	 **/
-	public int makeMove(int roll, int click) {
+	public int makeAnotherMove(int roll, int click) {
         List<Integer> moveTypesOfPlayer = facade.getPawnsMoveTypesOfPlayer(roll);
-        List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
-        tokenRepeat = 1;
         
-        if (verifyIfPlayerHasMoves(moveTypesOfPlayer) == 0) { facade.getPlayerOfRound(); return 0; }
+        if (roll == 6) {return 1;}
         
-        while (tokenRepeat != 0) {
-	        for (int i = 0; i < moveTypesOfPlayer.size(); i++) {
-	        	// if mouse click is in one pawns positions AND the move is possible
-	        	if (click == pawnsPositions.get(i) && moveTypesOfPlayer.get(i) != 0) {
-	        		facade.makeMove(i, pawnsPositions.get(i), roll);
-	        	}
-	        	
-	        	if (roll != 6 || moveTypesOfPlayer.get(i)!= 4) {tokenRepeat = 0;}
-	        } 
-        }
+        for (int i = 0; i < moveTypesOfPlayer.size(); i++) {
+     
+        	if (moveTypesOfPlayer.get(i) == 4) {return 1;}
+        } 
         
-        
-        return 1;
-	}
-	
-	int verifyIfPlayerHasMoves(List<Integer> moveTypesArray) {
-		for (int i = 0; i < moveTypesArray.size(); i++) {
-			if (moveTypesArray.get(i) != 0)
-				return 1;
-		}
-		
-		return 0;
+        return 0;
 	}
 	
 	int middlePortion(int x, int y) {

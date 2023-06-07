@@ -274,14 +274,16 @@ public class PNLudo extends JPanel implements MouseListener {
 		facade.getPlayerOfRound();
         b = facade.getPawnsMoveTypesOfPlayer(diceroll);
         pp = facade.getPawnsPositionOfPlayer();
-        //System.out.println(b);
-        //System.out.println(pos);
-        for(int i = 0; i < b.size(); i++) {
-        	if(b.get(i)!=0) {
-        		facade.makeMove(i, pos,diceroll);
+
+        
+        for (int i = 0; i < b.size(); i++) {
+        	if (b.get(i) != 0) {
+        		facade.makeMove(i, pos, diceroll);
         		break;
         	}
         }
+        
+        
         if(colorCount < 3)
         	colorCount++;
         else
