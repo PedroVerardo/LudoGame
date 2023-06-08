@@ -6,16 +6,12 @@ import Model.*;
 import View.*;
 
 public class Controller {
-	
-	private int tokenRepeat;
 
 	Facade facade = Facade.getFacadeInstance();
 	
 	public Controller() {}
 	
 	public void inicializeGame() { facade.setBoard(); }
-	
-	public int getDiceRoll() { return facade.GetDiceRoll(); }
 	
 	/**
 	 * Receives two coordinates of a mouse click and returns the position that corresponds to them
@@ -34,39 +30,43 @@ public class Controller {
 		return -5;
 	}
 	
-	/**
-	 * Function that verifies possibles moves for all player pawns and makes a move based on player selection
-	 * returns to view which pawns can be moved based on their positions
-	 **/
 	public int makeMove(int roll, int click) {
-        List<Integer> moveTypesOfPlayer = facade.getPawnsMoveTypesOfPlayer(roll);
-        List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
-        tokenRepeat = 1;
-        
-        if (verifyIfPlayerHasMoves(moveTypesOfPlayer) == 0) { facade.getPlayerOfRound(); return 0; }
-        
-        while (tokenRepeat != 0) {
-	        for (int i = 0; i < moveTypesOfPlayer.size(); i++) {
-	        	// if mouse click is in one pawns positions AND the move is possible
-	        	if (click == pawnsPositions.get(i) && moveTypesOfPlayer.get(i) != 0) {
-	        		facade.makeMove(i, pawnsPositions.get(i), roll);
-	        	}
-	        	
-	        	if (roll != 6 || moveTypesOfPlayer.get(i)!= 4) {tokenRepeat = 0;}
-	        } 
-        }
-        
-        
-        return 1;
-	}
-	
-	int verifyIfPlayerHasMoves(List<Integer> moveTypesArray) {
-		for (int i = 0; i < moveTypesArray.size(); i++) {
-			if (moveTypesArray.get(i) != 0)
-				return 1;
+		List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
+		List<Integer> moveTypes = facade.getPawnsMoveTypesOfPlayer(roll);
+		
+		if (verifyMoveTypes(moveTypes) == 0) { return 0; }
+		
+		for (int i = 0; i < pawnsPositions.size(); i++) {
+			// if a click corresponds to a pawn position in board and the move type of that pawn is valid
+			if (click == pawnsPositions.get(i) && moveTypes.get(i) != 0) {
+				
+				facade.makeMove(i, 0, roll);
+				return extraMovement(roll, moveTypes.get(i));
+				
+			}
 		}
 		
-		return 0;
+		return 1;
+	}
+	
+	public int verifyMoveTypes(List<Integer> moveTypes) {
+		
+		for (int i = 0; i < moveTypes.size(); i++) {
+			 
+			if (moveTypes.get(i) == 0) { return 0; }
+		}
+		
+		return 1;
+	}
+	
+	/*
+	 * Function that verifies if another move is possible
+	 * */
+	public int extraMovement(int roll, int type) {
+        
+        if (roll == 6 || type == 4) { return 1; }
+        
+        return 0;
 	}
 	
 	int middlePortion(int x, int y) {
@@ -101,13 +101,13 @@ public class Controller {
 	int sidePortions(int x, int y) {
 		if (y < 6)
 		{
-			if (x < 6) {return -4;} // red base
-			return -1; // green base
+			if (x < 6) {return 41;} // red base
+			return 2; // green base
 		}
 		
 		if (y > 8) {
-			if (x < 6) {return -3;} // blue
-			return -2; // yellow base
+			if (x < 6) {return 28;} // blue
+			return 15; // yellow base
 		}
 		
 		// first line from top to bottom 

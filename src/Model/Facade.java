@@ -125,10 +125,10 @@ public class Facade {
 	
 	
 	//move in the game
-	public void makeMove(int local,int pos1, int diceRoll){
+	public void makeMove(int local, int pos1, int diceRoll){
 		List<Pawn> lis = acctualPlayer.getPawns();
 		Pawn p = lis.get(local);
-		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
+		//System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
 		//printBoard();

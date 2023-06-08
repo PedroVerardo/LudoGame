@@ -1,6 +1,9 @@
 package View;
 
 import javax.swing.*;
+
+import Controller.Controller;
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.List;
@@ -14,6 +17,7 @@ public class PNLudo extends JPanel implements MouseListener {
 	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
 	int iClick,jClick;
 	Facade facade;
+	Controller c = new Controller();
 	Menu menu;
 	ViewHouse tab[]=new ViewHouse[72];
 	ViewHouse start[][] = new ViewHouse[4][4];
@@ -237,18 +241,11 @@ public class PNLudo extends JPanel implements MouseListener {
 		addMouseListener(this);
 		
 		setUpHouses();
-		
-//		JButton pb=new JButton("Teste");
-//		pb.setBounds(0,0,90,25);
-//		add(pb);
-//		setLayout(null);
-//		setBounds(0,0,410,450);
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d=(Graphics2D) g;
-		//for(int i = 0; i<4;i++) 
 		
 		g2d.setStroke(new BasicStroke((float) espLinha,
                 BasicStroke.CAP_BUTT,
@@ -261,86 +258,36 @@ public class PNLudo extends JPanel implements MouseListener {
 	
 
 	public void mousePressed(MouseEvent e) {
-		int x=e.getX()/40,y=e.getY()/40;
-		pos = -5;
-		if (x == 6) {
-			if(y >= 0 && y < 6)
-				pos = 51 - y;
-			if (y >= 6 && y<=8)
-				pos = 72;
-			if(y > 8 && y <= 14)
-				pos = 32 - (y- 9); 
-		}
-		if (x == 7) {
-			if(y == 0)
-				pos = 0;
-			if(y > 0 && y < 6)
-				pos = y + 51;
-			if (y >= 6 && y<=8)
-				pos = 72;
-			if(y > 8 && y < 14)
-				pos = 66 - (y- 9); 
-			if(y==14)
-				pos = 26;
-		}
-		if (x == 8) {
-			if(y >= 0 && y < 6)
-				pos = y + 1;
-			if (y >= 6 && y<=8)
-				pos = 72;
-			if(y > 8 && y <= 14)
-				pos = 20 + (y- 9); 
-		}
-		if (x > 8 && x < 15) {
-			if(y >= 0 && y < 6) {
-				pos = -1;
-			}	
-			if (y == 6)
-				pos = x - 2; 
-			if (y == 7) {
-				if (x < 14)
-					pos = 61 - (x - 9);
-				else
-					pos = 13;
-			}
-			if (y == 8)
-				pos = 19 - (x - 9);
-			if (y > 8) {
-				pos = -2;
-			}
-		}	
-		if (x >= 0 && x < 6) {
-			if(y >= 0 && y < 6)
-				pos = -4;
-			if (y == 6)
-				pos = 40 + x; 
-			if (y == 7) {
-				if (x > 0)
-					pos = 66 + x;
-				else
-					pos = 39;
-			}
-			if (y == 8)
-				pos = 38 - x;
-			if (y > 8) 
-				pos = -3;
-		}
+		pos = c.getPositionByClick(e.getX()/40, e.getY()/40);
 		Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 		int colorCount = 0;
 		int diceroll = menu.getDiceroll();
+		int chosenPawnMoveType = 0;
 		List<Integer> b;
 		List<Integer> pp;
 		facade.getPlayerOfRound();
         b = facade.getPawnsMoveTypesOfPlayer(diceroll);
         pp = facade.getPawnsPositionOfPlayer();
-        //System.out.println(b);
-        //System.out.println(pos);
-        for(int i = 0; i < b.size(); i++) {
-        	if(b.get(i)!=0) {
-        		facade.makeMove(i, pos,diceroll);
+
+        /*
+        for (int i = 0; i < b.size(); i++) {
+        	if (b.get(i) != 0) {
+        		chosenPawnMoveType = b.get(i);
+        		facade.makeMove(i, pos, diceroll);
         		break;
         	}
         }
+        */
+        
+        int repeatPlayer = c.extraMovement(diceroll, chosenPawnMoveType);
+        
+        System.out.println("\n\n\n" + repeatPlayer + "\n\n\n");
+        if (repeatPlayer == 1)	{
+        	
+        	
+        	
+        }
+        
         if(colorCount < 3)
         	colorCount++;
         else
