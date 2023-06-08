@@ -8,12 +8,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class testRound {
-
-	Pawn pawnYellow = new Pawn(PlayerColor.AMARELO);
+	Pawn pawnYellow  = new Pawn(PlayerColor.AMARELO);
 	Pawn pawnYellow2 = new Pawn(PlayerColor.AMARELO);
 	Pawn pawnYellow3 = new Pawn(PlayerColor.AMARELO);
 	Pawn pawnYellow4 = new Pawn(PlayerColor.AMARELO);	
-	Pawn pawnRed = new Pawn(PlayerColor.VERMELHO);
+	Pawn pawnRed  = new Pawn(PlayerColor.VERMELHO);
 	Pawn pawnRed2 = new Pawn(PlayerColor.VERMELHO);
 	Pawn pawnRed3 = new Pawn(PlayerColor.VERMELHO);
 	Pawn pawnRed4 = new Pawn(PlayerColor.VERMELHO);
@@ -25,16 +24,16 @@ class testRound {
 	Pawn pawnGreen2 = new Pawn(PlayerColor.VERDE);
 	Pawn pawnGreen3 = new Pawn(PlayerColor.VERDE);
 	Pawn pawnGreen4 = new Pawn(PlayerColor.VERDE);
-	Player playerYellow = new Player(2, pawnYellow, pawnYellow2, pawnYellow3, pawnYellow4);	
-	Player playerRed = new Player(15, pawnRed, pawnRed2, pawnRed3, pawnRed4);
-	Player playerBlue = new Player(28, pawnBlue, pawnBlue2, pawnBlue3, pawnBlue4);
-	Player playerGreen = new Player(41, pawnGreen, pawnGreen2, pawnGreen3, pawnGreen4);
+	
+	Player playerYellow = new Player(2, pawnYellow, pawnYellow2, pawnYellow3, pawnYellow4, PlayerColor.AMARELO);	
+	Player playerRed = new Player(15, pawnRed, pawnRed2, pawnRed3, pawnRed4, PlayerColor.VERMELHO);
+	Player playerBlue = new Player(28, pawnBlue, pawnBlue2, pawnBlue3, pawnBlue4, PlayerColor.AZUL);
+	Player playerGreen = new Player(41, pawnGreen, pawnGreen2, pawnGreen3, pawnGreen4, PlayerColor.VERDE);
 
 
 	@Test
 	void testInitialQueue() {
-		Round round = new Round();
-		round.inicialQueue(playerYellow, playerRed, playerBlue, playerGreen);
+		Round round = new Round(playerYellow, playerRed, playerBlue, playerGreen);
 
 		// Check if the queue is assigned correctly
 		assertEquals("Error in round queue assignment", playerYellow, round.queue.peek());
@@ -45,8 +44,7 @@ class testRound {
 
 	@Test
 	void testGetNextPlayer() {
-		Round round = new Round();
-		round.inicialQueue(playerYellow, playerRed, playerBlue, playerGreen);
+		Round round = new Round(playerYellow, playerRed, playerBlue, playerGreen);
 
 		// Check if the players are passed correctly
 		Player currentPlayer = round.getNextPlayer();
