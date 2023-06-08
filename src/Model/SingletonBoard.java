@@ -285,7 +285,6 @@ class SingletonBoard implements IObservableBoard{
 			p.setFinalLine();
 			System.out.println("position2 "+ p.getPawnPositionInBoard(player));
 			p.addMove(position2 - 50);
-			System.out.println("position2 "+  (52 + 6*((p.getColor() - 0x0100) >> 8) +5));
 			moveTo(p, position1, position2);
 			if(p.haveFinished()) {
 				player.incPawnsFinished();
@@ -338,6 +337,7 @@ class SingletonBoard implements IObservableBoard{
 			return;
 		}
 		
+		System.out.println(p.getPawnPositionInBoard(player));
 		notifyBoard();
 	}
 

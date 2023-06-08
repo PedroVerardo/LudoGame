@@ -94,7 +94,7 @@ class Player {
 		ArrayList<Integer> positions = new ArrayList<Integer>();
 		
 		for(Pawn p : pawnsBoardposition) {
-			positions.add(getPawnPosition(p));
+			positions.add(p.getPawnPositionInBoard(this));
 		}
 		
 		return positions;

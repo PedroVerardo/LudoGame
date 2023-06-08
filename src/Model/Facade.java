@@ -131,7 +131,7 @@ public class Facade {
 		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
-		printBoard();
+		//printBoard();
 	}
 	
 }

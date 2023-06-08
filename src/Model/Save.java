@@ -6,13 +6,14 @@ import java.util.List;
 
 class Save {
 	
-	static void save(List<Player> lplayers) throws IOException {
+	static void save(List<Player> lplayers, Player playerOfTheRound) throws IOException {
 		FileWriter escritor = new FileWriter("save.txt");
 		
 		for(Player player: lplayers) {
 			writePawnsState(player.getPawns(), player, escritor);
 		}
 		
+		escritor.write("PlayerOfTheRound: " + playerOfTheRound.getPlayerColor());
 		
 		escritor.flush();
 		escritor.close();
