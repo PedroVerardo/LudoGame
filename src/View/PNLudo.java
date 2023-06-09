@@ -244,18 +244,11 @@ public class PNLudo extends JPanel implements MouseListener {
 		addMouseListener(this);
 		
 		setUpHouses();
-		
-//		JButton pb=new JButton("Teste");
-//		pb.setBounds(0,0,90,25);
-//		add(pb);
-//		setLayout(null);
-//		setBounds(0,0,410,450);
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d=(Graphics2D) g;
-		//for(int i = 0; i<4;i++) 
 		
 		g2d.setStroke(new BasicStroke((float) espLinha,
                 BasicStroke.CAP_BUTT,
@@ -279,7 +272,7 @@ public class PNLudo extends JPanel implements MouseListener {
         b = facade.getPawnsMoveTypesOfPlayer(diceroll);
         pp = facade.getPawnsPositionOfPlayer();
 
-        
+        /*
         for (int i = 0; i < b.size(); i++) {
         	if (b.get(i) != 0) {
         		chosenPawnMoveType = b.get(i);
@@ -287,11 +280,14 @@ public class PNLudo extends JPanel implements MouseListener {
         		break;
         	}
         }
+        */
         
-        int repeatPlayer = c.makeAnotherMove(diceroll, chosenPawnMoveType);
+        int repeatPlayer = c.extraMovement(diceroll, chosenPawnMoveType);
+        
+        System.out.println("\n\n\n" + repeatPlayer + "\n\n\n");
         if (repeatPlayer == 1)	{
         	
-        	// repete jogada
+        	
         	
         }
         

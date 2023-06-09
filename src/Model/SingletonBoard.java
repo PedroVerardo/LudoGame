@@ -120,6 +120,7 @@ class SingletonBoard implements IObservableBoard{
 	 * 3 -> move para casa inicial do player referente ao turno
 	 * 4 -> move e remove o peão da casa
 	 * 5 -> levanta uma barreira
+	 * 6 -> jogador ganhou
 	 * */
 	int possibleMove(Pawn pawn, Player player, int position1, int diceRoll) {
 		
@@ -166,7 +167,7 @@ class SingletonBoard implements IObservableBoard{
 			
 			//is safe and don't have same color pawn
 			else if(h2.isSafe() && listH2.size() < 2 &&
-					!comparePawns(pawn ,h2)){return 1;}
+					!comparePawns(pawn , h2)){return 1;}
 			
 			else if(h2.isSafe() && comparePawns(pawn ,h2)){return 0;}
 			
@@ -285,7 +286,6 @@ class SingletonBoard implements IObservableBoard{
 			p.setFinalLine();
 			System.out.println("position2 "+ p.getPawnPositionInBoard(player));
 			p.addMove(position2 - 50);
-			System.out.println("position2 "+  (52 + 6*((p.getColor() - 0x0100) >> 8) +5));
 			moveTo(p, position1, position2);
 			if(p.haveFinished()) {
 				player.incPawnsFinished();
@@ -338,6 +338,7 @@ class SingletonBoard implements IObservableBoard{
 			return;
 		}
 		
+		System.out.println(p.getPawnPositionInBoard(player));
 		notifyBoard();
 	}
 

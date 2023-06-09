@@ -32,10 +32,12 @@ class testPawn {
 		assertEquals("Error in pawn.addMove()", 12, pawnYellow.getTotalMoves());
 		pawnYellow.addMove(6);
 		assertEquals("Error in pawn.addMove()", 18, pawnYellow.getTotalMoves());
-		pawnYellow.setPawnToBase();
+		pawnYellow.putInBase();
 		assertEquals("Error in pawn.setPawnToBase()", 0, pawnYellow.getTotalMoves());
-		for (int i = 0;i < 8;i++)
+		
+		for (int i = 0; i < 8; i++)
 			pawnYellow.addMove(6);
+		
 		pawnYellow.addMove(4);
 		assertEquals("Error in pawn.addMove()", 52, pawnYellow.getTotalMoves());
 	}

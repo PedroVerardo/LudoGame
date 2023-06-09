@@ -1,5 +1,6 @@
 package Model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -8,27 +9,29 @@ import org.junit.jupiter.api.Test;
 
 class testBoard {
 
-	 SingletonBoard board = SingletonBoard.getInstance(52);
-	    Pawn pawnYellow = new Pawn(PlayerColor.AMARELO);
+	 	SingletonBoard board = SingletonBoard.getInstance(52);
+	    
+	 	Pawn pawnYellow  = new Pawn(PlayerColor.AMARELO);
 		Pawn pawnYellow2 = new Pawn(PlayerColor.AMARELO);
 		Pawn pawnYellow3 = new Pawn(PlayerColor.AMARELO);
 		Pawn pawnYellow4 = new Pawn(PlayerColor.AMARELO);	
-		Pawn pawnRed = new Pawn(PlayerColor.VERMELHO);
-		Pawn pawnRed2 = new Pawn(PlayerColor.VERMELHO);
-		Pawn pawnRed3 = new Pawn(PlayerColor.VERMELHO);
-		Pawn pawnRed4 = new Pawn(PlayerColor.VERMELHO);
-		Pawn pawnBlue = new Pawn(PlayerColor.AZUL);
-		Pawn pawnBlue2 = new Pawn(PlayerColor.AZUL);
-		Pawn pawnBlue3 = new Pawn(PlayerColor.AZUL);
-		Pawn pawnBlue4 = new Pawn(PlayerColor.AZUL);
-		Pawn pawnGreen = new Pawn(PlayerColor.VERDE);
-		Pawn pawnGreen2 = new Pawn(PlayerColor.VERDE);
-		Pawn pawnGreen3 = new Pawn(PlayerColor.VERDE);
-		Pawn pawnGreen4 = new Pawn(PlayerColor.VERDE);
-		Player playerYellow = new Player(2, pawnYellow, pawnYellow2, pawnYellow3, pawnYellow4);	
-		Player playerRed = new Player(15, pawnRed, pawnRed2, pawnRed3, pawnRed4);
-		Player playerBlue = new Player(28, pawnBlue, pawnBlue2, pawnBlue3, pawnBlue4);
-		Player playerGreen = new Player(41, pawnGreen, pawnGreen2, pawnGreen3, pawnGreen4);
+		Pawn pawnRed     = new Pawn(PlayerColor.VERMELHO);
+		Pawn pawnRed2    = new Pawn(PlayerColor.VERMELHO);
+		Pawn pawnRed3    = new Pawn(PlayerColor.VERMELHO);
+		Pawn pawnRed4    = new Pawn(PlayerColor.VERMELHO);
+		Pawn pawnBlue    = new Pawn(PlayerColor.AZUL);
+		Pawn pawnBlue2   = new Pawn(PlayerColor.AZUL);
+		Pawn pawnBlue3   = new Pawn(PlayerColor.AZUL);
+		Pawn pawnBlue4   = new Pawn(PlayerColor.AZUL);
+		Pawn pawnGreen   = new Pawn(PlayerColor.VERDE);
+		Pawn pawnGreen2  = new Pawn(PlayerColor.VERDE);
+		Pawn pawnGreen3  = new Pawn(PlayerColor.VERDE);
+		Pawn pawnGreen4  = new Pawn(PlayerColor.VERDE);
+		
+		Player playerYellow = new Player(2, pawnYellow, pawnYellow2, pawnYellow3, pawnYellow4, PlayerColor.AMARELO);	
+		Player playerRed    = new Player(15, pawnRed, pawnRed2, pawnRed3, pawnRed4, PlayerColor.VERMELHO);
+		Player playerBlue   = new Player(28, pawnBlue, pawnBlue2, pawnBlue3, pawnBlue4, PlayerColor.AZUL);
+		Player playerGreen  = new Player(41, pawnGreen, pawnGreen2, pawnGreen3, pawnGreen4, PlayerColor.VERDE);
 
 	    
 	    @Test
@@ -75,9 +78,9 @@ class testBoard {
 	    @Test
 	    void testComparePawns() {
 	        House house = board.getHousePosition(3);
-	        Pawn pawn = new Pawn(PlayerColor.AZUL);
-	        Pawn pawn2 = new Pawn(PlayerColor.VERMELHO);
-	        Pawn pawn3 = new Pawn(PlayerColor.AZUL);
+	        Pawn  pawn   = new Pawn(PlayerColor.AZUL);
+	        Pawn  pawn2  = new Pawn(PlayerColor.VERMELHO);
+	        Pawn  pawn3  = new Pawn(PlayerColor.AZUL);
 	        house.addPawn(pawn);
 	        assertFalse("Function comparePawns is not working properly",board.comparePawns(pawn2, house));
 	        house.removePawn(pawn);
@@ -88,30 +91,35 @@ class testBoard {
 	    @Test
 	    void testPossibleMove() {
 	        // Test with a pawn that is in the initial house and has a possible move
-	        assertTrue(board.possibleMove(pawnBlue, playerBlue, 2, 6));
+	        assertEquals(board.possibleMove(pawnBlue, playerBlue, 2, 6), 1);
 	        House house = board.getHousePosition(4);
 	        house.setBarrierUp();
+	        
 	        // Test with a pawn that is in the initial house but has a barrier in front
-	        assertFalse(board.possibleMove(pawnBlue, playerBlue, 1, 5));
+	        assertEquals(board.possibleMove(pawnBlue, playerBlue, 1, 5), 0);
 	        house.setBarrierDown();
+	        
 	        // Test with a pawn that is already in the final line and has a possible move
-	        assertTrue(board.possibleMove(pawnGreen, playerGreen, 50, 2));
+	        assertEquals(board.possibleMove(pawnGreen, playerGreen, 50, 2), 1);
 	        
 	        // Test with a pawn that is already in the final line but would exceed the limit with the dice roll
-	        assertFalse(board.possibleMove(pawnGreen, playerGreen, 40, 45));
+	        assertEquals(board.possibleMove(pawnGreen, playerGreen, 40, 45), 0);
 	        
 	        // Test with a pawn that is in an intermediate position and has a possible move
-	        assertTrue(board.possibleMove(pawnRed, playerRed, 13, 4));
+	        assertEquals(board.possibleMove(pawnRed, playerRed, 13, 4), 1);
 	        House house2 = board.getHousePosition(15);
 	        house2.setBarrierUp();
+	        
 	        // Test with a pawn that is in an intermediate position but has a barrier in front
-	        assertFalse(board.possibleMove(pawnRed, playerRed, 13, 3));
+	        assertEquals(board.possibleMove(pawnRed, playerRed, 13, 3), 0);
 	        house.addPawn(pawnYellow3);
+	        
 	        // Test with a pawn that is in the initial house and has a same color pawn in front
-	        assertFalse(board.possibleMove(pawnYellow, playerYellow, 1, 6));
+	        assertEquals(board.possibleMove(pawnYellow, playerYellow, 1, 6), 0);
 	        house2.setBarrierDown();
 	        house2.addPawn(pawnYellow4);
+	        
 	        // Test with a pawn that is in an intermediate position and has a same color pawn in front
-	        assertFalse(board.possibleMove(pawnYellow2, playerYellow, 9, 4));
+	        assertEquals(board.possibleMove(pawnYellow2, playerYellow, 9, 4), 5);
 	    }
 }

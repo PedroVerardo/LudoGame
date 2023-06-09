@@ -30,10 +30,39 @@ public class Controller {
 		return -5;
 	}
 	
+	public int makeMove(int roll, int click) {
+		List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
+		List<Integer> moveTypes = facade.getPawnsMoveTypesOfPlayer(roll);
+		
+		if (verifyMoveTypes(moveTypes) == 0) { return 0; }
+		
+		for (int i = 0; i < pawnsPositions.size(); i++) {
+			// if a click corresponds to a pawn position in board and the move type of that pawn is valid
+			if (click == pawnsPositions.get(i) && moveTypes.get(i) != 0) {
+				
+				facade.makeMove(i, 0, roll);
+				return extraMovement(roll, moveTypes.get(i));
+				
+			}
+		}
+		
+		return 1;
+	}
+	
+	public int verifyMoveTypes(List<Integer> moveTypes) {
+		
+		for (int i = 0; i < moveTypes.size(); i++) {
+			 
+			if (moveTypes.get(i) == 0) { return 0; }
+		}
+		
+		return 1;
+	}
+	
 	/*
 	 * Function that verifies if another move is possible
 	 * */
-	public int makeAnotherMove(int roll, int type) {
+	public int extraMovement(int roll, int type) {
         
         if (roll == 6 || type == 4) { return 1; }
         
