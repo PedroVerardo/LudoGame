@@ -62,13 +62,19 @@ public class Menu extends JPanel {
 	            if (returnValue == JFileChooser.APPROVE_OPTION) {
 	                File selectedFile = fileChooser.getSelectedFile();
 	                JOptionPane.showMessageDialog(Menu.this, "Carregando partida do arquivo: " + selectedFile.getAbsolutePath());
+	                //função para abrir o arquivo e iniciar o jogo
 	            }
 	        }
 	    });
 
 	    JButton saveGameButton = new JButton("Salvar");
 	    saveGameButton.setBounds(10, 140, 150, 40);
-
+	    saveGameButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            //função para salvar
+	            }
+	        });
+	    
 	    JLabel statusLabel = new JLabel("À jogar: ");
 	    statusLabel.setBounds(10, 190, 150, 40);
 	    Font labelFont = new Font("Monospace Bold", Font.BOLD, 26);

@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 
 import Controller.Controller;
+import Controller.IObserver;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -12,7 +13,7 @@ import Model.*;
 
 
  
-public class PNLudo extends JPanel implements MouseListener {
+public class PNLudo extends JPanel implements MouseListener, IObserver {
 	int pos;
 	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
 	int iClick,jClick;
@@ -282,7 +283,7 @@ public class PNLudo extends JPanel implements MouseListener {
         	colorCount = 0;	
         menu.nextRound();
 		//System.out.println("x = " + x + " y = " + y + " Position = " + pos);	
-		repaint();
+		updateBoard();
 		menu.repaint();
 	}
 	
@@ -290,4 +291,15 @@ public class PNLudo extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {}
 	public void mouseReleased(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void updateBoard() {
+		repaint();
+	}
+
+	@Override
+	public void updateDice() {
+		// TODO Auto-generated method stub
+		
+	}
 }
