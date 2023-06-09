@@ -21,13 +21,11 @@ public class PNLudo extends JPanel implements MouseListener {
 	Menu menu;
 	ViewHouse tab[]=new ViewHouse[76];
 	ViewHouse start[][] = new ViewHouse[4][4];
-	//ViewHouse finalTrinagle[] = new ViewHouse[4];
 	Rectangle2D.Double houses[] = new Rectangle2D.Double[76];
 	Rectangle2D.Double base[] = new Rectangle2D.Double[4];
 	Shape finalHouse[] = new Shape[4];
 	Ellipse2D.Double baseHouses[][] = new Ellipse2D.Double[4][4];
 	Ellipse2D.Double pawns[][] = new Ellipse2D.Double[4][4];
-	Ellipse2D.Double ptest;
 	Ellipse2D.Double pawnst[][] = new Ellipse2D.Double[4][4];
 	List<Integer> pawnsPosition;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
@@ -44,10 +42,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		yFinal = y;
 		for(int i = 52; i < 58; i++) {
 			yFinal=yFinal+40;
-			//if( i < 57 )
 			tab[i] = new ViewHouse(xFinal,yFinal);
-			//else
-				//finalTrinagle[0] = new ViewHouse(xFinal,yFinal);
 		}
 		x=x+40;
 		for(int i = 0; i < 6; i++) {
@@ -64,10 +59,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		yFinal = y;
 		for(int i = 58; i < 64; i++) {
 			xFinal=xFinal-40;
-			//if( i < 62 )
 			tab[i] = new ViewHouse(xFinal,yFinal);
-			//else
-				//finalTrinagle[1] = new ViewHouse(xFinal,yFinal);
 		}
 		y=y+40;
 		for(int i = 0; i < 6; i++) {
@@ -84,10 +76,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		yFinal = y;
 		for(int i = 64; i < 70; i++) {
 			yFinal=yFinal-40;
-			//if( i < 67 )
 			tab[i] = new ViewHouse(xFinal,yFinal);
-			//else
-				//finalTrinagle[2] = new ViewHouse(xFinal,yFinal);
 		}
 		x=x-40;
 		for(int i = 0; i < 6; i++) {
@@ -104,10 +93,7 @@ public class PNLudo extends JPanel implements MouseListener {
 		yFinal = y;
 		for(int i = 70; i < 76; i++) {
 			xFinal=xFinal+40;
-			//if( i < 72 )
 			tab[i] = new ViewHouse(xFinal,yFinal);
-			//else
-			//finalTrinagle[3] = new ViewHouse(xFinal,yFinal);
 		}
 		y=y-40;
 		for(int i = 0; i < 6; i++) {
@@ -201,9 +187,8 @@ public class PNLudo extends JPanel implements MouseListener {
 	}
 	
 	private void drawCurrentState(Graphics2D g2d) {
-		int[] p = new int[72];
-		int u = 0;
-		for(int i = 0; i<72;i++)
+		int[] p = new int[76];
+		for(int i = 0; i<76;i++)
 			p[i] = 0;
 		for(int i = 0; i < 4; i ++) {
 			pawnsPosition = facade.getAllPawnsPositions().get(i);
@@ -272,7 +257,7 @@ public class PNLudo extends JPanel implements MouseListener {
         b = facade.getPawnsMoveTypesOfPlayer(diceroll);
         pp = facade.getPawnsPositionOfPlayer();
 
-        /*
+        
         for (int i = 0; i < b.size(); i++) {
         	if (b.get(i) != 0) {
         		chosenPawnMoveType = b.get(i);
@@ -280,16 +265,16 @@ public class PNLudo extends JPanel implements MouseListener {
         		break;
         	}
         }
-        */
         
-        int repeatPlayer = c.extraMovement(diceroll, chosenPawnMoveType);
         
-        System.out.println("\n\n\n" + repeatPlayer + "\n\n\n");
-        if (repeatPlayer == 1)	{
+        //int repeatPlayer = c.extraMovement(diceroll, chosenPawnMoveType);
+        
+        //System.out.println("\n\n\n" + repeatPlayer + "\n\n\n");
+        //if (repeatPlayer == 1)	{
         	
         	
         	
-        }
+        //}
         
         if(colorCount < 3)
         	colorCount++;
