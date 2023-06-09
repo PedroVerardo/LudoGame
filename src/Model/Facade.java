@@ -120,6 +120,10 @@ public class Facade {
 		return lis.get(local).getColor();
 	}
 	
+	public int getPlayerColor() {
+		return acctualPlayer.getPlayerColor().getValue();
+	}
+	
 	public void saveGame(){
 		try {
 			Save.save(listp, acctualPlayer);
@@ -144,7 +148,7 @@ public class Facade {
 		//System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
-		//printBoard();
+		printBoard();
 	}
 	
 }

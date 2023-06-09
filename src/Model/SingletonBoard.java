@@ -152,7 +152,7 @@ class SingletonBoard implements IObservableBoard{
 		
 		else {
 			for(int i = 1; i < diceRoll; i++) {
-				if(pawn.getTotalMoves() + i == 52) {return 2;}
+				if(pawn.getTotalMoves() + i >= 50) {return 2;}
 				
 				else if(haveBarrier(board.get(position1 + i))) {return 0;}
 			}
@@ -281,10 +281,10 @@ class SingletonBoard implements IObservableBoard{
 		if(moveType == 2) {
 			
 			position2 = 52 + 6*((p.getColor() - 0x0100) >> 8)  + 
-					p.getPawnPositionInBoard(player) + diceRoll - 
-					player.getStartHouse();
+					(50 - p.getTotalMoves() + diceRoll - 1)
+					;
 			p.setFinalLine();
-			System.out.println("position2 "+ p.getPawnPositionInBoard(player));
+			System.out.println("position2 "+ position2);
 			p.addMove(position2 - 50);
 			moveTo(p, position1, position2);
 			if(p.haveFinished()) {
