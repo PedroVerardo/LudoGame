@@ -8,6 +8,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -24,7 +25,7 @@ import Model.Facade;
 
 public class Menu extends JPanel {
 	private int diceroll;
-	private Ellipse2D playing;
+	private Rectangle2D.Double playing;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 	int colorCount = 0;
 	List<Integer> b;
@@ -74,20 +75,86 @@ public class Menu extends JPanel {
 	    statusLabel.setFont(labelFont);
 	    statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-	    playing = new Ellipse2D.Double(60, 250, 50, 50);
+	    playing = new Rectangle2D.Double(30, 235, 110, 110);
 	    JLabel imageLabel = new JLabel();
 	    JButton rollDiceButton = new JButton("Lançar Dado");
-	    rollDiceButton.setBounds(10, 340, 150, 40);
+	    rollDiceButton.setBounds(10, 360, 150, 40);
 	    rollDiceButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            diceroll = facade.GetDiceRoll();
 	            String image = "src/Images/Dado" + diceroll + ".png";	
 	            ImageIcon imageIcon = new ImageIcon(image);
 	            imageLabel.setIcon(imageIcon);
-	            imageLabel.setBounds(35, 390, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
 	        }
 	    });
 	    
+	    JButton dice1 = new JButton("1");
+	    dice1.setBounds(10, 410, 50, 50);
+	    dice1.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            diceroll = 1;
+	            String image = "src/Images/Dado" + diceroll + ".png";	
+	            ImageIcon imageIcon = new ImageIcon(image);
+	            imageLabel.setIcon(imageIcon);
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	        }
+	    });
+	    JButton dice2 = new JButton("2");
+	    dice2.setBounds(110, 410, 50, 50);
+	    dice2.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            diceroll = 2;
+	            String image = "src/Images/Dado" + diceroll + ".png";	
+	            ImageIcon imageIcon = new ImageIcon(image);
+	            imageLabel.setIcon(imageIcon);
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	        }
+	    });
+	    JButton dice3 = new JButton("3");
+	    dice3.setBounds(10, 470, 50, 50);
+	    dice3.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            diceroll = 3;
+	            String image = "src/Images/Dado" + diceroll + ".png";	
+	            ImageIcon imageIcon = new ImageIcon(image);
+	            imageLabel.setIcon(imageIcon);
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	        }
+	    });
+	    JButton dice4 = new JButton("4");
+	    dice4.setBounds(110, 470, 50, 50);
+	    dice4.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            diceroll = 4;
+	            String image = "src/Images/Dado" + diceroll + ".png";	
+	            ImageIcon imageIcon = new ImageIcon(image);
+	            imageLabel.setIcon(imageIcon);
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	        }
+	    });
+	    JButton dice5 = new JButton("5");
+	    dice5.setBounds(10, 530, 50, 50);
+	    dice5.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            diceroll = 5;
+	            String image = "src/Images/Dado" + diceroll + ".png";	
+	            ImageIcon imageIcon = new ImageIcon(image);
+	            imageLabel.setIcon(imageIcon);
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	        }
+	    });
+	    JButton dice6 = new JButton("6");
+	    dice6.setBounds(110, 530, 50, 50);
+	    dice6.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            diceroll = 6;
+	            String image = "src/Images/Dado" + diceroll + ".png";	
+	            ImageIcon imageIcon = new ImageIcon(image);
+	            imageLabel.setIcon(imageIcon);
+	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	        }
+	    });
 
 	    add(newGameButton);
 	    add(loadGameButton);
@@ -95,7 +162,12 @@ public class Menu extends JPanel {
 	    add(statusLabel);
 	    add(imageLabel);
 	    add(rollDiceButton);
-
+	    add(dice1);
+	    add(dice2);
+	    add(dice3);
+	    add(dice4);
+	    add(dice5);
+	    add(dice6);
 	}
 	
 	@Override
