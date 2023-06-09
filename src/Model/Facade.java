@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Facade {
 	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
 	
-	private Player acctualPlayer;
+	private Player acctualPlayer = pl4;
 	
 	public void printBoard() {
 		for(int i = 0; i < 76;i++) {
@@ -119,9 +120,21 @@ public class Facade {
 		return lis.get(local).getColor();
 	}
 	
-	public void saveGame() {
-		
+	public void saveGame(){
+		try {
+			Save.save(listp, acctualPlayer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	
+//	public void loadGame() {
+//		try {
+//			Load.buildStateGame("C:\\Users\\Pedro\\eclipse-workspace\\LudoGame\\save.txt");
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	
 	//move in the game

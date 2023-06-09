@@ -38,10 +38,10 @@ class Save {
 	
 	private static String translatePosition(Pawn p, Player pl) {
 		if(p.inBase()) {
-			return " position " + -1 + "\n";
+			return " position: " + -1 + "\n";
 		}
 		else {
-			return " position " + p.getPawnPositionInBoard(pl) + "\n";
+			return " position: " + p.getPawnPositionInBoard(pl) + "\n";
 		}
 	}
 }
