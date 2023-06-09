@@ -120,8 +120,8 @@ public class Facade {
 		return lis.get(local).getColor();
 	}
 	
-	public PlayerColor getPlayerColor() {
-		return acctualPlayer.getPlayerColor();
+	public int getPlayerColor() {
+		return acctualPlayer.getPlayerColor().getValue();
 	}
 	
 	public void saveGame(){

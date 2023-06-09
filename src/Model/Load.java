@@ -100,7 +100,7 @@ class Load {
 	static void finishedThePath(short pawn) {pawn |= 0x2000;}
 	
 	
-	static void refreshPawns(List<Player> listp) {
+	static void refreshPawns(List<Player> listp, ArrayList<ArrayList<Short>> playerPawns) {
 		for(Player p : listp) {
 			List<Pawn> pawns = p.getPawns();
 			
