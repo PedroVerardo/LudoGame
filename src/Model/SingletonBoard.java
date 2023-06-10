@@ -140,6 +140,8 @@ class SingletonBoard implements IObservableBoard{
 		
 		if(pawn.haveFinished()) {return 0;}
 		
+		if(totalMove > finalPos) {return 0;}
+		
 		if(totalMove == 57 || totalMove == 63 || totalMove == 69 || totalMove == 75 ) {
 			return 6;
 		}
@@ -151,8 +153,8 @@ class SingletonBoard implements IObservableBoard{
 		}
 		
 		else {
-			for(int i = 1; i < diceRoll; i++) {
-				if(pawn.getTotalMoves() + i >= 50) {return 2;}
+			for(int i = 1; i <= diceRoll; i++) {
+				if(pawn.getTotalMoves() + i >= 51) {return 2;}
 				
 				else if(haveBarrier(board.get(position1 + i))) {return 0;}
 			}
@@ -280,12 +282,12 @@ class SingletonBoard implements IObservableBoard{
 		//casa final
 		if(moveType == 2) {
 			
-			position2 = 52 + 6*((p.getColor() - 0x0100) >> 8)  + 
-					(50 - p.getTotalMoves() + diceRoll - 1)
+			position2 = 52 + 6*((p.getColor() - 0x0100) >> 8)  
+					+ (-50 + p.getTotalMoves() + diceRoll - 1)
 					;
 			p.setFinalLine();
 			System.out.println("position2 "+ position2);
-			p.addMove(position2 - 50);
+			p.setMove(position2);
 			moveTo(p, position1, position2);
 			if(p.haveFinished()) {
 				player.incPawnsFinished();

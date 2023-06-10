@@ -80,6 +80,12 @@ class Pawn implements Serializable{
 	 * */
 	void addMove(int diceRoll) {pawn += diceRoll;}
 	
+	void setMove(int position) {
+		this.pawnResetDist();
+		
+		pawn += position;
+	}
+	
 	
 	/**
 	 * Function overwrite the method equals used to compare pawns.
@@ -119,8 +125,7 @@ class Pawn implements Serializable{
 	short getPawn() {return pawn;}
 
 	public String toString() {
-		return "Base: " + this.inBase() + " FinalLine: " + this.isInFinalLine() 
-		+ " Finished: " + this.haveFinished() + " total Moves: " + this.getTotalMoves();
+		return "Cor: " + this.getColor() + " totalMoves: " + this.getTotalMoves();
 	}
 	
 }

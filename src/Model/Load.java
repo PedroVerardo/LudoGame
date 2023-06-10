@@ -38,7 +38,7 @@ class Load {
 		}
 	}
 	
-	static void makePawn(ArrayList<ArrayList<Integer>> list) {
+	static ArrayList<ArrayList<Short>> makePawn(ArrayList<ArrayList<Integer>> list) {
 		ArrayList<ArrayList<Short>> playerPawns = new ArrayList<ArrayList<Short>>();
 		
 		for(int i = 0; i < list.size(); i++) {
@@ -51,12 +51,21 @@ class Load {
 				
 				putColor(pawn, i);
 				//logica de tradução da posição
-				if(pos == -1) {
-					putInBase(pawn);
-				}
+				
 				
 			}
 			playerPawns.add(pawns);
+		}
+		return playerPawns;
+	}
+	
+	static void translatePosition(short pawn, int pos, int playerInitialHouse) {
+		if(pos > playerInitialHouse && pos < 51) {
+			pawn += pos - playerInitialHouse;
+		}
+		
+		else if(pos < playerInitialHouse && pos < 51){
+			pawn += 51 - playerInitialHouse + pos;
 		}
 	}
 	
