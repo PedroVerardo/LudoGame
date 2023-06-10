@@ -26,6 +26,7 @@ import Model.Facade;
 public class Menu extends JPanel {
 	private int diceroll;
 	private Rectangle2D.Double playing;
+	Facade facade;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 	int colorCount = 0;
 	List<Integer> b;
@@ -35,13 +36,8 @@ public class Menu extends JPanel {
 	int getDiceroll() {
 		return diceroll;
 	}
-	void nextRound() {
-        if(colorCount < 3)
-        	colorCount++;
-        else
-        	colorCount = 0;	
-	}
-	public Menu(Facade facade) {
+	public Menu(Facade f) {
+		facade = f;
 	    setBackground(Color.LIGHT_GRAY);
 	    setLayout(null);
 
@@ -181,7 +177,18 @@ public class Menu extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(colors[colorCount]);
+        if(facade.getPlayerColor()==1024)
+        	g2d.setColor(Color.RED);
+        else {
+        	if (facade.getPlayerColor()==768)
+        		g2d.setColor(Color.BLUE);
+        	else {
+        		if (facade.getPlayerColor()==512)
+            		g2d.setColor(Color.YELLOW);
+        		else
+        			g2d.setColor(Color.GREEN);
+        	}
+        }
         g2d.fill(playing);
     }
     
