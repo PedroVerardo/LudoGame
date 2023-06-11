@@ -21,6 +21,10 @@ class Pawn implements Serializable{
 		pawn |= 0x4000;
 	}
 	
+	Pawn(short val){
+		pawn = val;
+	}
+	
 	/**
 	 * Function to get the color of the paw represented by a short
 	 * 

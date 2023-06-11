@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import Controller.IObserver;
 
@@ -18,6 +19,7 @@ public class Facade {
 	private Player pl3 = listp.get(2);
 	private Player pl1 = listp.get(0);
 	
+	
 	private SingletonBoard game = SingletonBoard.getInstance(76);
 	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
@@ -30,6 +32,10 @@ public class Facade {
 		}
 	}
 
+	public Map<PlayerColor, Integer> getScore() {
+		return Score.totalScore(getAllPlayers());
+	}
+	
 	/**
 	 * Singleton construction
 	 * @return The instance of the facade class
@@ -50,10 +56,10 @@ public class Facade {
 	
 	public List<Player> getAllPlayers(){
 		List<Player> plist = new ArrayList<Player>(4);
-		plist.add(pl1);
+		plist.add(pl4);
 		plist.add(pl2);
 		plist.add(pl3);
-		plist.add(pl4);
+		plist.add(pl1);
 		
 		return plist;
 	}
@@ -126,19 +132,20 @@ public class Facade {
 	
 	public void saveGame(){
 		try {
-			Save.save(listp, acctualPlayer);
+			Save.save(getAllPlayers(), acctualPlayer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-//	public void loadGame() {
-//		try {
-//			Load.buildStateGame("C:\\Users\\Pedro\\eclipse-workspace\\LudoGame\\save.txt");
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void loadGame() {
+		try {
+			
+			Load.buildStateGame("C:\\Users\\Pedro\\eclipse-workspace\\LudoGame\\save.txt",getAllPlayers() ,round, game);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	//move in the game

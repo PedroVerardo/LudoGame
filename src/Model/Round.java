@@ -30,4 +30,8 @@ class Round {
 		
 		return currentPlayer;
 	}
+	
+	PlayerColor getCurrentPlayerColor() {
+		return currentPlayer.getPlayerColor();
+	}
 }

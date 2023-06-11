@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 class Load {
 	
-	static void buildStateGame(String path, List<Player> listp) throws FileNotFoundException {
+	static void buildStateGame(String path, List<Player> listp, Round round, SingletonBoard board) throws FileNotFoundException {
 		File file = new File(path);
 		Scanner scan = null;
 		scan = new Scanner(file);
@@ -36,22 +36,52 @@ class Load {
 			
 			cont++;
 		}
+		
+		
+		
+		//build the game
+		ArrayList<ArrayList<Pawn>> pawnsList = makePawn(pawnsPositions); //make a matrix of pawns
+		buildBoard(board, pawnsList, pawnsPositions);
+		
+		System.out.println(pawnsList);
 	}
 	
-	static ArrayList<ArrayList<Short>> makePawn(ArrayList<ArrayList<Integer>> list) {
-		ArrayList<ArrayList<Short>> playerPawns = new ArrayList<ArrayList<Short>>();
+	static void buildBoard(SingletonBoard board,ArrayList<ArrayList<Pawn>> pawnsList, List<ArrayList<Integer>> positions) {
+		for(int i = 0; i < 76; i++) {
+			if(!board.getHousePosition(i).getPawnsInHouse().isEmpty()) {
+				board.getHousePosition(i).removeAllPawns();
+			}
+				
+		}
 		
-		for(int i = 0; i < list.size(); i++) {
-			ArrayList<Short> pawns = new ArrayList<Short>();
-			short pawn = 0;
+		for(int i = 0; i < pawnsList.size(); i++) {
+			for(int j = 0; j < pawnsList.get(i).size(); j++) {
+				
+				
+				if(positions.get(i).get(j) != -1) {
+					board.putPawnInPosition(board,pawnsList.get(i).get(j), positions.get(i).get(j));
+				}
+				
+			}
+		}
+		
+	}
+	
+	static ArrayList<ArrayList<Pawn>> makePawn(List<ArrayList<Integer>> pawnsPositions) {
+		ArrayList<ArrayList<Pawn>> playerPawns = new ArrayList<ArrayList<Pawn>>();
+		
+		for(int i = 0; i < pawnsPositions.size(); i++) {
+			ArrayList<Pawn> pawns = new ArrayList<Pawn>();
+			int initialHouse = translateInitialHouse(i);
 			
-			for(int j = 0; j < list.get(i).size(); j++) {
-				
-				int pos = list.get(i).get(j);
-				
-				putColor(pawn, i);
-				//logica de tradução da posição
-				
+			for(int j = 0; j < pawnsPositions.get(i).size(); j++) {
+				short pawn = 0;
+				int pos = pawnsPositions.get(i).get(j);
+				System.out.println(pos);
+				//mouting the pawn
+				pawn = putColor(pawn, i);
+				pawn = translateSpecialPositionAndPosition(pawn, pos, initialHouse);
+				pawns.add(new Pawn(pawn));
 				
 			}
 			playerPawns.add(pawns);
@@ -59,25 +89,61 @@ class Load {
 		return playerPawns;
 	}
 	
-	static void translatePosition(short pawn, int pos, int playerInitialHouse) {
+	//add in pawn the qtd of moves
+	static short translatePosition(short pawn, int pos, int playerInitialHouse) {
+		System.out.println("oi");
 		if(pos > playerInitialHouse && pos < 51) {
+			
 			pawn += pos - playerInitialHouse;
 		}
 		
 		else if(pos < playerInitialHouse && pos < 51){
 			pawn += 51 - playerInitialHouse + pos;
 		}
+		
+		else {
+			pawn += pos;
+		}
+		
+		return pawn;
 	}
 	
-	static void translateSpecialPosition(short pawn, int pos) {
-		if(pos == -1) {putInBase(pawn);}
-		
-		if(pos == 57 || pos == 63 || pos == 69 || pos == 75) {finishedThePath(pawn);}
-		
-		else if(pos > 51){ setFinalLine(pawn);}
+	static int translateInitialHouse(int line) {
+		return 2 + line*13;
 	}
 	
-	static PlayerColor translateColor(String result) {
+	static short translateSpecialPositionAndPosition(short pawn, int pos, int playerInitialHouse) {
+		//System.out.println(pawn+ " pos:" + pos + " iniHouse: " + playerInitialHouse);
+		if(pos == -1) {
+			pawn = putInBase(pawn);
+		}
+		
+		else if(pos == 57 || pos == 63 || pos == 69 || pos == 75) {
+			pawn = finishedThePath(pawn);
+			pawn = translatePosition(pawn, pos, playerInitialHouse);
+		}
+		
+		else if(pos > 51){ 
+			pawn = setFinalLine(pawn);
+			pawn = translatePosition(pawn, pos, playerInitialHouse);
+		}
+		
+		else {
+			pawn = translatePosition(pawn, pos, playerInitialHouse);
+		}
+		
+		return pawn;
+	}
+	
+	//get the turn defined in the file
+	private static void translatePlayerTurn(PlayerColor colorOfTheTurn, Round round) {
+		while(round.getCurrentPlayerColor() != colorOfTheTurn) {
+			round.getNextPlayer();
+		}
+	}
+	
+	//translate the string in the file to playerColor
+	private static PlayerColor translateColor(String result) {
 		if(result.compareTo("VERMELHO") == 0) {return PlayerColor.VERMELHO;}
 		
 		else if(result.compareTo("AMARELO") == 0) {return PlayerColor.AMARELO;}
@@ -88,7 +154,8 @@ class Load {
 			
 	}
 	
-	static short putColor(short pawn, int pos) {
+	//add the color to the pawn
+	private static short putColor(short pawn, int pos) {
 		if(pos == 0) {
 			pawn = PlayerColor.VERDE.getValue();
 		}
@@ -104,19 +171,9 @@ class Load {
 		return pawn;
 	}
 	
-	static void setFinalLine(short pawn) {pawn |= 0x8000;}
-	static void putInBase(short pawn) {pawn |= 0x4000;}
-	static void finishedThePath(short pawn) {pawn |= 0x2000;}
-	
-	
-	static void refreshPawns(List<Player> listp, ArrayList<ArrayList<Short>> playerPawns) {
-		for(Player p : listp) {
-			List<Pawn> pawns = p.getPawns();
-			
-			for(Pawn pawn : pawns) {
-				
-			}
-		}
-	}
+	//function used in pawn
+	private static short setFinalLine(short pawn) {return pawn |= 0x8000;}
+	private static short putInBase(short pawn) {return pawn |= 0x4000;}
+	private static short finishedThePath(short pawn) {return pawn |= 0x2000;}
 	
 }

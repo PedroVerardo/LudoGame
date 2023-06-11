@@ -85,6 +85,15 @@ class House {
 	 * */
 	void setBarrierUp() {this.barrierUp = true;}
 	
+	void removeAllPawns() {
+		if(pawnsInHouse.isEmpty()) {return;}
+		else {
+			for(Pawn p : pawnsInHouse) {
+				this.removePawn(p);
+			}
+		}
+	}
+	
 	
 	/**
 	 * Function to set the boolean barrier to false.

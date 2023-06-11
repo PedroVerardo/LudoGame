@@ -160,6 +160,8 @@ class SingletonBoard implements IObservableBoard{
 			}
 			if(pawn.inBase() && diceRoll != 5) {return 0;}
 			
+			else if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
+			
 			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
 			
 			else if(pawn.inBase() && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
@@ -261,6 +263,13 @@ class SingletonBoard implements IObservableBoard{
 		House h1 = board.get(player.getStartHouse());
 		pawn.removeFromBase();
 		h1.addPawn(pawn);
+	}
+	
+	void putPawnInPosition(SingletonBoard board, Pawn p, int pos) {
+		House h = board.getHousePosition(pos);
+		
+		if(comparePawns(p,h)){h.setBarrierUp();}
+		h.addPawn(p);
 	}
 	
 	

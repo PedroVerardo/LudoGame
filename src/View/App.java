@@ -9,11 +9,15 @@ public class App {
 		new FRLudo(Facade.getFacadeInstance()).setVisible(true);
 
 		Facade oi = new Facade();
+		//oi.setBoard();
 		
 		
 		//oi.saveGame();
 		
 		//oi.loadGame();
+		//oi.printBoard();
+		
+		//System.out.println(0x4000 + 256);
 		
 	}
 }

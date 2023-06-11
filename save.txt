@@ -1,7 +1,7 @@
-VERMELHO 1024 position: -1
-VERMELHO 1024 position: -1
-VERMELHO 1024 position: -1
-VERMELHO 1024 position: -1
+VERDE 256 position: 5
+VERDE 256 position: -1
+VERDE 256 position: -1
+VERDE 256 position: -1
 AMARELO 512 position: -1
 AMARELO 512 position: -1
 AMARELO 512 position: -1
@@ -10,8 +10,8 @@ AZUL 768 position: -1
 AZUL 768 position: -1
 AZUL 768 position: -1
 AZUL 768 position: -1
-VERDE 256 position: -1
-VERDE 256 position: -1
-VERDE 256 position: -1
-VERDE 256 position: -1
+VERMELHO 1024 position: -1
+VERMELHO 1024 position: -1
+VERMELHO 1024 position: -1
+VERMELHO 1024 position: -1
 PlayerOfTheRound: VERDE
