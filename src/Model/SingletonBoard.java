@@ -160,10 +160,15 @@ class SingletonBoard implements IObservableBoard{
 			}
 			if(pawn.inBase() && diceRoll != 5) {return 0;}
 			
+			//can't have 2 pawns equals in the same initialHouse
 			else if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
 			
+			//move to inicialHouse
 			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
 			
+			else if(h2.isInitialHouse() && !comparePawns(pawn, h2)) {return 1;}
+			
+			//have a pawn of the same color in the inicialHouse
 			else if(pawn.inBase() && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
 			
 			//don't have pawns

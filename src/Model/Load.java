@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 class Load {
 	
-	static void buildStateGame(String path, List<Player> listp, Round round, SingletonBoard board) throws FileNotFoundException {
+	static ArrayList<Player> buildStateGame(String path, List<Player> listp, Round round, SingletonBoard board) throws FileNotFoundException {
 		File file = new File(path);
 		Scanner scan = null;
 		scan = new Scanner(file);
@@ -20,7 +20,7 @@ class Load {
 		pawnsPositions.add(new ArrayList<Integer>());
 		pawnsPositions.add(new ArrayList<Integer>());
 		
-		PlayerColor colorPlayerOfTheRound;
+		PlayerColor colorPlayerOfTheRound = PlayerColor.VERDE;
 		
 		//get the information from the save file
 		while(scan.hasNext()) {
@@ -42,8 +42,32 @@ class Load {
 		//build the game
 		ArrayList<ArrayList<Pawn>> pawnsList = makePawn(pawnsPositions); //make a matrix of pawns
 		buildBoard(board, pawnsList, pawnsPositions);
+		ArrayList<Player> playerList = createPlayerList(pawnsList);
+		translatePlayerTurn(colorPlayerOfTheRound, round);
 		
-		System.out.println(pawnsList);
+		
+		
+		return playerList;
+	}
+	
+	static ArrayList<Player> createPlayerList(ArrayList<ArrayList<Pawn>> pawnsList) {
+		ArrayList<Player> newPlayerList = new ArrayList<Player>();
+		ArrayList<Pawn> pawnsGreen = pawnsList.get(0);
+		ArrayList<Pawn> pawnsYellow = pawnsList.get(1);
+		ArrayList<Pawn> pawnsBlue = pawnsList.get(2);
+		ArrayList<Pawn> pawnsRed = pawnsList.get(3);
+		
+		Player pl1 = new Player(2,pawnsGreen.get(0),pawnsGreen.get(1),pawnsGreen.get(2),pawnsGreen.get(3),PlayerColor.VERDE);
+		Player pl2 = new Player(15,pawnsYellow.get(0),pawnsYellow.get(1),pawnsYellow.get(2),pawnsYellow.get(3),PlayerColor.AMARELO);
+		Player pl3 = new Player(28,pawnsBlue.get(0),pawnsBlue.get(1),pawnsBlue.get(2),pawnsBlue.get(3),PlayerColor.AZUL);
+		Player pl4 = new Player(41,pawnsRed.get(0),pawnsRed.get(1),pawnsRed.get(2),pawnsRed.get(3),PlayerColor.VERMELHO);
+		
+		newPlayerList.add(pl1);
+		newPlayerList.add(pl2);
+		newPlayerList.add(pl3);
+		newPlayerList.add(pl4);
+		
+		return newPlayerList;
 	}
 	
 	static void buildBoard(SingletonBoard board,ArrayList<ArrayList<Pawn>> pawnsList, List<ArrayList<Integer>> positions) {
@@ -137,6 +161,7 @@ class Load {
 	
 	//get the turn defined in the file
 	private static void translatePlayerTurn(PlayerColor colorOfTheTurn, Round round) {
+		round.getNextPlayer();
 		while(round.getCurrentPlayerColor() != colorOfTheTurn) {
 			round.getNextPlayer();
 		}

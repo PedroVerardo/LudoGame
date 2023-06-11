@@ -26,6 +26,7 @@ public class Facade {
 	
 	private Player acctualPlayer = pl4;
 	
+	
 	public void printBoard() {
 		for(int i = 0; i < 76;i++) {
 			System.out.println("casa "+ i + "com" + game.getHousePosition(i).getPawnsInHouse());
@@ -48,6 +49,8 @@ public class Facade {
 	
 	public void setBoard() {
 		game.setBoard();
+		
+		loadGame();
 	}
 	
 	public void subscribeInBoard(IObserver ob) {
@@ -141,7 +144,13 @@ public class Facade {
 	public void loadGame() {
 		try {
 			
-			Load.buildStateGame("C:\\Users\\Pedro\\eclipse-workspace\\LudoGame\\save.txt",getAllPlayers() ,round, game);
+			ArrayList<Player> playerList= Load.buildStateGame("C:\\Users\\Pedro\\eclipse-workspace\\LudoGame\\save.txt",getAllPlayers() ,round, game);
+			pl4 = playerList.get(0);
+			pl2 = playerList.get(1);
+			pl3 = playerList.get(2);
+			pl1 = playerList.get(3);
+			
+			round = new Round(pl4, pl2, pl3, pl1);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -152,10 +161,11 @@ public class Facade {
 	public void makeMove(int local, int pos1, int diceRoll){
 		List<Pawn> lis = acctualPlayer.getPawns();
 		Pawn p = lis.get(local);
-		//System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
+		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
-		printBoard();
+		//printBoard();
+		System.out.println(getAllPawnsPositions());
 	}
 	
 }
