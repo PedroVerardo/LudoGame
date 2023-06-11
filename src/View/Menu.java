@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 
@@ -67,9 +66,10 @@ public class Menu extends JPanel {
 	    saveGameButton.setBounds(10, 140, 150, 40);
 	    saveGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            //função para salvar
-	            }
-	        });
+	            // Create a new dialog box
+	        	new FRScoreBoard(facade).setVisible(true);;
+	        }
+	    });
 	    
 	    JLabel statusLabel = new JLabel("À jogar: ");
 	    statusLabel.setBounds(10, 190, 150, 40);
