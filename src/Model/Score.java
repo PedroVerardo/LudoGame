@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Score {
-	static Map<PlayerColor, Integer> totalScore(List<Player> list) {
+	static Map<Short, Integer> totalScore(List<Player> list) {
 		
-		Map<PlayerColor, Integer> score = new HashMap<PlayerColor, Integer>();
+		Map<Short, Integer> score = new HashMap<Short, Integer>();
 		
 		for(Player p: list) {
-			score.put(p.getPlayerColor(), playerScore(p));
+			score.put(p.getPlayerColor().getValue(), playerScore(p));
 		}
 		
 		return score;
