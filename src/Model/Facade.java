@@ -33,7 +33,7 @@ public class Facade {
 		}
 	}
 
-	public Map<PlayerColor, Integer> getScore() {
+	public Map<Short, Integer> getScore() {
 		return Score.totalScore(getAllPlayers());
 	}
 	

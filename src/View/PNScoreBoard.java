@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
 
@@ -28,26 +29,68 @@ public class PNScoreBoard extends JPanel {
 	JLabel pointLabel[] = new JLabel[4];
 	Facade facade;
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
+	Short values[] = {256,512,768,1024}; 
 	int colorCount = 0;
 	List<Integer> b;
 	List<Integer> pp;
+	int scores[] = new int[4];
 	//List<Pawn> p;
 	//Player r;
-	int getDiceroll() {
-		return diceroll;
-	}
+	int[] bogoSort(int[] a, Color[] b)
+    {
+        // if array is not sorted then shuffle the
+        // array again
+        while (isSorted(a) == false)
+            shuffle(a,b);
+        return a;
+    }
+ 
+    // To generate permutation of the array
+    void shuffle(int[] a, Color[] b)
+    {
+        // Math.random() returns a double positive
+        // value, greater than or equal to 0.0 and
+        // less than 1.0.
+        for (int i = 0; i < a.length; i++)
+            swap(a,b, i, (int)(Math.random() * i));
+    }
+ 
+    // Swapping 2 elements
+    void swap(int[] a, Color[] b, int i, int j)
+    {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+        Color tempc = b[i];
+        b[i] = b[j];
+        b[j] = tempc;
+    }
+ 
+    // To check if array is sorted or not
+    boolean isSorted(int[] a)
+    {
+        for (int i = 1; i < a.length; i++)
+            if (a[i] > a[i - 1])
+                return false;
+        return true;
+    }
 	public PNScoreBoard(Facade f) {
 		facade = f;
 	    setBackground(Color.LIGHT_GRAY);
 	    setLayout(null);
 	    Font labelFont = new Font("Monospace Bold", Font.BOLD, 26);
+	    Map<Short, Integer> score = facade.getScore();
+	    for(int i = 0; i < 4; i++) {
+	    	scores[i] = score.get(values[i]);
+	    }
+	    scores = bogoSort(scores,colors);
 		for(int i = 0; i < 4; i++) {
 			players[i] = new Ellipse2D.Double(70,30+60*(i),40,40);
 			statusLabel[i] = new JLabel(""+(i+1)+"");
 		    statusLabel[i].setBounds(70,30+60*(i),40,40);
 		    statusLabel[i].setFont(labelFont);
 		    statusLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
-		    pointLabel[i] = new JLabel("Pontos: "+(i+1)+"");
+		    pointLabel[i] = new JLabel("Pontos: "+scores[i]+"");
 		    pointLabel[i].setBounds(140,30+60*(i),300,40);
 		    pointLabel[i].setFont(labelFont);
 		    //pointLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
@@ -90,14 +133,12 @@ public class PNScoreBoard extends JPanel {
         g.drawLine(70, 140, 450, 140);
         g.drawLine(70, 200, 450, 200);
         g.drawLine(70, 260, 450, 260);
-    	g2d.setColor(Color.RED);
-    	g2d.fill(players[0]);
-    	g2d.setColor(Color.BLUE);
-    	g2d.fill(players[1]);
-        g2d.setColor(Color.YELLOW);
-        g2d.fill(players[2]);
-    	g2d.setColor(Color.GREEN);
-    	g2d.fill(players[3]);
+        for(int i = 0; i < 4; i++) {
+        	g2d.setColor(Color.BLACK);
+        	g.drawLine(70, 80+(60*i), 450, 80+(60*i));
+        	g2d.setColor(colors[i]);
+        	g2d.fill(players[i]);
+        }
     }
     
 }
