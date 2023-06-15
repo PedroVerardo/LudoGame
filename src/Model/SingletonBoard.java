@@ -138,14 +138,18 @@ class SingletonBoard implements IObservableBoard{
 		
 		LinkedList<Pawn> listH2 = h2.getPawnsInHouse();
 		
+		//verify if pawns finished
 		if(pawn.haveFinished()) {return 0;}
 		
+		//verify if the movment is greater than the final house
 		if(totalMove > finalPos) {return 0;}
 		
+		//if position is equal a final house
 		if(totalMove == 57 || totalMove == 63 || totalMove == 69 || totalMove == 75 ) {
 			return 6;
 		}
 		
+		//verify if the pawn in the final line can move
 		if(pawn.isInFinalLine()) {
 			if(totalMove < finalPos ) {return 1;}
 			
@@ -153,23 +157,32 @@ class SingletonBoard implements IObservableBoard{
 		}
 		
 		else {
+			//return 2 if the pawn complete the path and 0 if have a barrier in the middle of the path
 			for(int i = 1; i <= diceRoll; i++) {
 				if(pawn.getTotalMoves() + i >= 51) {return 2;}
 				
 				else if(haveBarrier(board.get(position1 + i))) {return 0;}
 			}
+			//if pawn is in base and the diceRoll is different of 5, the pawn can't move
 			if(pawn.inBase() && diceRoll != 5) {return 0;}
+			
+			//have a pawn of the same color in the inicialHouse
+			else if(pawn.inBase() && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
 			
 			//can't have 2 pawns equals in the same initialHouse
 			else if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
 			
+			//if have two pawns in a initial house
+			else if(h2.isInitialHouse() && listH2.size() > 1) {return 0;}
+			
 			//move to inicialHouse
+			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial) && initial.getPawnsInHouse().size() == 1) {return 7;}
+			
 			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
 			
-			else if(h2.isInitialHouse() && !comparePawns(pawn, h2)) {return 1;}
+			//errado
+			else if(h2.isInitialHouse() && listH2.get(0).getTotalMoves() == 0 && listH2.size() < 2) {return 1;}
 			
-			//have a pawn of the same color in the inicialHouse
-			else if(pawn.inBase() && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
 			
 			//don't have pawns
 			else if(listH2.isEmpty() && !pawn.inBase()) {return 1;}
@@ -270,6 +283,13 @@ class SingletonBoard implements IObservableBoard{
 		h1.addPawn(pawn);
 	}
 	
+	void exitBaseAndEat(Pawn pawn, Player player) {
+		House h1 = board.get(player.getStartHouse());
+		if(h1.getPawnsInHouse().size() != 0);
+		h1.removePawn();
+		h1.addPawn(pawn);
+	}
+	
 	void putPawnInPosition(SingletonBoard board, Pawn p, int pos) {
 		House h = board.getHousePosition(pos);
 		
@@ -347,6 +367,11 @@ class SingletonBoard implements IObservableBoard{
 			if(player.isWinner()) { 
 				return;
 			}
+		}
+		
+		else if(moveType == 7) {
+			p.removeFromBase();
+			exitBaseAndEat(p, player);
 		}
 		
 		//nao pode mover nao faz nada

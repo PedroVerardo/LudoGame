@@ -50,6 +50,7 @@ public class Facade {
 	public void setBoard() {
 		game.setBoard();
 		
+		//round.getNextPlayer();
 		loadGame();
 	}
 	

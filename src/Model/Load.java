@@ -74,6 +74,7 @@ class Load {
 		for(int i = 0; i < 76; i++) {
 			if(!board.getHousePosition(i).getPawnsInHouse().isEmpty()) {
 				board.getHousePosition(i).removeAllPawns();
+				board.getHousePosition(i).setBarrierDown();
 			}
 				
 		}
@@ -115,17 +116,19 @@ class Load {
 	
 	//add in pawn the qtd of moves
 	static short translatePosition(short pawn, int pos, int playerInitialHouse) {
-		System.out.println("oi");
-		if(pos > playerInitialHouse && pos < 51) {
-			
+		
+		if(pos >= playerInitialHouse && pos <= 51) {
+			System.out.println("case 1");
 			pawn += pos - playerInitialHouse;
 		}
 		
 		else if(pos < playerInitialHouse && pos < 51){
-			pawn += 51 - playerInitialHouse + pos;
+			System.out.println("case 2");
+			pawn += 52 - playerInitialHouse + pos;
 		}
 		
 		else {
+			System.out.println("case 3");
 			pawn += pos;
 		}
 		

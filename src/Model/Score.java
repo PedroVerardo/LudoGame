@@ -21,13 +21,14 @@ public class Score {
 		List<Pawn> pawns= p.getPawns();
 		
 		for(Pawn pawn : pawns) {
-			if(pawn.haveFinished()) {
-				total += 3;
+			if(pawn.getTotalMoves() > 50) {
+				int colorPlayerValueShifited = p.getPlayerColor().getValue() >> 4 - 1;
+				total += pawn.getTotalMoves() - 6*colorPlayerValueShifited;
+			}
+			else {
+				total += pawn.getTotalMoves();
 			}
 			
-			else if(pawn.isInFinalLine()) {
-				total += 1;
-			}
 		}
 		
 		return total;
