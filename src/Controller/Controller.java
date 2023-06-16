@@ -5,8 +5,12 @@ import java.util.List;
 import Model.*;
 import View.*;
 
-public class Controller {
 
+public class Controller {
+	
+	private int initGame = 0;
+	private int tokenRepeat = 0;
+	
 	Facade facade = Facade.getFacadeInstance();
 	
 	public Controller() {}
@@ -30,43 +34,122 @@ public class Controller {
 		return -5;
 	}
 	
-	public int makeMove(int roll, int click) {
+	/* 
+	 * makes a move based on a dice roll and on a board click
+	 * if a move is not possible, return -1
+	 * if function made move, returns 1
+	 */
+	public void makeMoveController(int roll, int click) {
+		
+		if (initGame == 0) {
+			facade.getPlayerOfRound();
+		}
+		initGame = 1;
+		
 		List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
 		List<Integer> moveTypes = facade.getPawnsMoveTypesOfPlayer(roll);
+		int indexClick = validateClick(click, pawnsPositions, moveTypes);
+		int indexBarrier = searchBarrier(roll, pawnsPositions);
 		
-		if (verifyMoveTypes(moveTypes) == 0) { return 0; }
+		// if player has no possible moves
+		if (verifyMoveTypes(moveTypes) == 0) { facade.getPlayerOfRound(); return; }		
+		// if click is not in a valid position, the round must be locked to that player 
+		if (indexClick == -1) { return; }
+		// if dice roll equals 6, there is a barrier in player round and he does not dismount it
+		if (indexBarrier != -1 && click != indexBarrier) { return; }
+		// if dice roll equals 5 and there are paws in base
+		if (setPawnOutOfBase(roll, pawnsPositions) == 1 && click != facade.getPlayerInitialHouse()) { return; }
 		
-		for (int i = 0; i < pawnsPositions.size(); i++) {
-			// if a click corresponds to a pawn position in board and the move type of that pawn is valid
-			if (click == pawnsPositions.get(i) && moveTypes.get(i) != 0) {
-				
-				facade.makeMove(i, 0, roll);
-				return extraMovement(roll, moveTypes.get(i));
-				
-			}
+			
+		facade.makeMove(indexClick, click, roll);
+		
+		
+		int extraMove = extraMovement(roll, moveTypes.get(indexClick)); 
+		// if dice roll was 6
+		if (extraMove == 1 && tokenRepeat < 2) {
+			tokenRepeat++;
+			return;
 		}
 		
-		return 1;
+		if (extraMove == 2) {
+			return;
+		}
+		
+		tokenRepeat = 0;
+		facade.getPlayerOfRound();
+		return;
 	}
 	
-	public int verifyMoveTypes(List<Integer> moveTypes) {
+	/*
+	 * Verify if player has moves. 
+	 * If not, round is passed to other player.
+	 * */
+	int verifyMoveTypes(List<Integer> moveTypes) {
 		
 		for (int i = 0; i < moveTypes.size(); i++) {
 			 
-			if (moveTypes.get(i) == 0) { return 0; }
+			if (moveTypes.get(i) != 0) { return 1; }
 		}
 		
-		return 1;
+		return 0;
+	}
+	
+	/*
+	 * Receives a board click and verifies:
+	 * - if it corresponds to a pawn position
+	 * - if move is possible
+	 * */
+	int validateClick(int click, List<Integer> pawnsPositions, List<Integer> moveTypes) {
+		for (int i = 0; i < pawnsPositions.size(); i++) {
+			if (click == pawnsPositions.get(i) && moveTypes.get(i) != 0) { return i; }
+		}
+		return -1;
+	}
+	
+	/*
+	 * Verifies if a player needs to set pawn out of base 
+	 * */
+	int setPawnOutOfBase(int roll, List<Integer> pawnsPositions) {
+		
+		if (roll != 5) { return 0; }
+		
+		for (int i = 0; i < pawnsPositions.size(); i++) {
+			if (pawnsPositions.get(i) == facade.getPlayerInitialHouse()) { return 1; }
+			
+		}
+		
+		return 0;
 	}
 	
 	/*
 	 * Function that verifies if another move is possible
 	 * */
-	public int extraMovement(int roll, int type) {
+	int extraMovement(int roll, int type) {
         
-        if (roll == 6 || type == 4) { return 1; }
+        if (roll == 6) { return 1; }
+        if (type == 4) { return 1; }
         
         return 0;
+	}
+	
+	/*
+	 * check if a barrier is up and obligates player to dismount
+	 * in his next round
+	 * returns barrier position in case is up
+	 * else returns -1  
+	 * */
+	int searchBarrier(int roll, List<Integer> pawnsPositions) {
+		if (roll != 6) { return -1;}
+		
+		for (int i = 0; i < 4; i++) {
+			Integer pawn = pawnsPositions.get(i);
+			for (int j = i+1; j < 4; j++ ) {
+				if (pawn.compareTo(pawnsPositions.get(j)) == 0
+						&& !facade.isInitialHouseOfPlayer(pawn)) {  return pawn; }
+			}
+		}
+		
+		return -1;
 	}
 	
 	int middlePortion(int x, int y) {
