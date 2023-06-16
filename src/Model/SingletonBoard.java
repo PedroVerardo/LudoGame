@@ -157,28 +157,32 @@ class SingletonBoard implements IObservableBoard{
 		}
 		
 		else {
-			//return 2 if the pawn complete the path and 0 if have a barrier in the middle of the path
-			for(int i = 1; i <= diceRoll; i++) {
-				if(pawn.getTotalMoves() + i >= 51) {return 2;}
-				
-				else if(haveBarrier(board.get(position1 + i))) {return 0;}
-			}
 			//if pawn is in base and the diceRoll is different of 5, the pawn can't move
 			if(pawn.inBase() && diceRoll != 5) {return 0;}
 			
 			//have a pawn of the same color in the inicialHouse
 			else if(pawn.inBase() && diceRoll == 5 && comparePawns(pawn, initial)) {return 0;}
-			
-			//can't have 2 pawns equals in the same initialHouse
-			else if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
-			
-			//if have two pawns in a initial house
-			else if(h2.isInitialHouse() && listH2.size() > 1) {return 0;}
+			//return 2 if the pawn complete the path and 0 if have a barrier in the middle of the path
 			
 			//move to inicialHouse
 			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial) && initial.getPawnsInHouse().size() == 1) {return 7;}
 			
 			else if(pawn.inBase() && diceRoll == 5 && !comparePawns(pawn, initial)) {return 3;}
+			
+			for(int i = 1; i <= diceRoll; i++) {
+				if(pawn.getTotalMoves() + i >= 51) {return 2;}
+				
+				else if(haveBarrier(board.get(position1 + i))) {return 0;}
+			}
+			
+			
+			//can't have 2 pawns equals in the same initialHouse
+			if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
+			
+			//if have two pawns in a initial house
+			else if(h2.isInitialHouse() && listH2.size() > 1) {return 0;}
+			
+			
 			
 			//errado
 			else if(h2.isInitialHouse() && listH2.get(0).getTotalMoves() == 0 && listH2.size() < 2) {return 1;}
