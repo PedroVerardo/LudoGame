@@ -251,39 +251,17 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 		Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 		int colorCount = 0;
 		int diceroll = menu.getDiceroll();
-		int chosenPawnMoveType = 0;
-		List<Integer> b;
-		List<Integer> pp;
-		facade.getPlayerOfRound();
-        b = facade.getPawnsMoveTypesOfPlayer(diceroll);
-        pp = facade.getPawnsPositionOfPlayer();
-
+				
+		c.makeMoveController(diceroll, pos);
         
-        for (int i = 0; i < b.size(); i++) {
-        	if (b.get(i) != 0) {
-        		chosenPawnMoveType = b.get(i);
-        		facade.makeMove(i, pos, diceroll);
-        		break;
-        	}
-        }
-        
-        
-        //int repeatPlayer = c.extraMovement(diceroll, chosenPawnMoveType);
-        
-        //System.out.println("\n\n\n" + repeatPlayer + "\n\n\n");
-        //if (repeatPlayer == 1)	{
-        	
-        	
-        	
-        //}
-        
-        if(colorCount < 3)
+        if (colorCount < 3)
         	colorCount++;
         else
-        	colorCount = 0;	
-		//System.out.println("x = " + x + " y = " + y + " Position = " + pos);	
-		updateBoard();
+        	colorCount = 0;		
+		
+        updateBoard();
 		menu.repaint();
+		
 	}
 	
 	public void mouseEntered(MouseEvent e) {}

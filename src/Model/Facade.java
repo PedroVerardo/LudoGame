@@ -108,6 +108,9 @@ public class Facade {
 	//Pawns in the House
 	public int getPawnsInHouse(int pos){return game.getHousePosition(pos).getPawnsInHouse().size();}
 	
+	//Get player start house
+	public int getPlayerInitialHouse() {return acctualPlayer.getStartHouse();}
+	
 	//Pawns positions of one player
 	public List<Integer> getPawnsPositionOfPlayer(){return acctualPlayer.getAllPawnsBoardposition();}
 	
@@ -120,8 +123,11 @@ public class Facade {
 	//If this house is final
 	public boolean isFinalHouse(int pos) {return game.getHousePosition(pos).isFinalHouse();}
 	
-	//If is this house is Initial
+	//If this house is Initial
 	public boolean isInitialHouse(int pos) {return game.getHousePosition(pos).isInitialHouse();}
+	
+	//If this house is initial of one player
+	public boolean isInitialHouseOfPlayer(int pos) { return pos == acctualPlayer.getStartHouse(); }
 	
 	//Pawn color
 	public int pawnColor(int local) {
