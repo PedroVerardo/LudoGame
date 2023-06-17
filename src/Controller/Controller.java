@@ -54,10 +54,6 @@ public class Controller {
 		int indexClick = validateClick(click, pawnsPositions, moveTypes);
 		int indexBarrier = searchBarrier(roll, pawnsPositions);
 		
-		System.out.println();
-		for (int i = 0; i < 4; i++) System.out.printf("%d ", pawnsPositions.get(i));
-		System.out.println();
-		
 		// if player has no possible moves
 		if (verifyMoveTypes(moveTypes) == 0) { 
 			menu.setDiceButton(true);
@@ -107,7 +103,10 @@ public class Controller {
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
 		
+<<<<<<< HEAD
 		
+=======
+>>>>>>> acf98e4798796086d1738075fb88942883676138
 		facade.getPlayerOfRound();
 		return;
 	}
