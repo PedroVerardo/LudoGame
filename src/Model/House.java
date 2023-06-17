@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 
@@ -88,8 +89,14 @@ class House {
 	void removeAllPawns() {
 		if(pawnsInHouse.isEmpty()) {return;}
 		else {
-			for(Pawn p : pawnsInHouse) {
-				this.removePawn(p);
+//			for(Iterator<Pawn> p = pawnsInHouse.iterator(); p.hasNext();) {
+//				Pawn p1 = p.next();
+//				this.removePawn(p1);
+//			}
+			Iterator<Pawn> p = pawnsInHouse.iterator();
+			while(p.hasNext()) {
+				Pawn p1 = p.next();
+				this.removePawn(p1);
 			}
 		}
 	}
