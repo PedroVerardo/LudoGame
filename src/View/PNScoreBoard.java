@@ -13,6 +13,7 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -74,7 +75,7 @@ public class PNScoreBoard extends JPanel {
     }
     
     
-	public PNScoreBoard(Facade f) {
+	public PNScoreBoard(Facade f, JFrame j) {
 		facade = f;
 	    setBackground(Color.LIGHT_GRAY);
 	    setLayout(null);
@@ -102,7 +103,9 @@ public class PNScoreBoard extends JPanel {
 		newGameButton.setBounds(30, 300, 150, 40);
 	    newGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            JOptionPane.showMessageDialog(PNScoreBoard.this, "Iniciando nova partida...");
+	            facade.resetGame();
+
+	            j.setVisible(false);
 	        }
 	    });
 	    
@@ -114,8 +117,9 @@ public class PNScoreBoard extends JPanel {
 	            int returnValue = fileChooser.showOpenDialog(PNScoreBoard.this);
 	            if (returnValue == JFileChooser.APPROVE_OPTION) {
 	                File selectedFile = fileChooser.getSelectedFile();
-	                JOptionPane.showMessageDialog(PNScoreBoard.this, "Carregando partida do arquivo: " + selectedFile.getAbsolutePath());
-	                //função para abrir o arquivo e iniciar o jogo
+
+	                facade.loadGame(selectedFile.getAbsolutePath());  
+	                j.setVisible(false);
 	            }
 	        }
 	    });

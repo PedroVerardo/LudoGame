@@ -107,6 +107,7 @@ public class Controller {
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
 		
+
 		facade.getPlayerOfRound();
 		return;
 	}
