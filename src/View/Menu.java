@@ -83,8 +83,8 @@ public class Menu extends JPanel {
 	    saveGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            // Create a new dialog box
-	        	//new FRScoreBoard(facade).setVisible(true);
-	        	facade.saveGame();
+	        	new FRScoreBoard(facade).setVisible(true);
+	        	//facade.saveGame();
 	        }
 	    });
 	    

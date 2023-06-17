@@ -19,8 +19,8 @@ public class FRScoreBoard extends JFrame {
 		int x=sl/2-LARG_DEFAULT/2;
 		int y=sa/2-ALT_DEFAULT/2;
 		setBounds(x,y,500,400);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().add(new PNScoreBoard(facade));
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		getContentPane().add(new PNScoreBoard(facade,this));
 		
 		
 		setTitle("Score board");
