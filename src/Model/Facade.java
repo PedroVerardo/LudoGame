@@ -102,6 +102,8 @@ public class Facade {
 	//Player of the round
 	public void getPlayerOfRound() {acctualPlayer = round.getNextPlayer();}
 	
+	public boolean checkIfPlayerWin() {return acctualPlayer.isWinner();}
+	
 	//diceValue
 	public int GetDiceRoll(){return Dice.getDiceValue()+1;}
 	
@@ -165,6 +167,8 @@ public class Facade {
 			pl1 = playerList.get(3);
 			
 			round = new Round(pl4, pl2, pl3, pl1);
+			
+			game.notifyBoard();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
