@@ -10,6 +10,7 @@ public class Controller {
 	
 	private int initGame = 0;
 	private int tokenRepeat = 0;
+	private int captureOrFinal = 0;
 	
 	Facade facade = Facade.getFacadeInstance();
 	Menu menu = new Menu(facade);
@@ -49,6 +50,7 @@ public class Controller {
 		
 		List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
 		List<Integer> moveTypes = facade.getPawnsMoveTypesOfPlayer(roll);
+		List<Integer> pawnsTotalMoves = facade.pawnTotalMove();
 		int indexClick = validateClick(click, pawnsPositions, moveTypes);
 		int indexBarrier = searchBarrier(roll, pawnsPositions);
 		
@@ -72,28 +74,33 @@ public class Controller {
 		
 		int extraMove = makeExtraMovement(roll, moveTypes.get(indexClick)); 
 		// if dice roll was 6
-		if (extraMove == 1) {
+		if (extraMove == 1 && captureOrFinal == 0) {
 			// if roll equals 6 three times in a row and player has not arrived in final house 
 			if (tokenRepeat == 2) {
-				if (pawnsPositions.get(indexClick) + 6 < 50) {
-					System.out.println("TERCEIRO SEIS\n");
+				if (pawnsTotalMoves.get(indexClick) + 6 < 50) {
 					facade.returnPawnToBase(pawnsPositions.get(indexClick) + 6); 
 				}
 			}
 			else {
 				tokenRepeat++;
+				menu.setDiceButton(true);
 				return; 
 			}
 		}
 		
 		// if captured pawn or arrived in final house, players wins 6 movements
 		if (extraMove == 2 || extraMove == 3) {
-			System.out.printf("Wins 6 movements\n");
+			captureOrFinal = 1;
+			menu.setDiceToSix();
 			return;
 		}
 		
+		captureOrFinal = 0;
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
+		
+		if () { new FRScoreBoard(facade).setVisible(true); return;}
+		
 		facade.getPlayerOfRound();
 		return;
 	}
