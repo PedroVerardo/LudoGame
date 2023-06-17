@@ -221,7 +221,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 			}
 		}
 	}
-	
+		
 	public PNLudo(Menu m, Facade f) {
 		facade = f;
 		menu = m;
