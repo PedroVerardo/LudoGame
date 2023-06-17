@@ -252,7 +252,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 		int colorCount = 0;
 		int diceroll = menu.getDiceroll();
 				
-		c.makeMoveController(diceroll, pos);
+		c.makeMoveController(diceroll, pos, menu);
         
         if (colorCount < 3)
         	colorCount++;

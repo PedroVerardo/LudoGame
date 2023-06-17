@@ -12,6 +12,7 @@ public class Controller {
 	private int tokenRepeat = 0;
 	
 	Facade facade = Facade.getFacadeInstance();
+	Menu menu = new Menu(facade);
 	
 	public Controller() {}
 	
@@ -39,7 +40,7 @@ public class Controller {
 	 * if a move is not possible, return -1
 	 * if function made move, returns 1
 	 */
-	public void makeMoveController(int roll, int click) {
+	public void makeMoveController(int roll, int click, Menu menu) {
 		
 		if (initGame == 0) {
 			facade.getPlayerOfRound();
@@ -52,30 +53,47 @@ public class Controller {
 		int indexBarrier = searchBarrier(roll, pawnsPositions);
 		
 		// if player has no possible moves
-		if (verifyMoveTypes(moveTypes) == 0) { facade.getPlayerOfRound(); return; }		
+		if (verifyMoveTypes(moveTypes) == 0) { 
+			menu.setDiceButton(true);
+			facade.getPlayerOfRound(); 
+			return; }		
 		// if click is not in a valid position, the round must be locked to that player 
 		if (indexClick == -1) { return; }
-		// if dice roll equals 6, there is a barrier in player round and he does not dismount it
-		if (indexBarrier != -1 && click != indexBarrier) { return; }
-		// if dice roll equals 5 and there are paws in base
-		if (setPawnOutOfBase(roll, pawnsPositions) == 1 && click != facade.getPlayerInitialHouse()) { return; }
+		
+		// if dice roll equals 6 and there is a barrier in player round
+		if (roll == 6 && indexBarrier != -1 && click != indexBarrier) { return; }
+		// if dice roll equals 5 and there are pawns in base
+		if (roll == 5 && setPawnOutOfBase(roll, pawnsPositions, moveTypes) == 1 
+				&& click != facade.getPlayerInitialHouse()) { return; }
 		
 			
 		facade.makeMove(indexClick, click, roll);
 		
 		
-		int extraMove = extraMovement(roll, moveTypes.get(indexClick)); 
+		int extraMove = makeExtraMovement(roll, moveTypes.get(indexClick)); 
 		// if dice roll was 6
-		if (extraMove == 1 && tokenRepeat < 2) {
-			tokenRepeat++;
-			return;
+		if (extraMove == 1) {
+			// if roll equals 6 three times in a row and player has not arrived in final house 
+			if (tokenRepeat == 2) {
+				if (pawnsPositions.get(indexClick) + 6 < 50) {
+					System.out.println("TERCEIRO SEIS\n");
+					facade.returnPawnToBase(pawnsPositions.get(indexClick) + 6); 
+				}
+			}
+			else {
+				tokenRepeat++;
+				return; 
+			}
 		}
 		
-		if (extraMove == 2) {
+		// if captured pawn or arrived in final house, players wins 6 movements
+		if (extraMove == 2 || extraMove == 3) {
+			System.out.printf("Wins 6 movements\n");
 			return;
 		}
 		
 		tokenRepeat = 0;
+		menu.setDiceButton(true);
 		facade.getPlayerOfRound();
 		return;
 	}
@@ -109,38 +127,32 @@ public class Controller {
 	/*
 	 * Verifies if a player needs to set pawn out of base 
 	 * */
-	int setPawnOutOfBase(int roll, List<Integer> pawnsPositions) {
-		
-		if (roll != 5) { return 0; }
-		
+	int setPawnOutOfBase(int roll, List<Integer> pawnsPositions, List<Integer> moveTypes) {
 		for (int i = 0; i < pawnsPositions.size(); i++) {
-			if (pawnsPositions.get(i) == facade.getPlayerInitialHouse()) { return 1; }
-			
+			if (pawnsPositions.get(i) == facade.getPlayerInitialHouse() 
+					&& moveTypes.get(i) != 0) { return 1; }	
 		}
-		
 		return 0;
 	}
 	
 	/*
 	 * Function that verifies if another move is possible
 	 * */
-	int extraMovement(int roll, int type) {
+	int makeExtraMovement(int roll, int type) {
         
         if (roll == 6) { return 1; }
-        if (type == 4) { return 1; }
+        if (type == 4) { return 2; }
+        if (type == 6) { return 3; }
         
         return 0;
 	}
 	
 	/*
-	 * check if a barrier is up and obligates player to dismount
-	 * in his next round
+	 * check if a barrier is up
 	 * returns barrier position in case is up
 	 * else returns -1  
 	 * */
 	int searchBarrier(int roll, List<Integer> pawnsPositions) {
-		if (roll != 6) { return -1;}
-		
 		for (int i = 0; i < 4; i++) {
 			Integer pawn = pawnsPositions.get(i);
 			for (int j = i+1; j < 4; j++ ) {

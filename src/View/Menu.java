@@ -104,6 +104,7 @@ public class Menu extends JPanel {
 	            ImageIcon imageIcon = new ImageIcon(image);
 	            imageLabel.setIcon(imageIcon);
 	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	            setDiceButton(false);
 	        }
 	    });
 	    
