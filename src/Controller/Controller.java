@@ -99,7 +99,7 @@ public class Controller {
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
 		
-		if () { new FRScoreBoard(facade).setVisible(true); return;}
+		//if () { new FRScoreBoard(facade).setVisible(true); return;}
 		
 		facade.getPlayerOfRound();
 		return;
