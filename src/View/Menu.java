@@ -30,11 +30,26 @@ public class Menu extends JPanel {
 	int colorCount = 0;
 	List<Integer> b;
 	List<Integer> pp;
+	JButton rollDiceButton;
+	JLabel imageLabel = new JLabel();
 	//List<Pawn> p;
 	//Player r;
 	int getDiceroll() {
 		return diceroll;
 	}
+	
+	public void setDiceButton(boolean status) {
+		rollDiceButton.setEnabled(status);
+	}
+	
+	public void setDiceToSix() {
+		diceroll = 6;
+		String image = "src/Images/Dado" + diceroll + ".png";	
+        ImageIcon imageIcon = new ImageIcon(image);
+        imageLabel.setIcon(imageIcon);
+        imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	}
+	
 	public Menu(Facade f) {
 		facade = f;
 	    setBackground(Color.LIGHT_GRAY);
@@ -78,8 +93,7 @@ public class Menu extends JPanel {
 	    statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 	    playing = new Rectangle2D.Double(30, 235, 110, 110);
-	    JLabel imageLabel = new JLabel();
-	    JButton rollDiceButton = new JButton("Lançar Dado");
+	    rollDiceButton = new JButton("Lançar Dado");
 	    rollDiceButton.setBounds(10, 360, 150, 40);
 	    rollDiceButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
