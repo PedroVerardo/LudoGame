@@ -185,7 +185,7 @@ class SingletonBoard implements IObservableBoard{
 			
 			
 			//errado
-			else if(h2.isInitialHouse() && listH2.get(0).getTotalMoves() == 0 && listH2.size() < 2) {return 1;}
+			else if(h2.isInitialHouse() && listH2.size() == 1 && listH2.get(0).getTotalMoves() == 0 ) {return 1;}
 			
 			
 			//don't have pawns
