@@ -117,7 +117,7 @@ public class PNScoreBoard extends JPanel {
 	            if (returnValue == JFileChooser.APPROVE_OPTION) {
 	                File selectedFile = fileChooser.getSelectedFile();
 	                facade.loadGame(selectedFile.getAbsolutePath());  
-	                //função para abrir o arquivo e iniciar o jogo
+	                j.setVisible(false);
 	            }
 	        }
 	    });
