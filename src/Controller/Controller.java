@@ -107,6 +107,11 @@ public class Controller {
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
 		
+<<<<<<< HEAD
+=======
+		//if () { new FRScoreBoard(facade).setVisible(true); return;}
+		
+>>>>>>> cac89262bcd5c54f29f162e37a20754727aadded
 		facade.getPlayerOfRound();
 		return;
 	}
