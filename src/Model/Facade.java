@@ -132,6 +132,10 @@ public class Facade {
 	//put pawn in base
 	public void returnPawnToBase(int pos) { game.returnPawnToBase(pos);}
 	
+	public List<Integer> pawnTotalMove() {
+		return acctualPlayer.getPawnsTotalMoves();
+	}
+	
 	//Pawn color
 	public int pawnColor(int local) {
 		List<Pawn> lis = acctualPlayer.getPawns();
@@ -151,10 +155,10 @@ public class Facade {
 		}
 	}
 	
-	public void loadGame() {
+	public void loadGame(String path) {
 		try {
 			
-			ArrayList<Player> playerList= Load.buildStateGame("C:\\Users\\Pedro\\eclipse-workspace\\LudoGame\\save.txt",getAllPlayers() ,round, game);
+			ArrayList<Player> playerList= Load.buildStateGame(path ,getAllPlayers() , round, game);
 			pl4 = playerList.get(0);
 			pl2 = playerList.get(1);
 			pl3 = playerList.get(2);

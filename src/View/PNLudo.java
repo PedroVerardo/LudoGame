@@ -221,7 +221,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 			}
 		}
 	}
-	
+		
 	public PNLudo(Menu m, Facade f) {
 		facade = f;
 		menu = m;
@@ -249,7 +249,6 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 
 	public void mousePressed(MouseEvent e) {
 		pos = c.getPositionByClick(e.getX()/40, e.getY()/40);
-		Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 		int colorCount = 0;
 		int diceroll = menu.getDiceroll();
 				

@@ -114,6 +114,16 @@ class Player {
 		return pawnsBoardposition;
 	}
 	
+	List<Integer> getPawnsTotalMoves(){
+		ArrayList<Integer> totalMoves = new ArrayList<Integer>();
+		
+		for(Pawn p : pawnsBoardposition) {
+			totalMoves.add(p.getTotalMoves());
+		}
+		
+		return totalMoves;
+	}
+	
 	List<Integer> getPawnsMoveTypes(SingletonBoard board, int diceRoll){
 		ArrayList<Integer> moveTypes = new ArrayList<Integer>();
 		
