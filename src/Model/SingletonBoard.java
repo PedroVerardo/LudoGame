@@ -258,7 +258,18 @@ class SingletonBoard implements IObservableBoard{
 		h2.addPawn(p);
 	}
 	
+	void returnPawnToBase(int position1) {
+		House h1 = board.get(position1);
+		if(h1.isBarrierUp()) {
+			h1.setBarrierDown();
+		}
+		Pawn p2 = h1.getPawnsInHouse().pop();
+		p2.putInBase();
+		p2.pawnResetDist();
+	}
+	
 	/**
+	 * @deprecated
 	 * Function to remove a pawn of a specific location and add in the other
 	 * position.
 	 * 
@@ -289,9 +300,13 @@ class SingletonBoard implements IObservableBoard{
 	
 	void exitBaseAndEat(Pawn pawn, Player player) {
 		House h1 = board.get(player.getStartHouse());
-		if(h1.getPawnsInHouse().size() != 0);
-		h1.removePawn();
-		h1.addPawn(pawn);
+		if(h1.getPawnsInHouse().size() != 0) {
+			Pawn p2 = h1.getPawnsInHouse().pop();
+			p2.putInBase();
+			p2.pawnResetDist();
+			h1.addPawn(pawn);
+		}
+		
 	}
 	
 	void putPawnInPosition(SingletonBoard board, Pawn p, int pos) {

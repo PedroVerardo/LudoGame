@@ -129,6 +129,9 @@ public class Facade {
 	//If this house is initial of one player
 	public boolean isInitialHouseOfPlayer(int pos) { return pos == acctualPlayer.getStartHouse(); }
 	
+	//put pawn in base
+	public void returnPawnToBase(int pos) { game.returnPawnToBase(pos);}
+	
 	//Pawn color
 	public int pawnColor(int local) {
 		List<Pawn> lis = acctualPlayer.getPawns();
