@@ -382,10 +382,6 @@ class SingletonBoard implements IObservableBoard{
 			moveTo(p, position1, position2);
 			p.finishedThePath();
 			player.incPawnsFinished();
-			//é para colocar um retorno apropiado aq sembolizando o player que ganhou
-			if(player.isWinner()) { 
-				return;
-			}
 		}
 		
 		else if(moveType == 7) {
