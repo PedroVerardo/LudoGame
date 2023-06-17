@@ -54,6 +54,10 @@ public class Controller {
 		int indexClick = validateClick(click, pawnsPositions, moveTypes);
 		int indexBarrier = searchBarrier(roll, pawnsPositions);
 		
+		System.out.println();
+		for (int i = 0; i < 4; i++) System.out.printf("%d ", pawnsPositions.get(i));
+		System.out.println();
+		
 		// if player has no possible moves
 		if (verifyMoveTypes(moveTypes) == 0) { 
 			menu.setDiceButton(true);
@@ -70,6 +74,10 @@ public class Controller {
 		
 			
 		facade.makeMove(indexClick, click, roll);
+		
+		if (facade.checkIfPlayerWin()) { 
+			System.out.printf("GANHOU\n");
+			new FRScoreBoard(facade).setVisible(true); return; }
 		
 		
 		int extraMove = makeExtraMovement(roll, moveTypes.get(indexClick)); 
@@ -98,8 +106,6 @@ public class Controller {
 		captureOrFinal = 0;
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
-		
-		if () { new FRScoreBoard(facade).setVisible(true); return;}
 		
 		facade.getPlayerOfRound();
 		return;
@@ -164,11 +170,22 @@ public class Controller {
 			Integer pawn = pawnsPositions.get(i);
 			for (int j = i+1; j < 4; j++ ) {
 				if (pawn.compareTo(pawnsPositions.get(j)) == 0
-						&& !facade.isInitialHouseOfPlayer(pawn)) {  return pawn; }
+						&& !facade.isInitialHouseOfPlayer(pawn)
+						&& !isFinalHouse(pawn)) {  return pawn; }
 			}
 		}
 		
 		return -1;
+	}
+	
+	boolean isFinalHouse(int pos) {
+		int[] finalHouses = {57, 63, 69, 75};
+		
+		for (int i = 0; i < 4; i++) {
+			if (pos == finalHouses[i]) { return true; }
+			
+		}
+		return false;
 	}
 	
 	int middlePortion(int x, int y) {
