@@ -103,10 +103,7 @@ public class Controller {
 		tokenRepeat = 0;
 		menu.setDiceButton(true);
 		
-<<<<<<< HEAD
-		
-=======
->>>>>>> acf98e4798796086d1738075fb88942883676138
+
 		facade.getPlayerOfRound();
 		return;
 	}

@@ -103,12 +103,9 @@ public class PNScoreBoard extends JPanel {
 		newGameButton.setBounds(30, 300, 150, 40);
 	    newGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 	            facade.resetGame();
-=======
-	        	facade.saveGame();
+
 	            j.setVisible(false);
->>>>>>> acf98e4798796086d1738075fb88942883676138
 	        }
 	    });
 	    
@@ -120,12 +117,9 @@ public class PNScoreBoard extends JPanel {
 	            int returnValue = fileChooser.showOpenDialog(PNScoreBoard.this);
 	            if (returnValue == JFileChooser.APPROVE_OPTION) {
 	                File selectedFile = fileChooser.getSelectedFile();
-<<<<<<< HEAD
-	                facade.loadGame(selectedFile.getAbsolutePath());
-=======
+
 	                facade.loadGame(selectedFile.getAbsolutePath());  
 	                j.setVisible(false);
->>>>>>> acf98e4798796086d1738075fb88942883676138
 	            }
 	        }
 	    });

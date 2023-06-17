@@ -134,6 +134,8 @@ public class Facade {
 	//put pawn in base
 	public void returnPawnToBase(int pos) { game.returnPawnToBase(pos);}
 	
+	public int getPlayerFinalHouse() {return acctualPlayer.getFinalHouse();}
+	
 	public List<Integer> pawnTotalMove() {
 		return acctualPlayer.getPawnsTotalMoves();
 	}

@@ -10,13 +10,14 @@ import java.util.List;
 class Player {
 	private int pawnsInBase = 4;
 	private int pawnsFinished = 0;
+	private int finalHouse;
 	private int startHouse;
 	private PlayerColor color;
 	private List<Pawn> pawnsBoardposition = new ArrayList<Pawn>(4);
 	
 	Player(int startHouse, Pawn p1, Pawn p2, Pawn p3, Pawn p4, PlayerColor color){
 		this.startHouse = startHouse;
-		
+		this.finalHouse = 2 + color.getValue()/256 -1;
 		this.color = color;
 		
 		pawnsBoardposition.add(p1);
@@ -141,4 +142,9 @@ class Player {
 	 * @return false if player not win the game.
 	 * */
 	boolean isWinner() {return pawnsFinished == 4;}
+
+
+	public int getFinalHouse() {
+		return finalHouse;
+	}
 }
