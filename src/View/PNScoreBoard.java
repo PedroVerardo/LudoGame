@@ -103,6 +103,7 @@ public class PNScoreBoard extends JPanel {
 		newGameButton.setBounds(30, 300, 150, 40);
 	    newGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
+	        	facade.saveGame();
 	            j.setVisible(false);
 	        }
 	    });
@@ -115,7 +116,7 @@ public class PNScoreBoard extends JPanel {
 	            int returnValue = fileChooser.showOpenDialog(PNScoreBoard.this);
 	            if (returnValue == JFileChooser.APPROVE_OPTION) {
 	                File selectedFile = fileChooser.getSelectedFile();
-	                JOptionPane.showMessageDialog(PNScoreBoard.this, "Carregando partida do arquivo: " + selectedFile.getAbsolutePath());
+	                facade.loadGame(selectedFile.getAbsolutePath());  
 	                //função para abrir o arquivo e iniciar o jogo
 	            }
 	        }
