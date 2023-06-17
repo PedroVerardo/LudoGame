@@ -36,44 +36,44 @@ public class PNScoreBoard extends JPanel {
 	int scores[] = new int[4];
 	//List<Pawn> p;
 	//Player r;
-	int[] bogoSort(int[] a, Color[] b)
-    {
-        // if array is not sorted then shuffle the
-        // array again
-        while (isSorted(a) == false)
-            shuffle(a,b);
-        return a;
+    
+    public void quickSort(int a[], Color b[], int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(a,b, begin, end);
+
+            quickSort(a,b, begin, partitionIndex-1);
+            quickSort(a,b, partitionIndex+1, end);
+        }
     }
- 
-    // To generate permutation of the array
-    void shuffle(int[] a, Color[] b)
-    {
-        // Math.random() returns a double positive
-        // value, greater than or equal to 0.0 and
-        // less than 1.0.
-        for (int i = 0; i < a.length; i++)
-            swap(a,b, i, (int)(Math.random() * i));
+    
+    private int partition(int a[],Color b[], int begin, int end) {
+        int pivot = a[end];
+        int i = (begin-1);
+
+        for (int j = begin; j < end; j++) {
+            if (a[j] >= pivot) {
+                i++;
+
+                int swapTemp = a[i];
+                Color swapTempb = b[i];
+                a[i] = a[j];
+                b[i] = b[j];
+                a[j] = swapTemp;
+                b[j] = swapTempb;
+            }
+        }
+
+        int swapTemp = a[i+1];
+        Color swapTempb = b[i+1];
+        a[i+1] = a[end];
+        b[i+1] = b[end];
+        a[end] = swapTemp;
+        b[end] = swapTempb;
+
+        return i+1;
     }
- 
-    // Swapping 2 elements
-    void swap(int[] a, Color[] b, int i, int j)
-    {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-        Color tempc = b[i];
-        b[i] = b[j];
-        b[j] = tempc;
-    }
- 
-    // To check if array is sorted or not
-    boolean isSorted(int[] a)
-    {
-        for (int i = 1; i < a.length; i++)
-            if (a[i] > a[i - 1])
-                return false;
-        return true;
-    }
+    
+    
 	public PNScoreBoard(Facade f) {
 		facade = f;
 	    setBackground(Color.LIGHT_GRAY);
@@ -83,7 +83,7 @@ public class PNScoreBoard extends JPanel {
 	    for(int i = 0; i < 4; i++) {
 	    	scores[i] = score.get(values[i]);
 	    }
-	    scores = bogoSort(scores,colors);
+	    quickSort(scores,colors,0,3);
 		for(int i = 0; i < 4; i++) {
 			players[i] = new Ellipse2D.Double(70,30+60*(i),40,40);
 			statusLabel[i] = new JLabel(""+(i+1)+"");
