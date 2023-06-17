@@ -24,7 +24,7 @@ public class Facade {
 	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
 	
-	private Player acctualPlayer = pl4;
+	private Player acctualPlayer;
 	
 	
 	public void printBoard() {
@@ -50,8 +50,8 @@ public class Facade {
 	public void setBoard() {
 		game.setBoard();
 		
-		//round.getNextPlayer();
-		loadGame();
+		getPlayerOfRound();
+		//loadGame();
 	}
 	
 	public void subscribeInBoard(IObserver ob) {
@@ -161,6 +161,27 @@ public class Facade {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void resetGame() {
+		for(int i = 0; i < 76; i++) {
+			if(!game.getHousePosition(i).getPawnsInHouse().isEmpty()) {
+				game.getHousePosition(i).removeAllPawns();
+				game.getHousePosition(i).setBarrierDown();
+			}
+				
+		}
+		
+		List<Player> listp = Instance.getPlayerInstance();
+		
+		pl4 = listp.get(3);
+		pl2 = listp.get(1);
+		pl3 = listp.get(2);
+		pl1 = listp.get(0);
+		
+		round = new Round(pl4, pl2, pl3, pl1);
+		
+		getPlayerOfRound();
 	}
 	
 	

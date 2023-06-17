@@ -120,7 +120,7 @@ class SingletonBoard implements IObservableBoard{
 	 * 3 -> move para casa inicial do player referente ao turno
 	 * 4 -> move e remove o peão da casa
 	 * 5 -> levanta uma barreira
-	 * 6 -> jogador ganhou
+	 * 6 -> peao ganhou
 	 * */
 	int possibleMove(Pawn pawn, Player player, int position1, int diceRoll) {
 		
