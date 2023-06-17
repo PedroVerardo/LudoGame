@@ -225,6 +225,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 	public PNLudo(Menu m, Facade f) {
 		facade = f;
 		menu = m;
+		facade.subscribeInBoard(this);
 		createHouse();
 		
 		addMouseListener(this);
@@ -259,7 +260,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
         else
         	colorCount = 0;		
 		
-        updateBoard();
+        //updateBoard();
 		menu.repaint();
 		
 	}

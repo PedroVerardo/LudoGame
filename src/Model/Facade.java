@@ -24,7 +24,7 @@ public class Facade {
 	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
 	
-	private Player acctualPlayer;
+	private Player acctualPlayer = pl4;
 	
 	
 	public void printBoard() {
@@ -50,7 +50,7 @@ public class Facade {
 	public void setBoard() {
 		game.setBoard();
 		
-		getPlayerOfRound();
+		//getPlayerOfRound();
 		//loadGame();
 	}
 	
@@ -184,7 +184,7 @@ public class Facade {
 		
 		round = new Round(pl4, pl2, pl3, pl1);
 		
-		getPlayerOfRound();
+		acctualPlayer = pl4;
 	}
 	
 	
