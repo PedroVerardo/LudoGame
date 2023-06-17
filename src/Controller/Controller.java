@@ -23,6 +23,8 @@ public class Controller {
 	 * Receives two coordinates of a mouse click and returns the position that corresponds to them
 	 **/
 	public int getPositionByClick(int x, int y) {
+		
+		int[] finalHouses = {56, 63, 69, 75};
 		// side portions of board: red+blue+housesBetween | green+yellow+housesBetween 
 		if (x < 6 || x > 8) { return sidePortions(x, y); }
 		
@@ -32,6 +34,7 @@ public class Controller {
 		// final houses possible coordinates
 		else if (x >= 6 && x <= 8 && y >= 6 && y <= 8) { return 72; }
 		
+			
 		// didn't find corresponding position
 		return -5;
 	}
@@ -43,9 +46,7 @@ public class Controller {
 	 */
 	public void makeMoveController(int roll, int click, Menu menu) {
 		
-		if (initGame == 0) {
-			facade.getPlayerOfRound();
-		}
+		if (initGame == 0) { facade.getPlayerOfRound(); }
 		initGame = 1;
 		
 		List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
@@ -55,35 +56,38 @@ public class Controller {
 		int indexBarrier = searchBarrier(roll, pawnsPositions);
 		
 		// if player has no possible moves
-		if (verifyMoveTypes(moveTypes) == 0) { 
+		if (verifyMoveTypes(moveTypes) == 0) {
 			menu.setDiceButton(true);
 			facade.getPlayerOfRound(); 
 			return; }		
 		// if click is not in a valid position, the round must be locked to that player 
-		if (indexClick == -1) { return; }
+		if (indexClick == -1) { 
+			return; }
 		
 		// if dice roll equals 6 and there is a barrier in player round
-		if (roll == 6 && indexBarrier != -1 && click != indexBarrier) { return; }
+		if (roll == 6 && indexBarrier != -1 && click != indexBarrier) { 
+			return; }
 		// if dice roll equals 5 and there are pawns in base
 		if (roll == 5 && setPawnOutOfBase(roll, pawnsPositions, moveTypes) == 1 
-				&& click != facade.getPlayerInitialHouse()) { return; }
-		
+				&& click != facade.getPlayerInitialHouse()) { 
+			return; }
 			
 		facade.makeMove(indexClick, click, roll);
 		
 		if (facade.checkIfPlayerWin()) { 
-			System.out.printf("GANHOU\n");
 			new FRScoreBoard(facade).setVisible(true); return; }
 		
 		
 		int extraMove = makeExtraMovement(roll, moveTypes.get(indexClick)); 
 		// if dice roll was 6
 		if (extraMove == 1 && captureOrFinal == 0) {
-			// if roll equals 6 three times in a row and player has not arrived in final house 
+			// if roll equals 6 three times in a row and player has not arrived in final house ;
 			if (tokenRepeat == 2) {
 				if (pawnsTotalMoves.get(indexClick) + 6 < 50) {
 					facade.returnPawnToBase(pawnsPositions.get(indexClick) + 6); 
 				}
+				
+			
 			}
 			else {
 				tokenRepeat++;
@@ -128,7 +132,8 @@ public class Controller {
 	 * */
 	int validateClick(int click, List<Integer> pawnsPositions, List<Integer> moveTypes) {
 		for (int i = 0; i < pawnsPositions.size(); i++) {
-			if (click == pawnsPositions.get(i) && moveTypes.get(i) != 0) { return i; }
+			if (click == pawnsPositions.get(i) && moveTypes.get(i) != 0) { 
+				return i; }
 		}
 		return -1;
 	}
@@ -199,7 +204,7 @@ public class Controller {
 			// green final houses
 			if (y < 6) {return 51 + y;}
 			// blue final houses
-			return 62 + (13 - y);
+			return 64 + (13 - y);
 		}
 		// third line from left to right
 		if (x == 8) {
@@ -233,9 +238,9 @@ public class Controller {
 		// second line 
 		if (y == 7) {
 			if (x == 0) {return 39;} // house before red final line
-			if (x < 6) {return 66 + x;} // red final line
+			if (x < 6) {return 69 + x;} // red final line
 			if (x == 14) {return 13;} // house before yellow final line
-			return 57 + (13 - x); // yellow final line
+			return 58 + (13 - x); // yellow final line
 		}
 		// third line from top to bottom
 		if (y == 8) {

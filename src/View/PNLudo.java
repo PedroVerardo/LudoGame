@@ -249,6 +249,9 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 
 	public void mousePressed(MouseEvent e) {
 		pos = c.getPositionByClick(e.getX()/40, e.getY()/40);
+		
+		System.out.println("x=" + e.getX()/40 + "y=" + e.getY()/40);
+		
 		int colorCount = 0;
 		int diceroll = menu.getDiceroll();
 				
