@@ -59,7 +59,8 @@ public class Menu extends JPanel {
 	    newGameButton.setBounds(10, 30, 150, 40);
 	    newGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            JOptionPane.showMessageDialog(Menu.this, "Iniciando nova partida...");
+	            System.out.println("oi");
+	            facade.resetGame();
 	        }
 	    });
 
@@ -71,8 +72,8 @@ public class Menu extends JPanel {
 	            int returnValue = fileChooser.showOpenDialog(Menu.this);
 	            if (returnValue == JFileChooser.APPROVE_OPTION) {
 	                File selectedFile = fileChooser.getSelectedFile();
-	                JOptionPane.showMessageDialog(Menu.this, "Carregando partida do arquivo: " + selectedFile.getAbsolutePath());
 	                //função para abrir o arquivo e iniciar o jogo
+	                facade.loadGame(selectedFile.getAbsolutePath());
 	            }
 	        }
 	    });
@@ -82,7 +83,8 @@ public class Menu extends JPanel {
 	    saveGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            // Create a new dialog box
-	        	new FRScoreBoard(facade).setVisible(true);;
+	        	//new FRScoreBoard(facade).setVisible(true);
+	        	facade.saveGame();
 	        }
 	    });
 	    

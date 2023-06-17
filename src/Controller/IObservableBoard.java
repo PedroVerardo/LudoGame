@@ -1,8 +1,8 @@
 package Controller;
 
 public interface IObservableBoard {
-	void add(IObserver observer);
+	public void add(IObserver observer);
 	
 	
-	void notifyBoard();
+	public void notifyBoard();
 }

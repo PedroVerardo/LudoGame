@@ -188,7 +188,8 @@ public class Facade {
 		
 		round = new Round(pl4, pl2, pl3, pl1);
 		
-		acctualPlayer = pl4;
+		getPlayerOfRound();
+		game.notifyBoard();
 	}
 	
 	

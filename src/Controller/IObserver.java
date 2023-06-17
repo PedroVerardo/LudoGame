@@ -1,7 +1,7 @@
 package Controller;
 
 public interface IObserver {
-	public void updateBoard();
+	void updateBoard();
 	
-	public void updateDice();
+	void updateDice();
 }
