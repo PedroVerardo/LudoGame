@@ -105,8 +105,7 @@ public class Controller {
 		
 		captureOrFinal = 0;
 		tokenRepeat = 0;
-		menu.setDiceButton(true);
-		
+		menu.setDiceButton(true);	
 
 		facade.getPlayerOfRound();
 		return;
@@ -116,7 +115,7 @@ public class Controller {
 	 * Verify if player has moves. 
 	 * If not, round is passed to other player.
 	 * */
-	int verifyMoveTypes(List<Integer> moveTypes) {
+	public int verifyMoveTypes(List<Integer> moveTypes) {
 		
 		for (int i = 0; i < moveTypes.size(); i++) {
 			 

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Controller.Controller;
 import Model.Facade;
 //import Model.Pawn;
 //import Model.Player;
@@ -26,6 +27,7 @@ public class Menu extends JPanel {
 	private int diceroll;
 	private Rectangle2D.Double playing;
 	Facade facade;
+	//Controller controller = new Controller();
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
 	int colorCount = 0;
 	List<Integer> b;
@@ -104,7 +106,18 @@ public class Menu extends JPanel {
 	            ImageIcon imageIcon = new ImageIcon(image);
 	            imageLabel.setIcon(imageIcon);
 	            imageLabel.setBounds(35, 240, imageIcon.getIconWidth(), imageIcon.getIconHeight());
+	            
+	            int count = 0;
+	            b = facade.getPawnsMoveTypesOfPlayer(diceroll);
 	            setDiceButton(false);
+	            for (int i = 0; i < 4; i++) {
+	            	if (b.get(i) == 0) {
+	            		count++; }
+	            }
+	            
+	            if (count == 4) { 
+	            	repaint();
+	            	setDiceButton(true); }
 	        }
 	    });
 	    
