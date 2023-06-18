@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 class Load {
+	private static PlayerColor color;
 	
 	static ArrayList<Player> buildStateGame(String path, List<Player> listp, Round round, SingletonBoard board) throws FileNotFoundException {
 		File file = new File(path);
@@ -31,7 +32,7 @@ class Load {
 				pawnsPositions.get(cont/4).add(Integer.parseInt(result)); 
 			}
 			else {
-				colorPlayerOfTheRound = translateColor(result);
+				color = translateColor(result);
 			}
 			
 			cont++;
@@ -43,7 +44,7 @@ class Load {
 		ArrayList<ArrayList<Pawn>> pawnsList = makePawn(pawnsPositions); //make a matrix of pawns
 		buildBoard(board, pawnsList, pawnsPositions);
 		ArrayList<Player> playerList = createPlayerList(pawnsList);
-		translatePlayerTurn(colorPlayerOfTheRound, round);
+		//translatePlayerTurn(colorPlayerOfTheRound, round);
 		
 		
 		
@@ -111,6 +112,7 @@ class Load {
 			}
 			playerPawns.add(pawns);
 		}
+		System.out.println(playerPawns);
 		return playerPawns;
 	}
 	
@@ -162,23 +164,30 @@ class Load {
 		return pawn;
 	}
 	
+	static PlayerColor getColor() {
+		return color;
+	}
+	
 	//get the turn defined in the file
-	private static void translatePlayerTurn(PlayerColor colorOfTheTurn, Round round) {
-		round.getNextPlayer();
-		while(round.getCurrentPlayerColor() != colorOfTheTurn) {
+	static void translatePlayerTurn( Round round) {
+		System.out.println(color);
+		
+		while(round.getCurrentPlayerColor() != color) {
 			round.getNextPlayer();
 		}
+		
+		System.out.println(round.getCurrentPlayerColor());
 	}
 	
 	//translate the string in the file to playerColor
 	private static PlayerColor translateColor(String result) {
-		if(result.compareTo("VERMELHO") == 0) {return PlayerColor.VERMELHO;}
+		if(result.compareTo("VERMELHO") == 0) {return PlayerColor.AZUL;}
 		
-		else if(result.compareTo("AMARELO") == 0) {return PlayerColor.AMARELO;}
+		else if(result.compareTo("AMARELO") == 0) {return PlayerColor.VERDE;}
 		
-		else if(result.compareTo("AZUL") == 0) {return PlayerColor.AZUL;}
+		else if(result.compareTo("AZUL") == 0) {return PlayerColor.AMARELO;}
 		
-		else {return PlayerColor.VERDE;}
+		else {return PlayerColor.VERMELHO;}
 			
 	}
 	

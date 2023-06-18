@@ -17,7 +17,7 @@ class Player {
 	
 	Player(int startHouse, Pawn p1, Pawn p2, Pawn p3, Pawn p4, PlayerColor color){
 		this.startHouse = startHouse;
-		this.finalHouse = 2 + color.getValue()/256 -1;
+		this.finalHouse = 57 + 6*(color.getValue()/256 -1);
 		this.color = color;
 		
 		pawnsBoardposition.add(p1);

@@ -57,6 +57,9 @@ class Pawn implements Serializable{
 	 * @return The player start house + the total of pawn moves % 52(total houses)
 	 */
 	int getPawnPositionInBoard(Player p) {
+		if(this.haveFinished()) {
+			return p.getFinalHouse();
+		}
 		if(this.isInFinalLine()) {
 			return this.getTotalMoves();
 		}

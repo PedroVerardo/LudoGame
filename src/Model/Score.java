@@ -22,7 +22,7 @@ public class Score {
 		
 		for(Pawn pawn : pawns) {
 			if(pawn.getTotalMoves() > 50) {
-				int colorPlayerValueShifited = p.getPlayerColor().getValue() >> 8 - 1;
+				int colorPlayerValueShifited = p.getPlayerColor().getValue()/256 -1;
 				total += pawn.getTotalMoves() - 6*colorPlayerValueShifited;
 			}
 			else {

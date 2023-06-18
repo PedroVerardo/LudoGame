@@ -177,10 +177,10 @@ class SingletonBoard implements IObservableBoard{
 			
 			
 			//can't have 2 pawns equals in the same initialHouse
-			if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
+			//if(h2.isInitialHouse() && comparePawns(pawn, h2)) {return 0;}
 			
 			//if have two pawns in a initial house
-			else if(h2.isInitialHouse() && listH2.size() > 1) {return 0;}
+			if(h2.isInitialHouse() && listH2.size() > 1) {return 0;}
 			
 			
 			
@@ -195,7 +195,7 @@ class SingletonBoard implements IObservableBoard{
 			else if(h2.isSafe() && listH2.size() < 2 &&
 					!comparePawns(pawn , h2)){return 1;}
 			
-			else if(h2.isSafe() && comparePawns(pawn ,h2)){return 0;}
+			//else if(h2.isSafe() && comparePawns(pawn ,h2)){return 0;}
 			
 			else if(h2.isSafe() && listH2.size() == 2){return 0;}
 			

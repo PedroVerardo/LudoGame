@@ -169,7 +169,13 @@ public class Facade {
 			pl1 = playerList.get(3);
 			
 			round = new Round(pl4, pl2, pl3, pl1);
+			getPlayerOfRound();
 			
+			while(acctualPlayer.getPlayerColor() != Load.getColor()) {
+				getPlayerOfRound();
+			}
+			
+			System.out.println(acctualPlayer.getPlayerColor());
 			game.notifyBoard();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -206,8 +212,8 @@ public class Facade {
 		System.out.println(getPawnsMoveTypesOfPlayer(diceRoll));
 		
 		game.makeMove(p ,acctualPlayer, p.getPawnPositionInBoard(acctualPlayer), diceRoll);
-		//printBoard();
-		System.out.println(getAllPawnsPositions());
+		printBoard();
+		//System.out.println(getAllPawnsPositions());
 	}
 	
 }
