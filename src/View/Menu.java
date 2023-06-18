@@ -18,11 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-<<<<<<< HEAD
 import Controller.Controller;
-=======
 import Controller.IObserver;
->>>>>>> c16ba0646362c868cfe387a1bb6373b185241a7d
 import Model.Facade;
 //import Model.Pawn;
 //import Model.Player;
@@ -123,6 +120,7 @@ public class Menu extends JPanel implements IObserver{
 	            }
 	            
 	            if (count == 4) { 
+	            	facade.getPlayerOfRound();
 	            	repaint();
 	            	setDiceButton(true); }
 	        }
