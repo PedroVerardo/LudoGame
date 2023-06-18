@@ -18,11 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import Controller.IObserver;
 import Model.Facade;
 //import Model.Pawn;
 //import Model.Player;
 
-public class Menu extends JPanel {
+public class Menu extends JPanel implements IObserver{
 	private int diceroll;
 	private Rectangle2D.Double playing;
 	Facade facade;
@@ -54,6 +55,7 @@ public class Menu extends JPanel {
 		facade = f;
 	    setBackground(Color.LIGHT_GRAY);
 	    setLayout(null);
+	    facade.subscribeInRound(this);
 
 	    JButton newGameButton = new JButton("Nova Partida");
 	    newGameButton.setBounds(10, 30, 150, 40);
@@ -74,6 +76,8 @@ public class Menu extends JPanel {
 	                File selectedFile = fileChooser.getSelectedFile();
 	                //função para abrir o arquivo e iniciar o jogo
 	                facade.loadGame(selectedFile.getAbsolutePath());
+	                facade.subscribeInRound(Menu.this);
+	                repaint();
 	            }
 	        }
 	    });
@@ -194,6 +198,7 @@ public class Menu extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
+        //System.out.println(facade.getPlayerColor());
         if(facade.getPlayerColor()==1024)
         	g2d.setColor(Color.RED);
         else {
@@ -208,5 +213,18 @@ public class Menu extends JPanel {
         }
         g2d.fill(playing);
     }
+
+	@Override
+	public void updateBoard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateDice() {
+		System.out.println("kkkkk");
+		repaint();
+		
+	}
     
 }

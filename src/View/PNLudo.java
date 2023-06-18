@@ -261,7 +261,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
         	colorCount = 0;		
 		
         //updateBoard();
-		menu.repaint();
+		//menu.repaint();
 		
 	}
 	

@@ -24,7 +24,7 @@ public class Facade {
 	private Round round = new Round(pl4, pl2, pl3, pl1);
 	
 	
-	private Player acctualPlayer = pl4;
+	private Player acctualPlayer;
 	
 	
 	public void printBoard() {
@@ -49,13 +49,15 @@ public class Facade {
 	
 	public void setBoard() {
 		game.setBoard();
-		
-		//getPlayerOfRound();
-		//loadGame();
+		getPlayerOfRound();
 	}
 	
 	public void subscribeInBoard(IObserver ob) {
 		game.add(ob);
+	}
+	
+	public void subscribeInRound(IObserver ob) {
+		round.add(ob);
 	}
 	
 	public List<Player> getAllPlayers(){
@@ -100,7 +102,10 @@ public class Facade {
 	}
 	
 	//Player of the round
-	public void getPlayerOfRound() {acctualPlayer = round.getNextPlayer();}
+	public void getPlayerOfRound() {
+		acctualPlayer = round.getNextPlayer();
+		round.notifyDice();
+		}
 	
 	public boolean checkIfPlayerWin() {return acctualPlayer.isWinner();}
 	

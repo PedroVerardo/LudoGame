@@ -1,10 +1,16 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
-class Round {
+import Controller.IObservableDice;
+import Controller.IObserver;
+
+class Round implements IObservableDice{
 	Queue<Player> queue = new LinkedList<Player>();
+	private List<IObserver> subscribers = new ArrayList<IObserver>();
 	Player currentPlayer;
 
 	/**
@@ -27,11 +33,27 @@ class Round {
 	Player getNextPlayer() {
 		currentPlayer = queue.remove();
 		queue.add(currentPlayer);
-		
+		notifyDice();
 		return currentPlayer;
 	}
 	
 	PlayerColor getCurrentPlayerColor() {
 		return currentPlayer.getPlayerColor();
+	}
+
+
+	@Override
+	public void add(IObserver observer) {
+		subscribers.add(observer);
+		
+	}
+
+
+	@Override
+	public void notifyDice() {
+		for(IObserver ob : subscribers) {
+			ob.updateDice();
+		}
+		
 	}
 }
