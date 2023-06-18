@@ -26,17 +26,15 @@ import Model.Facade;
 public class PNScoreBoard extends JPanel {
 	private int diceroll;
 	private Ellipse2D.Double players[] = new Ellipse2D.Double[4];
-	JLabel statusLabel[] = new JLabel[4];
-	JLabel pointLabel[] = new JLabel[4];
-	Facade facade;
-	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
-	Short values[] = {256,512,768,1024}; 
-	int colorCount = 0;
-	List<Integer> b;
-	List<Integer> pp;
-	int scores[] = new int[4];
-	//List<Pawn> p;
-	//Player r;
+	private JLabel statusLabel[] = new JLabel[4];
+	private JLabel pointLabel[] = new JLabel[4];
+	private Facade facade;
+	private Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
+	private Short values[] = {256,512,768,1024}; 
+	private int colorCount = 0;
+	private List<Integer> b;
+	private List<Integer> pp;
+	private int scores[] = new int[4];
     
     public void quickSort(int a[], Color b[], int begin, int end) {
         if (begin < end) {

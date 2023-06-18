@@ -11,7 +11,7 @@ import Controller.IObserver;
 class Round implements IObservableDice{
 	Queue<Player> queue = new LinkedList<Player>();
 	private List<IObserver> subscribers = new ArrayList<IObserver>();
-	Player currentPlayer;
+	private Player currentPlayer;
 
 	/**
 	 * Function to initialize the order of the players.

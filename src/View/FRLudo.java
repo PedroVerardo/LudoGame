@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class FRLudo extends JFrame {
 
-	final int LARG_DEFAULT=810;
-	final int ALT_DEFAULT=850;
+	private final int LARG_DEFAULT=810;
+	private final int ALT_DEFAULT=850;
 	
 	public FRLudo(Facade facade) {
 		facade.setBoard();

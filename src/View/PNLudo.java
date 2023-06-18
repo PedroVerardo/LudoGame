@@ -14,23 +14,23 @@ import Model.*;
 
  
 public class PNLudo extends JPanel implements MouseListener, IObserver {
-	int pos;
-	double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
-	int iClick,jClick;
-	Facade facade;
-	Controller c = new Controller();
-	Menu menu;
-	ViewHouse tab[]=new ViewHouse[76];
-	ViewHouse start[][] = new ViewHouse[4][4];
-	Rectangle2D.Double houses[] = new Rectangle2D.Double[76];
-	Rectangle2D.Double base[] = new Rectangle2D.Double[4];
-	Shape finalHouse[] = new Shape[4];
-	Ellipse2D.Double baseHouses[][] = new Ellipse2D.Double[4][4];
-	Ellipse2D.Double pawns[][] = new Ellipse2D.Double[4][4];
-	Ellipse2D.Double pawnst[][] = new Ellipse2D.Double[4][4];
-	List<Integer> pawnsPosition;
-	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
-	Integer bases[] = {2,15,28,41};
+	private int pos;
+	private double xIni=280.0,yIni=00.0,larg=40.0,alt=40.0,espLinha=2.0;
+	private int iClick,jClick;
+	private Facade facade;
+	private Controller c = new Controller();
+	private Menu menu;
+	private ViewHouse tab[]=new ViewHouse[76];
+	private ViewHouse start[][] = new ViewHouse[4][4];
+	private Rectangle2D.Double houses[] = new Rectangle2D.Double[76];
+	private Rectangle2D.Double base[] = new Rectangle2D.Double[4];
+	private Shape finalHouse[] = new Shape[4];
+	private Ellipse2D.Double baseHouses[][] = new Ellipse2D.Double[4][4];
+	private Ellipse2D.Double pawns[][] = new Ellipse2D.Double[4][4];
+	private Ellipse2D.Double pawnst[][] = new Ellipse2D.Double[4][4];
+	private List<Integer> pawnsPosition;
+	private Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
+	private Integer bases[] = {2,15,28,41};
 	
 	public int getPositonClicked() {
 		return pos;
@@ -129,7 +129,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 	
 	private void setUpHouses() {
 		for(int i = 0; i<76;i++)
-			houses[i] = new Rectangle2D.Double(tab[i].x+6,tab[i].y+6,40.00,40.00);
+			houses[i] = new Rectangle2D.Double(tab[i].getX()+6,tab[i].getY()+6,40.00,40.00);
 		
 		
 		base[0] = new Rectangle2D.Double(6.00,6.00,239.00,239.00);
@@ -139,7 +139,7 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 		
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 4; j++) {
-				baseHouses[i][j] = new Ellipse2D.Double(start[i][j].x,start[i][j].y,50,50);
+				baseHouses[i][j] = new Ellipse2D.Double(start[i][j].getX(),start[i][j].getY(),50,50);
 			}
 		}
 	}
@@ -167,10 +167,10 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 			if(i == 57 || i == 63 || i == 69)
 				colorCount++;
 		}
-		finalHouse[0] = Triangle.drawTriangleGreen(g2d, tab[57].x+6.00, tab[57].y+6.00);
-		finalHouse[1] = Triangle.drawTriangleYellow(g2d, tab[63].x+6.00, tab[63].y+6.00);
-		finalHouse[2] = Triangle.drawTriangleBlue(g2d, tab[69].x+6.00, tab[69].y+6.00);
-		finalHouse[3] = Triangle.drawTriangleRed(g2d, tab[75].x+6.00, tab[75].y+6.00);
+		finalHouse[0] = Triangle.drawTriangleGreen(g2d, tab[57].getX()+6.00, tab[57].getY()+6.00);
+		finalHouse[1] = Triangle.drawTriangleYellow(g2d, tab[63].getX()+6.00, tab[63].getY()+6.00);
+		finalHouse[2] = Triangle.drawTriangleBlue(g2d, tab[69].getX()+6.00, tab[69].getY()+6.00);
+		finalHouse[3] = Triangle.drawTriangleRed(g2d, tab[75].getX()+6.00, tab[75].getY()+6.00);
 		
 		g2d.setPaint(Color.red);
 		g2d.fill(base[0]);
@@ -200,18 +200,18 @@ public class PNLudo extends JPanel implements MouseListener, IObserver {
 				g2d.draw(baseHouses[i][j]);
 				if(pawnsPosition.get(j) == bases[i]) {
 					if(facade.getAllPawnsInBase().get(i).get(j)) {
-						pawns[i][j] = new Ellipse2D.Double(start[i][j].x+10,start[i][j].y+10,30,30);
+						pawns[i][j] = new Ellipse2D.Double(start[i][j].getX()+10,start[i][j].getY()+10,30,30);
 					}
 					else {
-						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+10,tab[pawnsPosition.get(j)].y+10,30,30);
+						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].getX()+10,tab[pawnsPosition.get(j)].getY()+10,30,30);
 					}
 							
 				} else {
 					if(p[pawnsPosition.get(j)] == 0) {
-						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+10,tab[pawnsPosition.get(j)].y+10,30,30);
+						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].getX()+10,tab[pawnsPosition.get(j)].getY()+10,30,30);
 						p[pawnsPosition.get(j)]++;
 					} else {
-						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].x+15,tab[pawnsPosition.get(j)].y+15,20,20);
+						pawns[i][j] = new Ellipse2D.Double(tab[pawnsPosition.get(j)].getX()+15,tab[pawnsPosition.get(j)].getY()+15,20,20);
 					}
 				}
 				g2d.draw(pawns[i][j]);

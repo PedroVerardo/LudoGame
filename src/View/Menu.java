@@ -28,16 +28,15 @@ public class Menu extends JPanel implements IObserver{
 	private int diceroll;
 	private Rectangle2D.Double playing;
 	private Rectangle2D.Double noplay;
-	Facade facade;
+	private Facade facade;
 	//Controller controller = new Controller();
-	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
-	int colorCount = 0;
-	List<Integer> b;
-	List<Integer> pp;
-	JButton rollDiceButton;
-	JLabel imageLabel = new JLabel();
-	//List<Pawn> p;
-	//Player r;
+	private Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
+	private int colorCount = 0;
+	private List<Integer> b;
+	private List<Integer> pp;
+	private JButton rollDiceButton;
+	private JLabel imageLabel = new JLabel();
+	
 	int getDiceroll() {
 		return diceroll;
 	}

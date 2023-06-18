@@ -2,6 +2,8 @@ package Controller;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Model.*;
 import View.*;
 
@@ -12,8 +14,7 @@ public class Controller {
 	private int tokenRepeat = 0;
 	private int captureOrFinal = 0;
 	
-	Facade facade = Facade.getFacadeInstance();
-	Menu menu = new Menu(facade);
+	private Facade facade = Facade.getFacadeInstance();
 	
 	public Controller() {}
 	
@@ -23,8 +24,6 @@ public class Controller {
 	 * Receives two coordinates of a mouse click and returns the position that corresponds to them
 	 **/
 	public int getPositionByClick(int x, int y) {
-		
-		int[] finalHouses = {56, 63, 69, 75};
 		// side portions of board: red+blue+housesBetween | green+yellow+housesBetween 
 		if (x < 6 || x > 8) { return sidePortions(x, y); }
 		
@@ -75,7 +74,17 @@ public class Controller {
 		facade.makeMove(indexClick, click, roll);
 		
 		if (facade.checkIfPlayerWin()) { 
-			new FRScoreBoard(facade).setVisible(true); return; }
+			FRScoreBoard score = new FRScoreBoard(facade);
+        	JOptionPane.showMessageDialog(score, "O jogador x venceu");
+
+        	 int choice = JOptionPane.showConfirmDialog(null, "Você quer continuar?", "Confirmation",
+                     JOptionPane.YES_NO_OPTION);
+
+             if (choice == JOptionPane.YES_OPTION) {
+                 System.out.println("User chose Yes");
+             } else if (choice == JOptionPane.NO_OPTION) {
+            	 System.exit(0);
+             } }
 		
 		
 		int extraMove = makeExtraMovement(roll, moveTypes.get(indexClick)); 

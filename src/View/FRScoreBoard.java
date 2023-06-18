@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class FRScoreBoard extends JFrame {
 
-	final int LARG_DEFAULT=500;
-	final int ALT_DEFAULT=500;
+	private final int LARG_DEFAULT=500;
+	private final int ALT_DEFAULT=500;
 	
 	public FRScoreBoard(Facade facade) {
 		facade.setBoard();
