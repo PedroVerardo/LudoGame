@@ -46,8 +46,8 @@ public class Controller {
 	 */
 	public void makeMoveController(int roll, int click, Menu menu) {
 		
-		if (initGame == 0) { facade.getPlayerOfRound(); }
-		initGame = 1;
+//		if (initGame == 0) { facade.getPlayerOfRound(); }
+//		initGame = 1;
 		
 		List<Integer> pawnsPositions = facade.getPawnsPositionOfPlayer();
 		List<Integer> moveTypes = facade.getPawnsMoveTypesOfPlayer(roll);
