@@ -97,7 +97,7 @@ public class Controller {
 		}
 		
 		// if captured pawn or arrived in final house, players wins 6 movements
-		if (extraMove == 2 || extraMove == 3) {
+		if (extraMove == 2 || extraMove == 3 || extraMove == 4) {
 			captureOrFinal = 1;
 			menu.setDiceToSix();
 			return;
@@ -158,6 +158,7 @@ public class Controller {
         if (roll == 6) { return 1; }
         if (type == 4) { return 2; }
         if (type == 6) { return 3; }
+        if (type == 7) { return 4; }
         
         return 0;
 	}
