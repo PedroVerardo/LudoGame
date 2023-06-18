@@ -58,6 +58,7 @@ public class Controller {
 		if (verifyMoveTypes(moveTypes) == 0) {
 			menu.setDiceButton(true);
 			facade.getPlayerOfRound(); 
+			menu.setDice(0);
 			return; }		
 		// if click is not in a valid position, the round must be locked to that player 
 		if (indexClick == -1) { 
@@ -98,7 +99,7 @@ public class Controller {
 		// if captured pawn or arrived in final house, players wins 6 movements
 		if (extraMove == 2 || extraMove == 3 || extraMove == 4) {
 			captureOrFinal = 1;
-			menu.setDiceToSix();
+			menu.setDice(6);
 			return;
 		}
 		
@@ -107,6 +108,7 @@ public class Controller {
 		menu.setDiceButton(true);	
 
 		facade.getPlayerOfRound();
+		menu.setDice(0);
 		return;
 	}
 	

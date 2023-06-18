@@ -27,6 +27,7 @@ import Model.Facade;
 public class Menu extends JPanel implements IObserver{
 	private int diceroll;
 	private Rectangle2D.Double playing;
+	private Rectangle2D.Double noplay;
 	Facade facade;
 	//Controller controller = new Controller();
 	Color colors[] = {Color.green,Color.yellow,Color.blue,Color.red};
@@ -45,8 +46,8 @@ public class Menu extends JPanel implements IObserver{
 		rollDiceButton.setEnabled(status);
 	}
 	
-	public void setDiceToSix() {
-		diceroll = 6;
+	public void setDice(int value) {
+		diceroll = value;
 		String image = "src/Images/Dado" + diceroll + ".png";	
         ImageIcon imageIcon = new ImageIcon(image);
         imageLabel.setIcon(imageIcon);
@@ -63,7 +64,6 @@ public class Menu extends JPanel implements IObserver{
 	    newGameButton.setBounds(10, 30, 150, 40);
 	    newGameButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            System.out.println("oi");
 	            facade.resetGame();
 	        }
 	    });
@@ -101,6 +101,7 @@ public class Menu extends JPanel implements IObserver{
 	    statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 	    playing = new Rectangle2D.Double(30, 235, 110, 110);
+	    noplay = new Rectangle2D.Double(120, 325, 20, 20);
 	    rollDiceButton = new JButton("Lançar Dado");
 	    rollDiceButton.setBounds(10, 360, 150, 40);
 	    rollDiceButton.addActionListener(new ActionListener() {
@@ -120,9 +121,11 @@ public class Menu extends JPanel implements IObserver{
 	            }
 	            
 	            if (count == 4) { 
+	            	setDice(0);
 	            	facade.getPlayerOfRound();
 	            	repaint();
 	            	setDiceButton(true); }
+	            
 	        }
 	    });
 	    
